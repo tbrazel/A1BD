@@ -103,7 +103,7 @@ PfisterForm(Ring,RingElement) := GrothendieckWittClass => (kk,a) -> (
     )
 
 PfisterForm(Ring,ZZ) := GrothendieckWittClass => (kk,a) -> (
-    diagonalForm(kk,sub((1,(-1)*a,kk)))
+    diagonalForm(kk,(1,sub((-1)*a,kk)))
     )
 
 PfisterForm(Ring,QQ) := GrothendieckWittClass => (kk,a) -> (

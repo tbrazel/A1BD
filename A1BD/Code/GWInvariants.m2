@@ -5,9 +5,16 @@
 -- Input: A Grothendieck-Witt class
 -- Output: The rank of a quadratic form representing the Grothendieck-Witt class
 
-rank (GrothendieckWittClass) := (ZZ) => (alpha) -> (
+rankForm = method()
+rankForm (GrothendieckWittClass) := (ZZ) => (alpha) -> (
     numRows(alpha.matrix)
     )
+
+rankForm (Matrix) := (ZZ) => (M) -> (
+    rank M
+    )
+
+
 
 -- Input: A symmetric matrix over QQ or RR
 -- Output: The number of positive entries on the diagonal of a diagonal matrix to which it is congruent
@@ -110,7 +117,7 @@ relevantPrimes (GrothendieckWittClass) := List => (beta) -> (
     if not kk === QQ then error "GrothendieckWittClass is not over QQ";
     
     -- Find the diagonal entries of a diagonal integral representative of the form
-    D := diagonalEntries beta;
+    D := diagonalEntries( diagonalClass beta );
     
     -- Make a list of all prime factors of diagonal entries
     L := {};

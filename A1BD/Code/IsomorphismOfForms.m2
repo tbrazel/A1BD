@@ -7,7 +7,7 @@ isIsomorphicFormQ (GrothendieckWittClass, GrothendieckWittClass) := Boolean => (
     if not (baseField(beta) === QQ) then error "second input must have base field QQ";
     
     -- If the ranks differ, then the forms are not isomorphic
-    if rank(alpha) != rank(beta) then return false;
+    if rankForm(alpha) != rankForm(beta) then return false;
     
     -- If the signatures (Hasse-Witt invariants at RR) differ, then the forms are not isomorphic
     if signature(alpha) != signature(beta) then return false;
@@ -64,7 +64,7 @@ isIsometricForm (Matrix,Matrix) := (Boolean) => (A,B) -> (
     
     -- Over CC, forms over spaces of the same dimension are equivalent if and only if they have the same rank
     if (instance(k1,ComplexField) and instance(k2,ComplexField)) then (
-        return ((numRows(A) == numRows(B)) and (rank(A) == rank(B)));
+        return ((numRows(A) == numRows(B)) and (rankForm(A) == rankForm(B)));
         )
     
     -----------------------------------
@@ -93,7 +93,7 @@ isIsometricForm (Matrix,Matrix) := (Boolean) => (A,B) -> (
     
     -- Over a finite field, diagonal forms over spaces of the same dimension are equivalent if and only if they have the same number of nonzero entries and the product of these nonzero entries is in the same square class
     else if (instance(k1, GaloisField) and instance(k2, GaloisField) and k1.char !=2 and k2.char != 2 and k1.order == k2.order) then (
-        return ((numRows(A) == numRows(B)) and (rank(A) == rank(B)) and (legendreBoolean(det(nondegeneratePartDiagonal(A))) == legendreBoolean(sub(det(nondegeneratePartDiagonal(B)),k1))));
+        return ((numRows(A) == numRows(B)) and (rankForm(A) == rankForm(B)) and (legendreBoolean(det(nondegeneratePartDiagonal(A))) == legendreBoolean(sub(det(nondegeneratePartDiagonal(B)),k1))));
         )
     -- If we get here, the base fields are not the same
     else error "Base fields are not the same"

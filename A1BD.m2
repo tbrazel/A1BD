@@ -49,7 +49,7 @@ export{
     -- ArithmeticMethods.m2
     "localAlgebraBasis",
     "padicValuation",
-
+    
     --MatrixMethods.m2
     "congruenceDiagonalize",
     
@@ -75,6 +75,7 @@ export{
     
     --GWInvariants.m2
     "signature",
+    "rankForm",
     "integralDiscriminant",
     "relevantPrimes",
     "HasseWittInvariant",

@@ -58,7 +58,7 @@ QQanisotropicDimension2 = method()
 QQanisotropicDimension2 (GrothendieckWittClass) := (GrothendieckWittClass) => beta -> (
     if not (anisotropicDimensionQQ(beta) == 2) then error "anisotropic dimension of form is not 2";
 
-    n := rank beta;
+    n := rankForm beta;
 
     -- Shortcut: if the form has anisotropic dimension 2 and the form is dimension 2, return the form itself
     if n == 2 then return beta; 
@@ -165,7 +165,7 @@ QQanisotropicDimension2 (GrothendieckWittClass) := (GrothendieckWittClass) => be
 QQanisotropicPart = method()
 QQanisotropicPart (GrothendieckWittClass) := (GrothendieckWittClass) => (beta) -> (
     beta = diagonalClass beta;
-    n := rank beta;
+    n := rankForm beta;
     
     -- If the form is anisotropic 
     if anisotropicDimension(beta) == n then return beta;
@@ -242,13 +242,13 @@ anisotropicPart (Matrix) := (Matrix) => (A) -> (
     else if (instance(k, GaloisField) and k.char != 2) then (
         diagA := congruenceDiagonalize(A);
         if anisotropicDimension(A) == 1 then (
-            return matrix(k,{{sub((-1)^((rank(diagA)-1)/2),k)*det(nondegeneratePartDiagonal(diagA))}});
+            return matrix(k,{{sub((-1)^((rankForm(diagA)-1)/2),k)*det(nondegeneratePartDiagonal(diagA))}});
             )
         else if anisotropicDimension(A) == 0 then (
             return diagonalMatrix(k,{});
             )
         else (
-            return matrix(k,{{1,0},{0,sub((-1)^((rank(diagA)-2)/2),k)*det(nondegeneratePartDiagonal(diagA))}});
+            return matrix(k,{{1,0},{0,sub((-1)^((rankForm(diagA)-2)/2),k)*det(nondegeneratePartDiagonal(diagA))}});
             );
         );
     )
@@ -268,7 +268,7 @@ sumDecompositionVerbose (GrothendieckWittClass) := (GrothendieckWittClass, Strin
     -- Get base field of beta
     kk := baseField beta;
 
-    if rank(beta) == 0 then (
+    if rankForm(beta) == 0 then (
 	return (gwClass(diagonalMatrix(kk,{})),"empty form");
 	);
     
@@ -284,7 +284,7 @@ sumDecompositionVerbose (GrothendieckWittClass) := (GrothendieckWittClass, Strin
     hyperbolicPart := hyperbolicForm(kk,2*w);
     alpha := anisotropicPart beta;
     
-    if rank(alpha) > 0 then (
+    if rankForm(alpha) > 0 then (
         D := diagonalEntries alpha;
         for i from 0 to (length(D) - 1) do (
 	    outputString = outputString | "+ <" | toString(D_i) | ">";
