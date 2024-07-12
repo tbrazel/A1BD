@@ -1,3 +1,6 @@
 .DS_Store
 *.m2~
 *.m2#
+
+init.m2
+.#init.m2
