@@ -160,9 +160,9 @@ congruenceDiagonalizeSimplify (Matrix) := (Matrix) => (AnonMut) -> (
         -- If -1 is a square, then find another nonsquare representative
         if legendreBoolean sub(-1,k) then (
 	    for i from 0 to (n-1) do (
-	        if (diagForm_(i,i) != 0 and (not legendreBoolean(diagForm_(i,i)))) then (
+	        if (A_(i,i) != 0 and (not legendreBoolean(A_(i,i)))) then (
                     -- If there is a nonsquare on the diagonal, choose it as the nonsquare representative
-	     	    nonSquareRep = diagForm_(i,i);
+	     	    nonSquareRep = A_(i,i);
                     break;
 		    );
                 );
