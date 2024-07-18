@@ -108,12 +108,12 @@ anisotropicDimension (Matrix) := (ZZ) => (A) -> (
     if not isSquareAndSymmetric(A) then error "Matrix is not symmetric";
     -- Over CC, the anisotropic dimension is 0 or 1 depending on the parity of the rank
     if instance(k,ComplexField) then (
-        return (rankForm(A)%2);
+        return rankForm(A)%2;
         )
     -- Over RR, the anisotropic dimension is the absolute value of the signature
     else if instance(k,RealField) then (
         diagonalA := congruenceDiagonalize A;
-        return (abs(numPosDiagEntries(diagonalA) - numNegDiagEntries(diagonalA)));
+        return abs(numPosDiagEntries(diagonalA) - numNegDiagEntries(diagonalA));
         )
     -- Over QQ, call anisotropicDimensionQQ
     else if (k === QQ) then (

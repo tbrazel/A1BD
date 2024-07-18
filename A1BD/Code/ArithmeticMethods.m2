@@ -88,7 +88,6 @@ squareSymbol(ZZ, ZZ) := (ZZ) => (a, p) -> (
 
 -- Input: Two integers a and b, and a prime number p
 -- Output: Boolean that gives whether a and b differ by a square in Q_p
-
 equalUptoPadicSquare = method()
 equalUptoPadicSquare (ZZ, ZZ, ZZ) := (Boolean) => (a, b, p) -> (
     
@@ -99,14 +98,12 @@ equalUptoPadicSquare (ZZ, ZZ, ZZ) := (Boolean) => (a, b, p) -> (
         -- differ by a square in GF(p)
         a1 := squarefreePart a;
         b1 := squarefreePart b;
-        if (padicValuation(a1, p) != padicValuation(b1, p)) then (
-	    return false;
-            )
+        if (padicValuation(a1, p) != padicValuation(b1, p)) then (return false;)
         else (
     	    -- c1 will be an integer prime to p
 	    c1 := squarefreePart(a1*b1);
 	    x := getSymbol "x";
-	    return (legendreBoolean(sub(c1, GF(p, Variable => x)))); 
+	    return legendreBoolean(sub(c1, GF(p, Variable => x))); 
 	    );
         )
     else (
@@ -122,7 +119,7 @@ equalUptoPadicSquare (ZZ, ZZ, ZZ) := (Boolean) => (a, b, p) -> (
 	    c1 = squarefreePart(a1*b1);
 	    c1 = c1 % 8;
 	    -- If c1 = 1, then the two odd units are congruent mod 8, and are squares in Q_2
-	    return (c1 == 1); 
+	    return c1==1; 
 	    );
         );
     )

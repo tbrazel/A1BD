@@ -227,7 +227,7 @@ anisotropicPart (Matrix) := (Matrix) => (A) -> (
             return id_(RR^(posEntries-negEntries));
             )
         else if (posEntries < negEntries) then (
-            return (-id_(RR^(negEntries-posEntries)));
+            return -id_(RR^(negEntries-posEntries));
             )
         else (
             return diagonalMatrix(RR,{});
