@@ -1,10 +1,10 @@
 -- Input: Two Grothendieck-Witt classes or symmetric matrices representing quadratic forms over QQ
 -- Output: Boolean that gives whether the Grothendieck-Witt classes/quadratic forms are isomorphic
 
-isIsomorphicFormQ = method()
-isIsomorphicFormQ (GrothendieckWittClass, GrothendieckWittClass) := Boolean => (alpha, beta) -> (
-    if not (baseField(alpha) === QQ) then error "first input must have base field QQ";
-    if not (baseField(beta) === QQ) then error "second input must have base field QQ";
+isIsomorphicFormQQ = method()
+isIsomorphicFormQQ (GrothendieckWittClass, GrothendieckWittClass) := Boolean => (alpha, beta) -> (
+    if not (getBaseField(alpha) === QQ) then error "first input must have base field QQ";
+    if not (getBaseField(beta) === QQ) then error "second input must have base field QQ";
     
     -- If the ranks differ, then the forms are not isomorphic
     if getRank(alpha) != getRank(beta) then return false;
@@ -16,10 +16,10 @@ isIsomorphicFormQ (GrothendieckWittClass, GrothendieckWittClass) := Boolean => (
     if integralDiscriminant(alpha) != integralDiscriminant(beta) then return false;
     
     -- Check the Hasse-Witt invariants
-    PrimesToCheck := unique(relevantPrimes(alpha) | relevantPrimes(beta));
+    PrimesToCheck := unique(getRelevantPrimes(alpha) | getRelevantPrimes(beta));
     for p in PrimesToCheck do (
         -- If any Hasse-Witt invariants differ, then the forms are not isomorphic
-	if (HasseWittInvariant(alpha,p) != HasseWittInvariant(beta,p)) then (
+	if (getHasseWittInvariant(alpha,p) != getHasseWittInvariant(beta,p)) then (
 	    return false;
 	    );
 	);
@@ -27,23 +27,15 @@ isIsomorphicFormQ (GrothendieckWittClass, GrothendieckWittClass) := Boolean => (
     true
     )
 
-isIsomorphicFormQ (Matrix, Matrix) := Boolean => (M,N) -> (
-    isIsomorphicFormQ(gwClass(M),gwClass(N))
-    )
-
--- Input: Two Grothendieck-Witt classes alpha and beta, defined over CC, RR, QQ, or a finite field of characteristic not 2
--- Output: Boolean that gives whether alpha and beta are the same Grothendieck-Witt class
-
-gwIsomorphic = method()
-gwIsomorphic (GrothendieckWittClass,GrothendieckWittClass) := Boolean => (alpha,beta) -> (
-    isIsometricForm(alpha.matrix,beta.matrix)
+isIsomorphicFormQQ (Matrix, Matrix) := Boolean => (M,N) -> (
+    isIsomorphicFormQQ(makeGWClass(M),makeGWClass(N))
     )
 
 -- Input: Two matrices representing symmetric bilinear forms over CC, RR, QQ, or a finite field of characteristic not 2
 -- Output: Boolean that gives whether the bilinear forms are isometric
 
-isIsometricForm = method()
-isIsometricForm (Matrix,Matrix) := Boolean => (A,B) -> (
+isIsomorphicForm = method()
+isIsomorphicForm (Matrix,Matrix) := Boolean => (A,B) -> (
     k1 := ring A;
     k2 := ring B;
     -- Ensure both base fields are supported
@@ -73,8 +65,8 @@ isIsometricForm (Matrix,Matrix) := Boolean => (A,B) -> (
     
     -- Over RR, diagonal forms of the same dimension are equivalent if and only if they have the same number of positive and negative entries
     else if (instance(k1,RealField) or instance(k2,RealField)) then (
-        diagA := congruenceDiagonalize A;
-        diagB := congruenceDiagonalize B;
+        diagA := diagonalizeViaCongruence A;
+        diagB := diagonalizeViaCongruence B;
         return ((numRows(A) == numRows(B)) and (countPosDiagEntries(diagA) == countPosDiagEntries(diagB)) and (countNegDiagEntries(diagA) == countNegDiagEntries(diagB)));
         )
     
@@ -82,9 +74,9 @@ isIsometricForm (Matrix,Matrix) := Boolean => (A,B) -> (
     -- Rational numbers
     -----------------------------------
     
-    -- Over QQ, if spaces have same dimension, then call isIsomorphicFormQ on their nondegenerate parts
+    -- Over QQ, if spaces have same dimension, then call isIsomorphicFormQQ on their nondegenerate parts
     else if ((k1 === QQ) and (k2 === QQ)) then (
-        return ((numRows(A) == numRows(B)) and (isIsomorphicFormQ(nondegeneratePartDiagonal(A),nondegeneratePartDiagonal(B))));
+        return ((numRows(A) == numRows(B)) and (isIsomorphicFormQQ(getNondegeneratePartDiagonal(A),getNondegeneratePartDiagonal(B))));
         )
     
     -----------------------------------
@@ -93,8 +85,15 @@ isIsometricForm (Matrix,Matrix) := Boolean => (A,B) -> (
     
     -- Over a finite field, diagonal forms over spaces of the same dimension are equivalent if and only if they have the same number of nonzero entries and the product of these nonzero entries is in the same square class
     else if (instance(k1, GaloisField) and instance(k2, GaloisField) and k1.char !=2 and k2.char != 2 and k1.order == k2.order) then (
-        return ((numRows(A) == numRows(B)) and (getRank(A) == getRank(B)) and (getLegendreBoolean(det(nondegeneratePartDiagonal(A))) == getLegendreBoolean(sub(det(nondegeneratePartDiagonal(B)),k1))));
+        return ((numRows(A) == numRows(B)) and (getRank(A) == getRank(B)) and (isGFSquare(det(getNondegeneratePartDiagonal(A))) == isGFSquare(sub(det(getNondegeneratePartDiagonal(B)),k1))));
         )
     -- If we get here, the base fields are not the same
     else error "Base fields are not the same"
+    )
+
+-- Input: Two Grothendieck-Witt classes alpha and beta, defined over CC, RR, QQ, or a finite field of characteristic not 2
+-- Output: Boolean that gives whether alpha and beta are the same Grothendieck-Witt class
+
+isIsomorphicForm (GrothendieckWittClass,GrothendieckWittClass) := Boolean => (alpha,beta) -> (
+    isIsomorphicForm(alpha.matrix,beta.matrix)
     )

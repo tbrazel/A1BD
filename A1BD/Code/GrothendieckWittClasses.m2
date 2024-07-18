@@ -7,8 +7,8 @@ GrothendieckWittClass.synonym = "Grothendieck Witt Class"
 -- Input: A matrix M representing a nondegenerate symmetric bilinear form over a field of characteristic not 2
 -- Output: The GrothendieckWittClass representing the symmetric bilinear form determined by M
 
-gwClass = method()
-gwClass Matrix := GrothendieckWittClass => M -> (
+makeGWClass = method()
+makeGWClass Matrix := GrothendieckWittClass => M -> (
    if isWellDefined M then (
         new GrothendieckWittClass from {
             symbol matrix => M,
@@ -16,7 +16,7 @@ gwClass Matrix := GrothendieckWittClass => M -> (
             }
         )
     else (
-        error "gwClass called on a matrix that does not represent a nondegenerate symmetric bilinear form over a field of characteristic not 2";
+        error "makeGWClass called on a matrix that does not represent a nondegenerate symmetric bilinear form over a field of characteristic not 2";
         )
     )
 
@@ -68,47 +68,47 @@ isWellDefined Matrix := Boolean => M -> (
 -- Input: A Grothendieck-Witt class beta, the isomorphism class of a symmetric bilinear form
 -- Output: The base ring of beta
 
-baseField = method()
-baseField GrothendieckWittClass := Ring => beta -> (
+getBaseField = method()
+getBaseField GrothendieckWittClass := Ring => beta -> (
     ring(beta.matrix)
     )
 
 -- Input: Two Grothendieck-Witt classes beta and gamma
 -- Output: The direct sum of beta and gamma
 
-addGw = method()
-addGw (GrothendieckWittClass, GrothendieckWittClass) := GrothendieckWittClass => (beta, gamma) -> (
-    Kb := baseField beta;
-    Kg := baseField gamma;
+addGW = method()
+addGW (GrothendieckWittClass, GrothendieckWittClass) := GrothendieckWittClass => (beta, gamma) -> (
+    Kb := getBaseField beta;
+    Kg := getBaseField gamma;
     
     -- Galois field case
     if instance(Kb, GaloisField) and instance(Kg, GaloisField) then (
 	-- Return an error if the underlying fields of the two classes are different
 	if not Kb.order == Kg.order  then error "these classes have different underlying fields";
-	return gwClass(beta.matrix ++ substitute(gamma.matrix,Kb));
+	return makeGWClass(beta.matrix ++ substitute(gamma.matrix,Kb));
 	);
     
     -- Remaining cases
     if not Kb === Kg then error "these classes have different underlying fields";
-    gwClass(beta.matrix ++ gamma.matrix)
+    makeGWClass(beta.matrix ++ gamma.matrix)
     )
 
 -- Input: Two Grothendieck-Witt classes beta and gamma
 -- Output: The tensor product of beta and gamma
 
-gwMultiply = method()
-gwMultiply (GrothendieckWittClass, GrothendieckWittClass) := GrothendieckWittClass => (beta, gamma) -> (
-    Kb := baseField beta;
-    Kg := baseField gamma;
+multiplyGW = method()
+multiplyGW (GrothendieckWittClass, GrothendieckWittClass) := GrothendieckWittClass => (beta, gamma) -> (
+    Kb := getBaseField beta;
+    Kg := getBaseField gamma;
     
     -- Galois field case
     if instance(Kb, GaloisField) and instance(Kg, GaloisField) then (
 	-- Return an error if the underlying fields of the two classes are different
 	if not Kb.order == Kg.order  then error "these classes have different underlying fields";
-	return gwClass(beta.matrix ** substitute(gamma.matrix,Kb));
+	return makeGWClass(beta.matrix ** substitute(gamma.matrix,Kb));
 	);
     
     -- Remaining cases
     if not Kb === Kg then error "these classes have different underlying fields";
-    gwClass(beta.matrix ** gamma.matrix)
+    makeGWClass(beta.matrix ** gamma.matrix)
     )

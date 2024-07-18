@@ -51,14 +51,14 @@ export{
     "getPadicValuation",
     
     --MatrixMethods.m2
-    "congruenceDiagonalize",
+    "diagonalizeViaCongruence",
     
     --GrothendieckWittClasses.m2    
     "GrothendieckWittClass",
-    "baseField",
-    "gwClass",
-    "addGw",
-    "gwMultiply",
+    "getBaseField",
+    "makeGWClass",
+    "addGW",
+    "multiplyGW",
     
     --BuildingForms.m2
     "makeDiagonalForm",
@@ -69,23 +69,23 @@ export{
     "diagonalClass",
     "diagonalEntries",
     
-    --HilbertSymbols.m2
-    "HilbertSymbol",
-    "HilbertSymbolReal",
+    --getHilbertSymbols.m2
+    "getHilbertSymbol",
+    "getHilbertSymbolReal",
     
     --GWInvariants.m2
     "getSignature",
     "getRank",
     "integralDiscriminant",
-    "relevantPrimes",
-    "HasseWittInvariant",
+    "getRelevantPrimes",
+    "getHasseWittInvariant",
 
     --LocalGlobalDegrees.m2
-    "globalA1Degree",
-    "localA1Degree",
+    "getGlobalA1Degree",
+    "getLocalA1Degree",
     
     --IsomorphismOfForms.m2
-    "gwIsomorphic",
+    "isIsomorphicForm",
     
     --Isotropy.m2
     "isIsotropic",
@@ -150,8 +150,8 @@ beginDocumentation()
 document{
     Key => A1BD,
     Headline => "for working with A1-Brouwer degree computations",
-    PARA{"This package is intended computing and manipulating ", TO2(localA1Degree,"local"), " and ", TO2(globalA1Degree,"global"), " ", TEX///$\mathbb{A}^1$///, EM "-Brouwer degrees."," Global Brouwer degrees are non-degenerate symmetric bilinear forms valued in the Grothendieck-Witt ring of a field ", TEX///$\text{GW}(k)$///, "."},
-    PARA{"In order to simplify the forms produced, this package produces invariants of symmetric bilinear forms, including their ", TO2(getWittIndex,"Witt indices"), ", their ", TO2(integralDiscriminant,"discriminants"), ", and their ", TO2(HasseWittInvariant, "Hasse Witt invariants"), ". Quadratic forms can furthermore be ", TO2(getSumDecomposition,"decomposed"), " into their isotropic and ", TO2(getAnisotropicPart,"anisotropic parts"), ". Finally, and perhaps most crucially, we can certify whether two symmetric bilinear forms are ", TO2(gwIsomorphic,"isomorphic") , " in the Grothendieck-Witt ring."},
+    PARA{"This package is intended computing and manipulating ", TO2(getLocalA1Degree,"local"), " and ", TO2(getGlobalA1Degree,"global"), " ", TEX///$\mathbb{A}^1$///, EM "-Brouwer degrees."," Global Brouwer degrees are non-degenerate symmetric bilinear forms valued in the Grothendieck-Witt ring of a field ", TEX///$\text{GW}(k)$///, "."},
+    PARA{"In order to simplify the forms produced, this package produces invariants of symmetric bilinear forms, including their ", TO2(getWittIndex,"Witt indices"), ", their ", TO2(integralDiscriminant,"discriminants"), ", and their ", TO2(getHasseWittInvariant, "Hasse Witt invariants"), ". Quadratic forms can furthermore be ", TO2(getSumDecomposition,"decomposed"), " into their isotropic and ", TO2(getAnisotropicPart,"anisotropic parts"), ". Finally, and perhaps most crucially, we can certify whether two symmetric bilinear forms are ", TO2(isIsomorphicForm,"isomorphic") , " in the Grothendieck-Witt ring."},
     }
 
 undocumented {
@@ -193,7 +193,7 @@ load "./A1BD/Documentation/DecompositionDoc.m2"
 TEST ///
 print("diagonal form testing");
 M1=matrix(RR, {{0, 1}, {1, 0}});
-G1=gwClass(M1);
+G1=makeGWClass(M1);
 M2=diagonalClass(G1);
 assert(M2.matrix===matrix(RR, {{1, 0}, {0, -1}}));
 ///
@@ -201,7 +201,7 @@ assert(M2.matrix===matrix(RR, {{1, 0}, {0, -1}}));
 -- Test 1
 TEST ///
 M3=matrix(CC, {{1, 2, 3}, {2, 4, 5}, {3, 5, 7}});
-G2=gwClass(M3);
+G2=makeGWClass(M3);
 M4=diagonalClass(G2);
 assert(M4.matrix===matrix(CC, {{1, 0, 0}, {0, 1, 0}, {0, 0, 1}}));
 ///
@@ -209,7 +209,7 @@ assert(M4.matrix===matrix(CC, {{1, 0, 0}, {0, 1, 0}, {0, 0, 1}}));
 --Test 2
 TEST ///
 M3=matrix(QQ, {{1, 2, 3}, {2, 4, 5}, {3, 5, 7}});
-G2=gwClass(M3);
+G2=makeGWClass(M3);
 M4=diagonalClass(G2);
 assert(M4.matrix===matrix(QQ,{{1, 0, 0}, {0, -2, 0}, {0, 0, 2}}));
 ///
@@ -219,13 +219,13 @@ assert(M4.matrix===matrix(QQ,{{1, 0, 0}, {0, -2, 0}, {0, 0, 2}}));
 TEST ///
 M = matrix(QQ,{{1,0},{0,1}});
 N = matrix(QQ, {{1, 2}, {2, 5}});
-beta = gwClass(M);
-gamma = gwClass(N);
-assert(baseField(beta) === QQ)
+beta = makeGWClass(M);
+gamma = makeGWClass(N);
+assert(getBaseField(beta) === QQ)
 assert(beta.matrix === M)
 --Operations within GW-classes
-A = addGw(beta, gamma);
-B = gwMultiply(beta, gamma);
+A = addGW(beta, gamma);
+B = multiplyGW(beta, gamma);
 assert(A.matrix === matrix(QQ, {{1, 0, 0, 0}, {0, 1, 0, 0}, {0, 0, 1, 2}, {0, 0, 2, 5}}));
 assert(B.matrix === matrix(QQ, {{1, 2, 0, 0}, {2, 5, 0, 0}, {0, 0, 1, 2}, {0, 0, 2, 5}}));
 ///
@@ -236,40 +236,40 @@ assert(B.matrix === matrix(QQ, {{1, 2, 0, 0}, {2, 5, 0, 0}, {0, 0, 1, 2}, {0, 0,
 TEST ///
 T1 = QQ[x]
 f = {x^2}
-beta = globalA1Degree(f)
-gamma = gwClass(matrix(QQ,{{0,1},{1,0}}))
-assert(gwIsomorphic(beta,gamma))
+beta = getGlobalA1Degree(f)
+gamma = makeGWClass(matrix(QQ,{{0,1},{1,0}}))
+assert(isIsomorphicForm(beta,gamma))
 ///
 
 -- Test 5
 TEST ///
 T1 = QQ[z_1..z_2];
 f1 = {(z_1-1)*z_1*z_2, (3/5)*z_1^2 - (17/3)*z_2^2};
-f1GD = globalA1Degree(f1);
+f1GD = getGlobalA1Degree(f1);
 assert(getWittIndex(f1GD) == 3);
 q=ideal {z_1,z_2};
 r=ideal {z_1-1,z_2^2-(9/85)};
-f1LDq= localA1Degree(f1,q);
-f1LDr= localA1Degree(f1,r);
-f1LDsum = addGw(f1LDq, f1LDr);
-assert(gwIsomorphic(f1LDsum, f1GD));
+f1LDq= getLocalA1Degree(f1,q);
+f1LDr= getLocalA1Degree(f1,r);
+f1LDsum = addGW(f1LDq, f1LDr);
+assert(isIsomorphicForm(f1LDsum, f1GD));
 ///
 
 -- Test 6
 TEST ///
 T2 = GF(17)[w];
 f2 = {w^4 + w^3 - w^2 - w};
-f2GD= globalA1Degree(f2);
+f2GD= getGlobalA1Degree(f2);
 assert(getWittIndex(f2GD) == 2);
 p=ideal {w+1};
-f2LDp = localA1Degree(f2, p);
+f2LDp = getLocalA1Degree(f2, p);
 assert(getWittIndex(f2LDp) == 1);
 s=ideal{w-1};
-f2LDs = localA1Degree(f2, s);
+f2LDs = getLocalA1Degree(f2, s);
 t=ideal{w};
-f2LDt = localA1Degree(f2, t);
-f2LDsum = addGw(addGw(f2LDp, f2LDs),f2LDt);
-assert(gwIsomorphic(f2LDsum, f2GD));
+f2LDt = getLocalA1Degree(f2, t);
+f2LDsum = addGW(addGW(f2LDp, f2LDs),f2LDt);
+assert(isIsomorphicForm(f2LDsum, f2GD));
 ///
 
 -- Testing for building forms
@@ -277,16 +277,16 @@ assert(gwIsomorphic(f2LDsum, f2GD));
 TEST ///
 twoH = makeHyperbolicForm(GF(17),4);
 P = makePfisterForm(GF(17),(2,3));
-assert(gwIsomorphic(P,twoH));
+assert(isIsomorphicForm(P,twoH));
 ///
 
 -- Test 8
 TEST ///
 H = makeHyperbolicForm(RR);
 A = makeDiagonalForm(RR,(1,-1));
-B = gwClass(matrix(RR,{{0,1},{1,0}}));
-assert(gwIsomorphic(H,A));
-assert(gwIsomorphic(H,B));
+B = makeGWClass(matrix(RR,{{0,1},{1,0}}));
+assert(isIsomorphicForm(H,A));
+assert(isIsomorphicForm(H,B));
 ///
 
 -- Test for local algebra basis
@@ -303,7 +303,7 @@ assert(getLocalAlgebraBasis(f,p) == {1,x});
 TEST ///
 M1 = matrix(CC,{{1,0,0},{0,2,0},{0,0,-3}});
 M2 = matrix(CC,{{1,0,0},{0,1,0},{0,0,1}});
-G = gwClass(M1);
+G = makeGWClass(M1);
 assert((diagonalClass(G)).matrix == M2);
 assert(diagonalEntries(G) == {1,2,-3});
 
@@ -313,7 +313,7 @@ assert(diagonalEntries(G) == {1,2,-3});
 TEST ///
 M1 = matrix(RR,{{1,0,0},{0,2,0},{0,0,-3}});
 M2 = matrix(RR,{{1,0,0},{0,1,0},{0,0,-1}});
-G = gwClass(M1);
+G = makeGWClass(M1);
 assert((diagonalClass(G)).matrix == M2);
 assert(diagonalEntries(G) == {1,2,-3});
 ///
@@ -321,7 +321,7 @@ assert(diagonalEntries(G) == {1,2,-3});
 -- Test 12
 TEST ///
 M = matrix(QQ,{{1,0,0},{0,2,0},{0,0,-3}});
-G = gwClass(M);
+G = makeGWClass(M);
 assert((diagonalClass(G)).matrix == M);
 assert(diagonalEntries(G) == {1,2,-3})
 ///
@@ -329,7 +329,7 @@ assert(diagonalEntries(G) == {1,2,-3})
 -- Test 13
 TEST ///
 M = matrix(GF(5),{{1,0,0},{0,2,0},{0,0,-3}});
-G = gwClass(M);
+G = makeGWClass(M);
 assert((diagonalClass(G)).matrix == M);
 assert(diagonalEntries(G) == {1,2,-3});
 ///
@@ -339,7 +339,7 @@ TEST ///
 kk = GF(7);
 M1 = matrix(kk,{{1,0,0},{0,2,0},{0,0,-3}});
 M2 = matrix(kk,{{1,0,0},{0,1,0},{0,0,1}});
-G = gwClass(M1);
+G = makeGWClass(M1);
 assert((diagonalClass(G)).matrix == M2);
 assert(diagonalEntries(G) == {1,2,-3});
 ///
@@ -348,7 +348,7 @@ assert(diagonalEntries(G) == {1,2,-3});
 TEST ///
 M1 = matrix(QQ,{{18,0,0},{0,125/9,0},{0,0,-8/75}});
 M2 = matrix(QQ,{{2,0,0},{0,5,0},{0,0,-6}});
-G1 = gwClass(M1);
+G1 = makeGWClass(M1);
 assert((diagonalClass(G1)).matrix == M2);
 ///
 
@@ -359,62 +359,62 @@ TEST ///
 assert(getPadicValuation(27,3) == 3);
 ///
 
--- Test for congruenceDiagonalize
+-- Test for diagonalizeViaCongruence
 -- Test 17
 TEST ///
 B=matrix(QQ,{{0/1,1},{1,0}});
-eta = gwClass(B)
+eta = makeGWClass(B)
 assert(getWittIndex(eta) == 1);
 
 P=matrix(QQ,{{0/1, 5,1},{2,2,1},{0,0,1}});
 A=matrix(QQ,{{1/1,0,0},{0,-1,0},{0,0,1}});
-assert(getWittIndex(gwClass(congruenceDiagonalize(P*A*transpose(P)))) == 1);
+assert(getWittIndex(makeGWClass(diagonalizeViaCongruence(P*A*transpose(P)))) == 1);
 ///
 
 
--- Test for gwClass
+-- Test for makeGWClass
 -- Test 18
 TEST ///
 M1 = matrix(QQ,{{1/1,0,0},{0,1,0},{0,0,1}});
 M2 = matrix(QQ,{{1/1,24/10,0},{24/10,-5,0},{0,0,69}});
 M3 = matrix(GF(7),{{1,0,0},{0,2,0},{0,0,-3}});
-assert(class(gwClass(M1)) === GrothendieckWittClass);
-assert(class(gwClass(M2)) === GrothendieckWittClass);
-assert(class(gwClass(M3)) === GrothendieckWittClass);
+assert(class(makeGWClass(M1)) === GrothendieckWittClass);
+assert(class(makeGWClass(M2)) === GrothendieckWittClass);
+assert(class(makeGWClass(M3)) === GrothendieckWittClass);
 ///
 
--- Test for baseField
+-- Test for getBaseField
 -- Test 19
 TEST ///
-M = gwClass(matrix(QQ,{{1/1,0,0},{0,2,3},{0,3,1}}));
-M1 = gwClass(matrix(RR,{{1.0,24/10,-2.41},{24/10,-5,0},{-2.41,0,69}}));
-M2 = gwClass(matrix(CC,{{1*ii,24/10,-2.41},{24/10,-5,0},{-2.41,0,69+ii}}));
-M3 = gwClass(matrix(GF(7),{{1,0,0},{0,2,0},{0,0,-3}}));
+M = makeGWClass(matrix(QQ,{{1/1,0,0},{0,2,3},{0,3,1}}));
+M1 = makeGWClass(matrix(RR,{{1.0,24/10,-2.41},{24/10,-5,0},{-2.41,0,69}}));
+M2 = makeGWClass(matrix(CC,{{1*ii,24/10,-2.41},{24/10,-5,0},{-2.41,0,69+ii}}));
+M3 = makeGWClass(matrix(GF(7),{{1,0,0},{0,2,0},{0,0,-3}}));
 
-assert(baseField(M) === QQ);
-assert(baseField(M1) === RR_53);
-assert(baseField(M2) === CC_53);
-assert(toString(baseField(M3)) === toString(GF(7)));
+assert(getBaseField(M) === QQ);
+assert(getBaseField(M1) === RR_53);
+assert(getBaseField(M2) === CC_53);
+assert(toString(getBaseField(M3)) === toString(GF(7)));
 ///
 
 -- Test for gwAdd
 -- Test 20
 TEST ///
-M1 = gwClass(matrix(QQ, {{1/1,0,-3},{0,23,0},{-3,0,-2/5}}));
-M2 = gwClass(matrix(QQ, {{0,1/2,0},{1/2,5/9,0},{0,0,1}}));
-M3 = gwClass(matrix(QQ, {{1/1,0,-3,0,0,0},{0,23,0,0,0,0},{-3,0,-2/5,0,0,0},{0,0,0,0,1/2,0},{0,0,0,1/2,5/9,0},{0,0,0,0,0,1}}))
+M1 = makeGWClass(matrix(QQ, {{1/1,0,-3},{0,23,0},{-3,0,-2/5}}));
+M2 = makeGWClass(matrix(QQ, {{0,1/2,0},{1/2,5/9,0},{0,0,1}}));
+M3 = makeGWClass(matrix(QQ, {{1/1,0,-3,0,0,0},{0,23,0,0,0,0},{-3,0,-2/5,0,0,0},{0,0,0,0,1/2,0},{0,0,0,1/2,5/9,0},{0,0,0,0,0,1}}))
 
-G1 = gwClass(matrix(RR, {{sqrt(2),0,-3},{0,sqrt(5),0},{-3,0,-1/5}}));
-G2 = gwClass(matrix(RR, {{1/3}}));
-G3 = gwClass(matrix(RR, {{sqrt(2),0,-3,0},{0,sqrt(5),0,0},{-3,0,-1/5,0},{0,0,0,1/3}}));
+G1 = makeGWClass(matrix(RR, {{sqrt(2),0,-3},{0,sqrt(5),0},{-3,0,-1/5}}));
+G2 = makeGWClass(matrix(RR, {{1/3}}));
+G3 = makeGWClass(matrix(RR, {{sqrt(2),0,-3,0},{0,sqrt(5),0,0},{-3,0,-1/5,0},{0,0,0,1/3}}));
 
-H1 = gwClass(matrix(CC, {{2*ii,0,0},{0,-2,0},{0,0,-3}}));
-H2 = gwClass(matrix(CC, {{1,0,-3+ii,0},{0,-2,0,0},{-3+ii,0,-3,0},{0,0,0,5}}));
-H3 = gwClass(matrix(CC, {{2*ii,0,0,0,0,0,0},{0,-2,0,0,0,0,0},{0,0,-3,0,0,0,0},{0,0,0,1,0,-3+ii,0},{0,0,0,0,-2,0,0},{0,0,0,-3+ii,0,-3,0},{0,0,0,0,0,0,5}}));
+H1 = makeGWClass(matrix(CC, {{2*ii,0,0},{0,-2,0},{0,0,-3}}));
+H2 = makeGWClass(matrix(CC, {{1,0,-3+ii,0},{0,-2,0,0},{-3+ii,0,-3,0},{0,0,0,5}}));
+H3 = makeGWClass(matrix(CC, {{2*ii,0,0,0,0,0,0},{0,-2,0,0,0,0,0},{0,0,-3,0,0,0,0},{0,0,0,1,0,-3+ii,0},{0,0,0,0,-2,0,0},{0,0,0,-3+ii,0,-3,0},{0,0,0,0,0,0,5}}));
 
-assert(addGw(M1,M2) === M3);
-assert(addGw(G1,G2) === G3);
-assert(addGw(H1,H2) === H3);
+assert(addGW(M1,M2) === M3);
+assert(addGW(G1,G2) === G3);
+assert(addGW(H1,H2) === H3);
 ///
 
 -- Test for isIsotropic/isAnisotropic
@@ -422,15 +422,15 @@ assert(addGw(H1,H2) === H3);
 TEST ///
 A1=matrix(QQ, {{0, 1/1},{1/1, 0}});
 assert(isIsotropic(A1)===true);
-assert(isAnisotropic(gwClass(A1))===false);
+assert(isAnisotropic(makeGWClass(A1))===false);
 
 A2=matrix(RR, {{1, -2, 4}, {-2, 2, 0}, {4, 0, -7}});
 assert(isAnisotropic(A2)===false);
-assert(isIsotropic(gwClass(A2))===true);
+assert(isIsotropic(makeGWClass(A2))===true);
 
 K=GF(13^4);
 A3=matrix(K, {{7, 81, 63}, {81, 7, 55}, {63, 55, 109}});
-assert(isIsotropic(gwClass(A3))===true);
+assert(isIsotropic(makeGWClass(A3))===true);
 --Isotropic by the Chevalley-Warning Theorem.
 
 A4=matrix(QQ, {{5, 0}, {0, 5}});
@@ -440,42 +440,42 @@ A5=matrix(CC, {{3+ii, 0}, {0, 5-ii}});
 assert(isAnisotropic(A5)===false);
 ///
 
---Test for isIsomorphicFormQ
+--Test for isIsomorphicFormQQ
 -- Test 22
 TEST ///
 B1=matrix(QQ, {{1/1, -2/1, 4/1}, {-2/1, 2/1, 0}, {4/1, 0, -7/1}});
 B2=matrix(QQ, {{-17198/4225, -166126/975, -71771/1560}, {-166126/975, -27758641/4050, -251077/135}, {-71771/1560, -251077/135, -290407/576}});
-assert(gwIsomorphic(gwClass(B1), gwClass(B2))===true);
+assert(isIsomorphicForm(makeGWClass(B1), makeGWClass(B2))===true);
 B3=matrix(QQ, {{-38/1, -50/1, 23/1}, {-50/1, -62/1, 41/1}, {23/1, 41/1, 29/1}});
-assert(gwIsomorphic(gwClass(B1), gwClass(B3))===true);
+assert(isIsomorphicForm(makeGWClass(B1), makeGWClass(B3))===true);
 ///
 
 
---Test for gwIsomorphic
+--Test for isIsomorphicForm
 --Test 23
 
 TEST ///
 D1=matrix(QQ, {{1/1, -2/1, 4/1}, {-2/1, 2/1, 0}, {4/1, 0, -7/1}});
 D2=matrix(QQ, {{-38/1, -50/1, 23/1}, {-50/1, -62/1, 41/1}, {23/1, 41/1, 29/1}});
-assert(gwIsomorphic(gwClass(D1), gwClass(D2))===true);
+assert(isIsomorphicForm(makeGWClass(D1), makeGWClass(D2))===true);
 
 C1=matrix(RR, {{1/1, -2/1, 4/1}, {-2/1, 2/1, 0}, {4/1, 0, -7/1}});
 C2=matrix(RR, {{-38/1, -50/1, 23/1}, {-50/1, -62/1, 41/1}, {23/1, 41/1, 29/1}});
-assert(gwIsomorphic(gwClass(C1), gwClass(C2))===true);
+assert(isIsomorphicForm(makeGWClass(C1), makeGWClass(C2))===true);
 
 M=GF(13^1)
 C3=matrix(M, {{1, 11, 4}, {11, 2, 0}, {4, 0, 6}});
 C4=matrix(M, {{1, 2, 10}, {2, 3, 2}, {10, 2, 3}});
-assert(gwIsomorphic(gwClass(C3), gwClass(C4))===true);
+assert(isIsomorphicForm(makeGWClass(C3), makeGWClass(C4))===true);
 ///
 
 -- Test for GWinvariants
 -- Test 24
 TEST ///
-M1 = gwClass(matrix(QQ, {{1/1,0,-3},{0,23,0},{-3,0,-2/5}}));
-M2 = gwClass(matrix(QQ, {{1/1,0,0},{0, 23,0},{0,0,-2/5}}));
-M3 = gwClass(matrix(QQ, {{1/1,0,0},{0,-23,0},{0,0,-2/5}}));
-M4 = gwClass(matrix(QQ, {{-1/1,0,0},{0,-23,0},{0,0,-2/5}}));
+M1 = makeGWClass(matrix(QQ, {{1/1,0,-3},{0,23,0},{-3,0,-2/5}}));
+M2 = makeGWClass(matrix(QQ, {{1/1,0,0},{0, 23,0},{0,0,-2/5}}));
+M3 = makeGWClass(matrix(QQ, {{1/1,0,0},{0,-23,0},{0,0,-2/5}}));
+M4 = makeGWClass(matrix(QQ, {{-1/1,0,0},{0,-23,0},{0,0,-2/5}}));
 
 assert(getSignature(M1) == 1);
 assert(getSignature(M2) == 1);
@@ -483,34 +483,34 @@ assert(getSignature(M3) == -1);
 assert(getSignature(M4) == -3);
 
 assert(integralDiscriminant(M1)==-5405);
-assert(relevantPrimes(M1) == {23, 5, 47} );
-assert(HasseWittInvariant(M1, 5) == -1);
-assert(HasseWittInvariant(M1, 23) == 1);
-assert(HasseWittInvariant(M1, 47) == -1);
+assert(getRelevantPrimes(M1) == {23, 5, 47} );
+assert(getHasseWittInvariant(M1, 5) == -1);
+assert(getHasseWittInvariant(M1, 23) == 1);
+assert(getHasseWittInvariant(M1, 47) == -1);
 ///
 
 -- Test for hilbertSymbols
 -- Test 25
 TEST ///
-a = HilbertSymbol(100, 7, 3);
+a = getHilbertSymbol(100, 7, 3);
 assert(a==1);
 
-b = HilbertSymbol(100/121, 7/169, 3);
+b = getHilbertSymbol(100/121, 7/169, 3);
 assert(b==1);
 
-assert(HilbertSymbol(5, 1/9, 7)==1);
-assert(HilbertSymbol(1/9, 5, 7)==1);
+assert(getHilbertSymbol(5, 1/9, 7)==1);
+assert(getHilbertSymbol(1/9, 5, 7)==1);
 
-assert(HilbertSymbol(3, 11, 3)==-1);
-assert(HilbertSymbol(3, 11, 2)==-1);
-assert(HilbertSymbol(-3, -11, 2)==1);
-assert(HilbertSymbol(-5, 11, 2) == -1);
+assert(getHilbertSymbol(3, 11, 3)==-1);
+assert(getHilbertSymbol(3, 11, 2)==-1);
+assert(getHilbertSymbol(-3, -11, 2)==1);
+assert(getHilbertSymbol(-5, 11, 2) == -1);
 
 
-assert(HilbertSymbolReal(-3/1, 5)==1);
-assert(HilbertSymbolReal(-3, -5/1)==-1);
-assert(HilbertSymbolReal(-3/1, -5)==-1);
-assert(HilbertSymbolReal(3, 5)==1);
+assert(getHilbertSymbolReal(-3/1, 5)==1);
+assert(getHilbertSymbolReal(-3, -5/1)==-1);
+assert(getHilbertSymbolReal(-3/1, -5)==-1);
+assert(getHilbertSymbolReal(3, 5)==1);
 ///
 
 

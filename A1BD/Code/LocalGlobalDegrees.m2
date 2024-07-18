@@ -5,8 +5,8 @@
 -- Input: A list f = {f_1, f_2, ..., f_n} of polynomials giving a map kk^n -> kk^n
 -- Output: The Grothendieck-Witt class deg^(A^1)(f)
 
-globalA1Degree = method()
-globalA1Degree List := GrothendieckWittClass => Endo -> (
+getGlobalA1Degree = method()
+getGlobalA1Degree List := GrothendieckWittClass => Endo -> (
     -- Endo is the list {f_1, f_2, ..., f_n} of polynomials giving a map kk^n -> kk^n
     -- n is the number of polynomials
     n := #Endo;
@@ -29,11 +29,11 @@ globalA1Degree List := GrothendieckWittClass => Endo -> (
     -- If the field is CC, output the Grothendieck-Witt class of an identity matrix of the appropriate rank
     if instance(kk,ComplexField) then (
     	rankAlgebra := getGlobalAlgebraRank Endo;
-    	return gwClass id_(CC^rankAlgebra);
+    	return makeGWClass id_(CC^rankAlgebra);
         );
     
     -- If the field is RR, ask the user to run the computation over QQ instead and then base chnage to RR
-    if instance(kk,RealField) then error "globalA1Degree method does not work over the reals. Instead, define the polynomials over QQ to output a GrothendieckWittClass. Then extract the matrix, base change it to RR, and run getSumDecomposition().";    
+    if instance(kk,RealField) then error "getGlobalA1Degree method does not work over the reals. Instead, define the polynomials over QQ to output a GrothendieckWittClass. Then extract the matrix, base change it to RR, and run getSumDecomposition().";    
     
     -- Create internal rings/matrices
     
@@ -124,7 +124,7 @@ globalA1Degree List := GrothendieckWittClass => Endo -> (
             B_(i,j) = phi0(coefficient((sBXProm_(0,i)**sBYProm_(0,j))_(0,0), bezDetRed));
             );
         );
-    gwClass matrix(B)
+    makeGWClass matrix(B)
     )
 
 ---------
@@ -134,8 +134,8 @@ globalA1Degree List := GrothendieckWittClass => Endo -> (
 -- Input: A list f = {f_1, f_2, ..., f_n} of polynomials giving a map kk^n -> kk^n and a prime ideal in the zero locus V(f)
 -- Output: The Grothendieck-Witt class deg^(A^1)_p (f)
 
-localA1Degree = method()
-localA1Degree (List, Ideal) := GrothendieckWittClass => (Endo,p) -> (
+getLocalA1Degree = method()
+getLocalA1Degree (List, Ideal) := GrothendieckWittClass => (Endo,p) -> (
     -- Endo is the list {f_1, f_2, ..., f_n} of polynomials giving a map kk^n -> kk^n
     -- n is the number of polynomials
     n := #Endo;
@@ -163,11 +163,11 @@ localA1Degree (List, Ideal) := GrothendieckWittClass => (Endo,p) -> (
 
     -- If the field is CC, output the Grothendieck-Witt class of an identity matrix of the appropriate rank
     if instance(kk,ComplexField) then (
-    	return gwClass id_(CC^localFormRank);
+    	return makeGWClass id_(CC^localFormRank);
         );
 
     -- If the field is RR, ask the user to run the computation over QQ instead and then base chnage to RR
-    if instance(kk,RealField) then error "localA1Degree method does not work over the reals. Instead, define the polynomials over QQ to output a GrothendieckWittClass. Then extract the matrix, base change it to RR, and run getSumDecomposition().";
+    if instance(kk,RealField) then error "getLocalA1Degree method does not work over the reals. Instead, define the polynomials over QQ to output a GrothendieckWittClass. Then extract the matrix, base change it to RR, and run getSumDecomposition().";
     
     -- Create internal rings/matrices
 
@@ -257,5 +257,5 @@ localA1Degree (List, Ideal) := GrothendieckWittClass => (Endo,p) -> (
             B_(i,j) = phi0(coefficient((sBXProm_i**sBYProm_j)_(0,0), bezDetRed));
             );
         );
-    gwClass matrix(B)
+    makeGWClass matrix(B)
     )

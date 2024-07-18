@@ -52,9 +52,9 @@ getPadicValuation (QQ, ZZ) := ZZ => (q, p) -> (
 -- Input: An element of a finite field
 -- Output: Boolean that gives whether the element is a square
 
-getLegendreBoolean = method()
-getLegendreBoolean RingElement := Boolean => a -> (
-    if not instance(ring(a),GaloisField) then error "getLegendreBoolean only works for Galois fields";
+isGFSquare = method()
+isGFSquare RingElement := Boolean => a -> (
+    if not instance(ring(a),GaloisField) then error "isGFSquare only works for Galois fields";
     q := (ring a).order;
     -- Detects if a is a square in F_q
     a^((q-1)//2) == 1 
@@ -72,7 +72,7 @@ getSquareSymbol (ZZ, ZZ) := ZZ => (a, p) -> (
     if even e1 then (
     	a1 := sub(a/(p^e1), ZZ);
 	a2 := sub(a1, R);
-	if getLegendreBoolean a2 then (
+	if isGFSquare a2 then (
 	    return 1;
 	    ) 
 	else (
@@ -103,7 +103,7 @@ isEqualUpToPadicSquare (ZZ, ZZ, ZZ) := Boolean => (a, b, p) -> (
     	    -- c1 will be an integer prime to p
 	    c1 := getSquarefreePart(a1*b1);
 	    x := getSymbol "x";
-	    return getLegendreBoolean(sub(c1, GF(p, Variable => x))); 
+	    return isGFSquare(sub(c1, GF(p, Variable => x))); 
 	    );
         )
     else (

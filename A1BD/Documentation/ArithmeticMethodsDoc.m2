@@ -20,9 +20,9 @@
     
     
 -- document{
---     Key => {(getLegendreBoolean, RingElement), getLegendreBoolean},
+--     Key => {(isGFSquare, RingElement), isGFSquare},
 --     Headline => "Basic Legendre symbol over a finite field",
---     Usage => "getLegendreBoolean(a)",
+--     Usage => "isGFSquare(a)",
 --     Inputs => {
 -- 	RingElement => "a" => {"Any element in a finite field ", TEX///$a\in \mathbb{F}_q$///, "."},
 -- 	},
@@ -32,9 +32,9 @@
 --     PARA{"Given an element of a finite field, will return a Boolean checking if it is a square."},
 --     EXAMPLE lines///
 --     a = sub(-1,GF(5));
---     getLegendreBoolean(a)
+--     isGFSquare(a)
 --     b = sub(-1,GF(7));
---     getLegendreBoolean(b)
+--     isGFSquare(b)
 --     ///,
 --     }
 
@@ -80,5 +80,5 @@ document {
 	
 	{"[S02] B. Sturmfels, ", EM "Solving Systems of Polynomial Equations,", " American Mathematical Society, 2002."},
 	},
-    SeeAlso => {"localA1Degree"}
+    SeeAlso => {"getLocalA1Degree"}
 }

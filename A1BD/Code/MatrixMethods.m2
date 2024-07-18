@@ -63,8 +63,8 @@ isDiagonal Matrix := Boolean => M -> (
 -- Input: A symmetric matrix over a field
 -- Output: A diagonal matrix congruent to the original matrix
 
-congruenceDiagonalize = method()
-congruenceDiagonalize Matrix := Matrix => AnonMut -> (
+diagonalizeViaCongruence = method()
+diagonalizeViaCongruence Matrix := Matrix => AnonMut -> (
     k := ring AnonMut;
     if not isField(k) then error "expected matrix entries from a field";
     if not isSquareAndSymmetric(AnonMut) then error "matrix is not symmetric";
@@ -114,15 +114,15 @@ congruenceDiagonalize Matrix := Matrix => AnonMut -> (
 -- Input: A symmetric matrix 
 -- Output: A diagonal matrix congruent to the original matrix, with squarefree entries on the diagonal
 
-congruenceDiagonalizeSimplify = method()
-congruenceDiagonalizeSimplify Matrix := Matrix => AnonMut -> (
+diagonalizeAndSimplifyViaCongruence = method()
+diagonalizeAndSimplifyViaCongruence Matrix := Matrix => AnonMut -> (
     k := ring AnonMut;
     if not (instance(k,ComplexField) or instance(k,RealField) or k === QQ or (instance(k, GaloisField) and k.char != 2)) then (
         error "Base field not supported; only implemented over QQ, RR, CC, and finite fields of characteristic not 2";
         );
     if not isSquareAndSymmetric(AnonMut) then error "matrix is not symmetric";
 
-    A := mutableMatrix congruenceDiagonalize(AnonMut);
+    A := mutableMatrix diagonalizeViaCongruence(AnonMut);
     n := numRows A;
 
     -- If the field is the complex numbers, replace each nonzero entry of the diagonalization by 1
@@ -158,9 +158,9 @@ congruenceDiagonalizeSimplify Matrix := Matrix => AnonMut -> (
         -- Initially let the nonsquare representative be -1
         nonSquareRep := sub(-1,k);
         -- If -1 is a square, then find another nonsquare representative
-        if getLegendreBoolean sub(-1,k) then (
+        if isGFSquare sub(-1,k) then (
 	    for i from 0 to (n-1) do (
-	        if (A_(i,i) != 0 and (not getLegendreBoolean(A_(i,i)))) then (
+	        if (A_(i,i) != 0 and (not isGFSquare(A_(i,i)))) then (
                     -- If there is a nonsquare on the diagonal, choose it as the nonsquare representative
 	     	    nonSquareRep = A_(i,i);
                     break;
@@ -168,10 +168,10 @@ congruenceDiagonalizeSimplify Matrix := Matrix => AnonMut -> (
                 );
 	    );
 	for i from 0 to (n-1) do (
-	    if (A_(i,i) != 0 and getLegendreBoolean(A_(i,i))) then (
+	    if (A_(i,i) != 0 and isGFSquare(A_(i,i))) then (
 		A_(i,i) = 1;
 		);
-	    if (A_(i,i) != 0 and not getLegendreBoolean(A_(i,i))) then (
+	    if (A_(i,i) != 0 and not isGFSquare(A_(i,i))) then (
 		A_(i,i) = nonSquareRep;
 		);
 	    );
@@ -182,9 +182,9 @@ congruenceDiagonalizeSimplify Matrix := Matrix => AnonMut -> (
 -- Input: A matrix representing a symmetric bilinear form
 -- Output: A diagonal matrix representing the nondegenerate part of the symmetric bilinear form
 
-nondegeneratePartDiagonal = method()
-nondegeneratePartDiagonal Matrix := Matrix => A -> (
-    diagA := congruenceDiagonalize A;
+getNondegeneratePartDiagonal = method()
+getNondegeneratePartDiagonal Matrix := Matrix => A -> (
+    diagA := diagonalizeViaCongruence A;
     i := 0;
     while (i < numRows(diagA)) do (
         if (diagA_(i,i) == 0) then (

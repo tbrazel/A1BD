@@ -5,15 +5,15 @@ document{
     PARA{"Given any basis ", TEX///$e_1,\ldots,e_n$///, " for ", TEX///$V$///, " as a ", TEX///$k$///, "-vector space, we can encode the symmetric bilinear form ", TEX///$\beta$///, " by how it acts on basis elements. That is, we can produce a matrix ", TEX///$\left(\beta(e_i,e_j)\right)_{i,j}$///, ". This is called a ", EM "Gram matrix", " for the symmetric bilinear form. A change of basis will produce a congruent Gram matrix, thus a matrix represents a symmetric bilinear form uniquely up to matrix congruence."},
 	
 	
-    PARA{"A GrothendieckWittClass object can be built from a symmetric ", TO2(matrix, "matrix"), " over a field using the ", TO2(gwClass,"gwClass"), " method."},
+    PARA{"A GrothendieckWittClass object can be built from a symmetric ", TO2(matrix, "matrix"), " over a field using the ", TO2(makeGWClass,"makeGWClass"), " method."},
     EXAMPLE lines///
-    beta = gwClass(matrix(QQ,{{0,1},{1,0}}))
+    beta = makeGWClass(matrix(QQ,{{0,1},{1,0}}))
     class beta
     ///,
-    PARA{"The underlying matrix representative of a form can be recovered via the ", TT "matrix", " command, and its underlying field can be recovered using ", TO2(baseField,"baseField"), "."},
+    PARA{"The underlying matrix representative of a form can be recovered via the ", TT "matrix", " command, and its underlying field can be recovered using ", TO2(getBaseField,"getBaseField"), "."},
     EXAMPLE lines///
     beta.matrix
-    baseField(beta)
+    getBaseField(beta)
     ///,
     PARA{"For computational purposes, it is often desirable to diagonalize a Gram matrix. Any symmetric bilinear form admits a diagonal Gram matrix representative by ", EM "Sylvester's law of inertia", ", and this is implemented via the ", TO2(diagonalClass, "diagonalClass"), " method."},
     EXAMPLE lines///
@@ -23,13 +23,13 @@ document{
     EXAMPLE lines///
     beta.cache.diagonalClass
     ///,
-    SeeAlso => {"gwClass","diagonalClass","baseField"},
+    SeeAlso => {"makeGWClass","diagonalClass","getBaseField"},
     }
 
 document {
-    Key => {gwClass, (gwClass, Matrix), (matrix, GrothendieckWittClass), (isWellDefined, Matrix)},
+    Key => {makeGWClass, (makeGWClass, Matrix), (matrix, GrothendieckWittClass), (isWellDefined, Matrix)},
 	Headline => "the Grothendieck Witt class of a symmetric matrix",
-	Usage => "gwClass(M)",
+	Usage => "makeGWClass(M)",
 	Inputs => {
 	    Matrix => "M" => {"a symmetric matrix defined over an arbitrary field"}
 	    },
@@ -40,24 +40,24 @@ document {
                 "This output has the representing matrix, ", TEX///$M$///, ", and the base field of the matrix stored in its CacheTable."},
 	EXAMPLE lines ///
 		 M := matrix(QQ,{{0,0,1},{0,1,0},{1,0,0}});
-		 beta = gwClass(M)
+		 beta = makeGWClass(M)
 	 	 ///,
 	PARA{"The matrix representing a ", TT "GrothendieckWittClass", " element can be recovered using the ", TT "matrix", " command:"},
 	EXAMPLE lines ///
 	    	beta.matrix
 		///,
-        PARA{"The base field which the form ", TEX///$\beta$///, " is implicitly defined over can be recovered with the ", TO2(baseField,"baseField"), " method."},
+        PARA{"The base field which the form ", TEX///$\beta$///, " is implicitly defined over can be recovered with the ", TO2(getBaseField,"getBaseField"), " method."},
 	EXAMPLE lines ///
-	    	baseField beta
+	    	getBaseField beta
 		///,
 		
-	SeeAlso => {"baseField","GrothendieckWittClass"}
+	SeeAlso => {"getBaseField","GrothendieckWittClass"}
         }
 
 document {
-    Key => {baseField, (baseField, GrothendieckWittClass)},
+    Key => {getBaseField, (getBaseField, GrothendieckWittClass)},
 	Headline => "the base field of a Grothendieck Witt class",
-	Usage => "baseField(beta)",
+	Usage => "getBaseField(beta)",
 	Inputs => {
 	    GrothendieckWittClass => "beta" => {"the isomorphism class of a symmetric bilinear form"}
 	    },
@@ -67,17 +67,17 @@ document {
 	PARA {"Given the isomorphism class of a symmetric bilinear form, ", TT "beta", 
                 ", this command outputs the base field of the form."},
 	EXAMPLE lines ///
-		 beta = gwClass(matrix(QQ,{{0,2},{2,0}}));
-		 baseField beta
+		 beta = makeGWClass(matrix(QQ,{{0,2},{2,0}}));
+		 getBaseField beta
 	 	 ///,
     SeeAlso => {"GrothendieckWittClass"}
         }
 
 
 document {
-    Key => {addGw, (addGw, GrothendieckWittClass, GrothendieckWittClass)},
+    Key => {addGW, (addGW, GrothendieckWittClass, GrothendieckWittClass)},
     Headline => "the direct sum of two Grothendieck-Witt classes",     
-    Usage => "addGw(beta, gamma)",
+    Usage => "addGW(beta, gamma)",
 	Inputs => {
 	    GrothendieckWittClass => "beta" => {"the isomorphism class of a non-degenerate symmetric bilinear form represented by a matrix ", TT "M"},
 	    GrothendieckWittClass => "gamma" => {"the isomorphism class of a non-degenerate symmetric bilinear form represented by a matrix ", TT "N"},
@@ -89,17 +89,17 @@ document {
 	EXAMPLE lines ///
 		 M = matrix(QQ,{{1,0},{0,1}});
 		 N = matrix(QQ, {{1, 2}, {2, 5}});
-		 beta = gwClass(M);
-		 gamma = gwClass(N);
-    	    	 addGw(beta, gamma)
+		 beta = makeGWClass(M);
+		 gamma = makeGWClass(N);
+    	    	 addGW(beta, gamma)
 	 	 ///,
-    SeeAlso => {"GrothendieckWittClass", "gwClass", "gwMultiply"}
+    SeeAlso => {"GrothendieckWittClass", "makeGWClass", "multiplyGW"}
 }
 
 document {
-    Key => {gwMultiply, (gwMultiply, GrothendieckWittClass, GrothendieckWittClass)},
+    Key => {multiplyGW, (multiplyGW, GrothendieckWittClass, GrothendieckWittClass)},
     Headline => "the tensor product of two Grothendieck-Witt classes",     
-	Usage => "gwMultiply(beta, gamma)",
+	Usage => "multiplyGW(beta, gamma)",
 	Inputs => {
 	    GrothendieckWittClass => "beta" => {"the isomorphism class of a non-degenerate symmetric bilinear form represented by a matrix ", TT "M"},
 	    GrothendieckWittClass => "gamma" => {"the isomorphism class of a non-degenerate symmetric bilinear form represented by a matrix ", TT "N"},
@@ -111,10 +111,10 @@ document {
 	EXAMPLE lines ///
     	    	 M = matrix(QQ,{{1,0},{0,1}});
 		 N = matrix(QQ, {{1, 2}, {2, 5}});
-		 beta = gwClass(M);
-		 gamma = gwClass(N);
-    	    	 gwMultiply(beta, gamma)
+		 beta = makeGWClass(M);
+		 gamma = makeGWClass(N);
+    	    	 multiplyGW(beta, gamma)
 	 	 ///,
-    SeeAlso => {"GrothendieckWittClass", "gwClass", "addGw"}
+    SeeAlso => {"GrothendieckWittClass", "makeGWClass", "addGW"}
 }
 

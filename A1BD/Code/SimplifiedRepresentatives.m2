@@ -11,11 +11,11 @@ diagonalClass GrothendieckWittClass := GrothendieckWittClass => beta -> (
     -- Check if the diagonalClass has already been computed; if so, recall it from the cache
     if beta.cache.?diagonalClass then return beta.cache.diagonalClass;
 
-    diagonalClassOfBetaMatrix := congruenceDiagonalizeSimplify(beta.matrix);
+    diagonalClassOfBetaMatrix := diagonalizeAndSimplifyViaCongruence(beta.matrix);
 
     -- The diagonal form gets cached in the GWClass type
-    beta.cache.diagonalClass = gwClass diagonalClassOfBetaMatrix;
-    gwClass diagonalClassOfBetaMatrix
+    beta.cache.diagonalClass = makeGWClass diagonalClassOfBetaMatrix;
+    makeGWClass diagonalClassOfBetaMatrix
     )
 
 -- Input: A Grothendieck-Witt class beta over QQ, RR, CC, or a finite field of characteristic not 2
@@ -24,7 +24,7 @@ diagonalClass GrothendieckWittClass := GrothendieckWittClass => beta -> (
 diagonalEntries = method()
 diagonalEntries GrothendieckWittClass := List => beta -> (
     
-    M := congruenceDiagonalize(beta.matrix);
+    M := diagonalizeViaCongruence(beta.matrix);
     n := numRows M;
     L := {};
     

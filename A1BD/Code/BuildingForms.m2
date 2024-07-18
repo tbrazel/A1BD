@@ -7,15 +7,15 @@
 
 makeDiagonalForm = method()
 makeDiagonalForm (Ring,RingElement) := GrothendieckWittClass => (kk,a) -> (
-    gwClass matrix(kk,{{sub(a,kk)}})
+    makeGWClass matrix(kk,{{sub(a,kk)}})
     )
 
 makeDiagonalForm (Ring,ZZ) := GrothendieckWittClass => (kk,a) -> (
-    gwClass matrix(kk,{{sub(a,kk)}})
+    makeGWClass matrix(kk,{{sub(a,kk)}})
     )
 
 makeDiagonalForm (Ring,QQ) := GrothendieckWittClass => (kk,a) -> (
-    gwClass matrix(kk,{{sub(a,kk)}})
+    makeGWClass matrix(kk,{{sub(a,kk)}})
     )
 
 makeDiagonalForm (Ring, Sequence) := GrothendieckWittClass => (kk,L) -> (
@@ -30,19 +30,19 @@ makeDiagonalForm (Ring, Sequence) := GrothendieckWittClass => (kk,L) -> (
 	);
     
     -- A is mutable so we take matrix(A) and form a Grothendieck-Witt class
-    gwClass matrix(A)
+    makeGWClass matrix(A)
     )
 
 makeDiagonalForm (InexactFieldFamily,RingElement) := GrothendieckWittClass => (kk,a) -> (
-    gwClass matrix(kk,{{sub(a,kk)}})
+    makeGWClass matrix(kk,{{sub(a,kk)}})
     )
 
 makeDiagonalForm (InexactFieldFamily,ZZ) := GrothendieckWittClass => (kk,a) -> (
-    gwClass matrix(kk,{{sub(a,kk)}})
+    makeGWClass matrix(kk,{{sub(a,kk)}})
     )
 
 makeDiagonalForm (InexactFieldFamily,QQ) := GrothendieckWittClass => (kk,a) -> (
-    gwClass matrix(kk,{{sub(a,kk)}})
+    makeGWClass matrix(kk,{{sub(a,kk)}})
     )
 
 makeDiagonalForm (InexactFieldFamily, Sequence) := GrothendieckWittClass => (kk,L) -> (
@@ -57,7 +57,7 @@ makeDiagonalForm (InexactFieldFamily, Sequence) := GrothendieckWittClass => (kk,
 	);
     
     -- A is mutable so we take matrix(A) and form a Grothendieck-Witt class
-    gwClass matrix(A)
+    makeGWClass matrix(A)
     )
 
 -- Input: A field kk and an optional even rank n (default is n = 2)
@@ -65,7 +65,7 @@ makeDiagonalForm (InexactFieldFamily, Sequence) := GrothendieckWittClass => (kk,
 
 makeHyperbolicForm = method()
 makeHyperbolicForm Ring := GrothendieckWittClass => kk -> (
-    gwClass matrix(kk,{{1,0},{0,-1}})
+    makeGWClass matrix(kk,{{1,0},{0,-1}})
     )
 
 makeHyperbolicForm (Ring,ZZ) := GrothendieckWittClass => (kk,n) -> (
@@ -76,11 +76,11 @@ makeHyperbolicForm (Ring,ZZ) := GrothendieckWittClass => (kk,n) -> (
     for i from 0 to m - 1 do (
         outputMatrix = outputMatrix ++ H;
         );
-    gwClass outputMatrix
+    makeGWClass outputMatrix
     )
 
 makeHyperbolicForm InexactFieldFamily := GrothendieckWittClass => kk -> (
-    gwClass matrix(kk,{{1,0},{0,-1}})
+    makeGWClass matrix(kk,{{1,0},{0,-1}})
     )
 
 makeHyperbolicForm (InexactFieldFamily,ZZ) := GrothendieckWittClass => (kk,n) -> (
@@ -91,7 +91,7 @@ makeHyperbolicForm (InexactFieldFamily,ZZ) := GrothendieckWittClass => (kk,n) ->
     for i from 0 to m - 1 do (
         outputMatrix = outputMatrix ++ H;
         );
-    gwClass outputMatrix
+    makeGWClass outputMatrix
     )
 
 -- Input: A field kk, and a list of elements a_1,...,a_n of kk
@@ -118,7 +118,7 @@ makePfisterForm (Ring,Sequence) := GrothendieckWittClass => (kk,L) -> (
     outputForm := makeDiagonalForm(kk,1);
     for i from 0 to (n-1) do (
 	ithPfister := makePfisterForm(kk,L_i);
-	outputForm = gwMultiply(outputForm,ithPfister);
+	outputForm = multiplyGW(outputForm,ithPfister);
 	);
     outputForm
     )
@@ -143,7 +143,7 @@ makePfisterForm (InexactFieldFamily,Sequence) := GrothendieckWittClass => (kk,L)
     outputForm := makeDiagonalForm(kk,1);
     for i from 0 to (n-1) do (
 	ithPfister := makePfisterForm(kk,L_i);
-	outputForm = gwMultiply(outputForm,ithPfister);
+	outputForm = multiplyGW(outputForm,ithPfister);
 	);
     outputForm
     )

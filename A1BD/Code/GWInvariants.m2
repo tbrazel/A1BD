@@ -28,7 +28,7 @@ countPosDiagEntries Matrix := Matrix => A -> (
         error "Only implemented over QQ and RR";
         );
     if not isDiagonal(A) then (
-        A = congruenceDiagonalize(A);
+        A = diagonalizeViaCongruence(A);
         );
     posDiagEntries := 0;
     for i from 0 to (numRows(A) - 1) do (
@@ -53,7 +53,7 @@ countNegDiagEntries Matrix := Matrix => A -> (
         error "Only implemented over QQ and RR";
         );
     if not isDiagonal(A) then (
-        A = congruenceDiagonalize A;
+        A = diagonalizeViaCongruence A;
         );
     negDiagEntries := 0;
     for i from 0 to (numRows(A) - 1) do (
@@ -97,7 +97,7 @@ getSignature GrothendieckWittClass := ZZ => beta -> (
 
 integralDiscriminant = method()
 integralDiscriminant GrothendieckWittClass := ZZ => beta -> (
-    kk := baseField beta;
+    kk := getBaseField beta;
     if not kk === QQ then error "GrothendieckWittClass is not over QQ";
 
     -- Return a squarefree integral representative of the product of diagonal entries of a diagonal representative of the form 
@@ -107,9 +107,9 @@ integralDiscriminant GrothendieckWittClass := ZZ => beta -> (
 -- Input: A Grothendieck-Witt class defined over QQ
 -- Output: The list of primes that divide entries of its diagonal representative
 
-relevantPrimes = method()
-relevantPrimes GrothendieckWittClass := List => beta -> (
-    kk := baseField beta;
+getRelevantPrimes = method()
+getRelevantPrimes GrothendieckWittClass := List => beta -> (
+    kk := getBaseField beta;
     if not kk === QQ then error "GrothendieckWittClass is not over QQ";
     
     -- Find the diagonal entries of a diagonal integral representative of the form
@@ -127,8 +127,8 @@ relevantPrimes GrothendieckWittClass := List => beta -> (
 -- or a Grothendieck-Witt class over QQ, and a prime number p
 -- Output: The Hasse-Witt invariant of the quadratic form or Grothendieck-Witt class over Q_p
 
-HasseWittInvariant = method()
-HasseWittInvariant (List, ZZ) := ZZ => (L,p) -> (
+getHasseWittInvariant = method()
+getHasseWittInvariant (List, ZZ) := ZZ => (L,p) -> (
     if not isPrime(p) then error "second argument must be a prime number";
 
     a := 1;
@@ -141,15 +141,15 @@ HasseWittInvariant (List, ZZ) := ZZ => (L,p) -> (
 	);
     for i from 0 to len - 2 do (
        	for j from i + 1 to len - 1 do (
-	    a = a * HilbertSymbol(f_i, f_j, p);
+	    a = a * getHilbertSymbol(f_i, f_j, p);
 	    );
 	);
     a
     )
 
-HasseWittInvariant(GrothendieckWittClass, ZZ) := ZZ => (beta,p) -> (
-    kk := baseField beta;
+getHasseWittInvariant(GrothendieckWittClass, ZZ) := ZZ => (beta,p) -> (
+    kk := getBaseField beta;
     if not (kk === QQ) then error "method is only implemented over the rationals";
-    HasseWittInvariant(diagonalEntries(beta),p)
+    getHasseWittInvariant(diagonalEntries(beta),p)
     )
 

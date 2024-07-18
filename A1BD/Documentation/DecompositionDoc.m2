@@ -12,13 +12,13 @@ document {
     PARA {"Given a symmetric bilinear form ", TT"beta", " over a field ", TEX///$k$///, ", we decompose it as a sum of some number of hyperbolic and rank one forms."},
     EXAMPLE lines ///
     M = matrix(RR,{{2.091,2.728,6.747},{2.728,7.329,6.257},{6.747,6.257,0.294}});
-    beta = gwClass(M);
+    beta = makeGWClass(M);
     getSumDecomposition(beta)
     ///,
     PARA {"Over ", TEX///$\mathbb{R}$///, " there are only two square classes and a form is determined uniquely by its rank and signature [L05, II Proposition 3.2]. A form defined by the ", TEX///$3\times 3$///, " Gram matrix ", TT"M", " above is isomorphic to the form ", TEX///$\langle 1,-1,1\rangle $///, "."},
     EXAMPLE lines ///
     M = matrix(GF(13),{{9,1,7,4},{1,10,3,2},{7,3,6,7},{4,2,7,5}});
-    beta = gwClass(M);
+    beta = makeGWClass(M);
     getSumDecomposition(beta)
     ///,
     PARA{EM "Citations:"},
@@ -43,13 +43,13 @@ document {
     PARA {"Given a symmetric bilinear form ", TT"beta", " over a field ", TEX///$k$///, ", we return a simplified diagonal form of ", TT"beta","."},
     EXAMPLE lines ///
     M = matrix(RR,{{2.091,2.728,6.747},{2.728,7.329,6.257},{6.747,6.257,0.294}});
-    beta = gwClass(M);
+    beta = makeGWClass(M);
     getSumDecompositionString(beta)
     ///,
     PARA {"Over ", TEX///$\mathbb{R}$///, " there are only two square classes and a form is determined uniquely by its rank and signature [L05, II Proposition 3.2]. A form defined by the ", TEX///$3\times 3$///, " Gram matrix ", TT"M", " above is isomorphic to the form ", TEX///$\langle 1,-1,1\rangle $///, "."},
     EXAMPLE lines ///
     M = matrix(GF(13),{{9,1,7,4},{1,10,3,2},{7,3,6,7},{4,2,7,5}});
-    beta = gwClass(M);
+    beta = makeGWClass(M);
     getSumDecompositionString(beta)
     ///,
     PARA {"Over ", TEX///$\mathbb{F}_{q}$///, " forms can similarly be diagonalized. In this case as ", TEX///$\langle 1,-1,1,-6 \rangle$///, "."},

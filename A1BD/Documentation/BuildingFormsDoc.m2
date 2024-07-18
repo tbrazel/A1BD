@@ -20,7 +20,7 @@ document {
 	makeDiagonalForm(GF(29),5/13)
 	makeDiagonalForm(RR,2)
 	///,
-    SeeAlso => {"diagonalClass", "congruenceDiagonalize", "diagonalEntries"}
+    SeeAlso => {"diagonalClass", "diagonalizeViaCongruence", "diagonalEntries"}
 }
 
 document {

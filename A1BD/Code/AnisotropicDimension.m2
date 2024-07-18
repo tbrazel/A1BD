@@ -28,8 +28,8 @@ isHyperbolicQQp (GrothendieckWittClass, ZZ) := Boolean => (beta, p) -> (
     -- At this stage, the rank and discriminant of our beta agrees with that of a hyperbolic form,
     -- so by e.g. Lam V.3.25 it suffices to check whether their Hasse-Witt invariants agree
     m := sub(getRankBeta/2,ZZ);
-    HasseWittHyperbolicForm := (HilbertSymbol(-1,-1,p))^(m*(m - 1)/2);
-    HasseWittBeta := HasseWittInvariant(beta,p);
+    HasseWittHyperbolicForm := (getHilbertSymbol(-1,-1,p))^(m*(m - 1)/2);
+    HasseWittBeta := getHasseWittInvariant(beta,p);
     HasseWittHyperbolicForm == HasseWittBeta
     )
 
@@ -60,7 +60,7 @@ getAnisotropicDimensionQQp (GrothendieckWittClass, ZZ) := ZZ => (beta, p) -> (
     
     if odd getRankBeta then (
 	c := (-1)^(getRankBeta*(getRankBeta+1)/2) * integralDiscriminant(beta);
-	gamma := addGw(beta, makeDiagonalForm(QQ,(c)));
+	gamma := addGW(beta, makeDiagonalForm(QQ,(c)));
 	if isHyperbolicQQp(gamma,p) then return 1;
 	return 3;
 	);
@@ -88,7 +88,7 @@ getAnisotropicDimensionQQ GrothendieckWittClass := ZZ => beta -> (
     ListOfLocalAnistropicDimensions = append(ListOfLocalAnistropicDimensions, getAnisotropicDimensionQQp(beta,2));
        
     -- For the remaining local fields, we can just look at relevant primes
-    for p in relevantPrimes(beta) do (
+    for p in getRelevantPrimes(beta) do (
 	ListOfLocalAnistropicDimensions = append(ListOfLocalAnistropicDimensions, getAnisotropicDimensionQQp(beta,p))
 	);
     max ListOfLocalAnistropicDimensions
@@ -112,22 +112,22 @@ getAnisotropicDimension Matrix := ZZ => A -> (
         )
     -- Over RR, the anisotropic dimension is the absolute value of the getSignature
     else if instance(k,RealField) then (
-        diagonalA := congruenceDiagonalize A;
+        diagonalA := diagonalizeViaCongruence A;
         return abs(countPosDiagEntries(diagonalA) - countNegDiagEntries(diagonalA));
         )
     -- Over QQ, call getAnisotropicDimensionQQ
     else if (k === QQ) then (
-        return getAnisotropicDimensionQQ(gwClass(nondegeneratePartDiagonal(A)));
+        return getAnisotropicDimensionQQ(makeGWClass(getNondegeneratePartDiagonal(A)));
         )
     -- Over a finite field, if the number of nonzero diagonal entries is odd, then the anisotropic dimension is 1
     -- if the number of nonzero diagonal entries is even, then the anisotropic dimension is either 0 or 2
     -- depending on whether the nondegenerate part of the form is totally hyperbolic
     else if (instance(k, GaloisField) and k.char != 2) then (
-        diagA := congruenceDiagonalize A;
+        diagA := diagonalizeViaCongruence A;
         if (getRank(diagA)%2 == 1) then (
             return 1;
             )
-        else if (getLegendreBoolean(det(nondegeneratePartDiagonal(diagA))) == getLegendreBoolean(sub((-1)^(getRank(diagA)/2),k))) then (
+        else if (isGFSquare(det(getNondegeneratePartDiagonal(diagA))) == isGFSquare(sub((-1)^(getRank(diagA)/2),k))) then (
             return 0;
             )
         else (
