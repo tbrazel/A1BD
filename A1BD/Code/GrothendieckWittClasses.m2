@@ -8,7 +8,7 @@ GrothendieckWittClass.synonym = "Grothendieck Witt Class"
 -- Output: The GrothendieckWittClass representing the symmetric bilinear form determined by M
 
 gwClass = method()
-gwClass (Matrix) := GrothendieckWittClass => M -> (
+gwClass Matrix := GrothendieckWittClass => M -> (
    if isWellDefined M then (
         new GrothendieckWittClass from {
             symbol matrix => M,
@@ -23,18 +23,18 @@ gwClass (Matrix) := GrothendieckWittClass => M -> (
 -- This allows us to extract the matrix from a Grothendieck-Witt class
 matrix GrothendieckWittClass := Matrix => beta -> beta.matrix
 
-net (GrothendieckWittClass) := Net => alpha -> (
+net GrothendieckWittClass := Net => alpha -> (
     net(alpha.matrix)
     )
 
-texMath (GrothendieckWittClass) := String => alpha -> (
+texMath GrothendieckWittClass := String => alpha -> (
     texMath(alpha.matrix)
     )
 
 -- Input: A matrix
 -- Output: Boolean that gives whether the matrix defines a nondegenerate symmetric bilinear form over a field of characteristic not 2
 
-isWellDefined (Matrix) := Boolean => M -> (
+isWellDefined Matrix := Boolean => M -> (
     
     -- Return false if the matrix isn't square and symmetric
     if not isSquareAndSymmetric(M) then return false;
