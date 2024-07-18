@@ -20,12 +20,15 @@ gwClass Matrix := GrothendieckWittClass => M -> (
         )
     )
 
+-- This allows us to extract the matrix from a Grothendieck-Witt class
+matrix GrothendieckWittClass := Matrix => beta -> beta.matrix
+
 -- Input: A GrothendieckWittClass representing a symmetric bilinear form determined by a matrix M
 -- Output: The matrix M
 
-matrix GrothendieckWittClass := Matrix => beta -> (
-    beta.matrix
-    )
+--matrix GrothendieckWittClass := Matrix => beta -> (
+  --  beta.matrix
+    -)
 
 -- Input: A GrothendieckWittClass
 -- Output: A net for printing the underlying matrix
