@@ -57,7 +57,7 @@ export{
     "GrothendieckWittClass",
     "baseField",
     "gwClass",
-    "gwAdd",
+    "addGw",
     "gwMultiply",
     
     --BuildingForms.m2
@@ -224,7 +224,7 @@ gamma = gwClass(N);
 assert(baseField(beta) === QQ)
 assert(beta.matrix === M)
 --Operations within GW-classes
-A = gwAdd(beta, gamma);
+A = addGw(beta, gamma);
 B = gwMultiply(beta, gamma);
 assert(A.matrix === matrix(QQ, {{1, 0, 0, 0}, {0, 1, 0, 0}, {0, 0, 1, 2}, {0, 0, 2, 5}}));
 assert(B.matrix === matrix(QQ, {{1, 2, 0, 0}, {2, 5, 0, 0}, {0, 0, 1, 2}, {0, 0, 2, 5}}));
@@ -251,7 +251,7 @@ q=ideal {z_1,z_2};
 r=ideal {z_1-1,z_2^2-(9/85)};
 f1LDq= localA1Degree(f1,q);
 f1LDr= localA1Degree(f1,r);
-f1LDsum = gwAdd(f1LDq, f1LDr);
+f1LDsum = addGw(f1LDq, f1LDr);
 assert(gwIsomorphic(f1LDsum, f1GD));
 ///
 
@@ -268,7 +268,7 @@ s=ideal{w-1};
 f2LDs = localA1Degree(f2, s);
 t=ideal{w};
 f2LDt = localA1Degree(f2, t);
-f2LDsum = gwAdd(gwAdd(f2LDp, f2LDs),f2LDt);
+f2LDsum = addGw(addGw(f2LDp, f2LDs),f2LDt);
 assert(gwIsomorphic(f2LDsum, f2GD));
 ///
 
@@ -412,9 +412,9 @@ H1 = gwClass(matrix(CC, {{2*ii,0,0},{0,-2,0},{0,0,-3}}));
 H2 = gwClass(matrix(CC, {{1,0,-3+ii,0},{0,-2,0,0},{-3+ii,0,-3,0},{0,0,0,5}}));
 H3 = gwClass(matrix(CC, {{2*ii,0,0,0,0,0,0},{0,-2,0,0,0,0,0},{0,0,-3,0,0,0,0},{0,0,0,1,0,-3+ii,0},{0,0,0,0,-2,0,0},{0,0,0,-3+ii,0,-3,0},{0,0,0,0,0,0,5}}));
 
-assert(gwAdd(M1,M2) === M3);
-assert(gwAdd(G1,G2) === G3);
-assert(gwAdd(H1,H2) === H3);
+assert(addGw(M1,M2) === M3);
+assert(addGw(G1,G2) === G3);
+assert(addGw(H1,H2) === H3);
 ///
 
 -- Test for isIsotropic/isAnisotropic
