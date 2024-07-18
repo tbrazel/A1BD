@@ -35,7 +35,7 @@ isIsomorphicFormQ (Matrix, Matrix) := Boolean => (M,N) -> (
 -- Output: Boolean that gives whether alpha and beta are the same Grothendieck-Witt class
 
 gwIsomorphic = method()
-gwIsomorphic (GrothendieckWittClass,GrothendieckWittClass) := (Boolean) => (alpha,beta) -> (
+gwIsomorphic (GrothendieckWittClass,GrothendieckWittClass) := Boolean => (alpha,beta) -> (
     isIsometricForm(alpha.matrix,beta.matrix)
     )
 
@@ -43,7 +43,7 @@ gwIsomorphic (GrothendieckWittClass,GrothendieckWittClass) := (Boolean) => (alph
 -- Output: Boolean that gives whether the bilinear forms are isometric
 
 isIsometricForm = method()
-isIsometricForm (Matrix,Matrix) := (Boolean) => (A,B) -> (
+isIsometricForm (Matrix,Matrix) := Boolean => (A,B) -> (
     k1 := ring A;
     k2 := ring B;
     -- Ensure both base fields are supported
