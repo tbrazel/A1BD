@@ -28,7 +28,7 @@ matrix GrothendieckWittClass := Matrix => beta -> beta.matrix
 
 --matrix GrothendieckWittClass := Matrix => beta -> (
   --  beta.matrix
-    -)
+    --)
 
 -- Input: A GrothendieckWittClass
 -- Output: A net for printing the underlying matrix
