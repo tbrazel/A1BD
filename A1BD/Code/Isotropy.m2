@@ -8,7 +8,7 @@ isAnisotropic Matrix := Boolean => A -> (
     if not (instance(k,ComplexField) or instance(k,RealField) or k === QQ or (instance(k, GaloisField) and k.char != 2)) then (
         error "Base field not supported; only implemented over QQ, RR, CC, and finite fields of characteristic not 2";
         );
-    numRows(A) == anisotropicDimension(A)
+    numRows(A) == getAnisotropicDimension(A)
     )
 
 -- Input: A Grothendieck-Witt class over QQ, RR, CC, or a finite field of characteristic not 2

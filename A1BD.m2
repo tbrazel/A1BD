@@ -47,8 +47,8 @@ newPackage(
 export{
     
     -- ArithmeticMethods.m2
-    "localAlgebraBasis",
-    "padicValuation",
+    "getLocalAlgebraBasis",
+    "getPadicValuation",
     
     --MatrixMethods.m2
     "congruenceDiagonalize",
@@ -61,9 +61,9 @@ export{
     "gwMultiply",
     
     --BuildingForms.m2
-    "diagonalForm",
-    "hyperbolicForm",
-    "PfisterForm",
+    "makeDiagonalForm",
+    "makeHyperbolicForm",
+    "makePfisterForm",
     
     --SimplifiedRepresentatives.m2
     "diagonalClass",
@@ -92,9 +92,9 @@ export{
     "isAnisotropic",
 
     --AnisotropicDimension.m2
-    "anisotropicDimensionQp",
-    "anisotropicDimension",
-    "WittIndex",
+    "getAnisotropicDimensionQQp",
+    "getAnisotropicDimension",
+    "getWittIndex",
     
     --Decomposition.m2
     "anisotropicPart",
@@ -151,7 +151,7 @@ document{
     Key => A1BD,
     Headline => "for working with A1-Brouwer degree computations",
     PARA{"This package is intended computing and manipulating ", TO2(localA1Degree,"local"), " and ", TO2(globalA1Degree,"global"), " ", TEX///$\mathbb{A}^1$///, EM "-Brouwer degrees."," Global Brouwer degrees are non-degenerate symmetric bilinear forms valued in the Grothendieck-Witt ring of a field ", TEX///$\text{GW}(k)$///, "."},
-    PARA{"In order to simplify the forms produced, this package produces invariants of symmetric bilinear forms, including their ", TO2(WittIndex,"Witt indices"), ", their ", TO2(integralDiscriminant,"discriminants"), ", and their ", TO2(HasseWittInvariant, "Hasse Witt invariants"), ". Quadratic forms can furthermore be ", TO2(sumDecomposition,"decomposed"), " into their isotropic and ", TO2(anisotropicPart,"anisotropic parts"), ". Finally, and perhaps most crucially, we can certify whether two symmetric bilinear forms are ", TO2(gwIsomorphic,"isomorphic") , " in the Grothendieck-Witt ring."},
+    PARA{"In order to simplify the forms produced, this package produces invariants of symmetric bilinear forms, including their ", TO2(getWittIndex,"Witt indices"), ", their ", TO2(integralDiscriminant,"discriminants"), ", and their ", TO2(HasseWittInvariant, "Hasse Witt invariants"), ". Quadratic forms can furthermore be ", TO2(sumDecomposition,"decomposed"), " into their isotropic and ", TO2(anisotropicPart,"anisotropic parts"), ". Finally, and perhaps most crucially, we can certify whether two symmetric bilinear forms are ", TO2(gwIsomorphic,"isomorphic") , " in the Grothendieck-Witt ring."},
     }
 
 undocumented {
@@ -246,7 +246,7 @@ TEST ///
 T1 = QQ[z_1..z_2];
 f1 = {(z_1-1)*z_1*z_2, (3/5)*z_1^2 - (17/3)*z_2^2};
 f1GD = globalA1Degree(f1);
-assert(WittIndex(f1GD) == 3);
+assert(getWittIndex(f1GD) == 3);
 q=ideal {z_1,z_2};
 r=ideal {z_1-1,z_2^2-(9/85)};
 f1LDq= localA1Degree(f1,q);
@@ -260,10 +260,10 @@ TEST ///
 T2 = GF(17)[w];
 f2 = {w^4 + w^3 - w^2 - w};
 f2GD= globalA1Degree(f2);
-assert(WittIndex(f2GD) == 2);
+assert(getWittIndex(f2GD) == 2);
 p=ideal {w+1};
 f2LDp = localA1Degree(f2, p);
-assert(WittIndex(f2LDp) == 1);
+assert(getWittIndex(f2LDp) == 1);
 s=ideal{w-1};
 f2LDs = localA1Degree(f2, s);
 t=ideal{w};
@@ -275,15 +275,15 @@ assert(gwIsomorphic(f2LDsum, f2GD));
 -- Testing for building forms
 -- Test 7
 TEST ///
-twoH = hyperbolicForm(GF(17),4);
-P = PfisterForm(GF(17),(2,3));
+twoH = makeHyperbolicForm(GF(17),4);
+P = makePfisterForm(GF(17),(2,3));
 assert(gwIsomorphic(P,twoH));
 ///
 
 -- Test 8
 TEST ///
-H = hyperbolicForm(RR);
-A = diagonalForm(RR,(1,-1));
+H = makeHyperbolicForm(RR);
+A = makeDiagonalForm(RR,(1,-1));
 B = gwClass(matrix(RR,{{0,1},{1,0}}));
 assert(gwIsomorphic(H,A));
 assert(gwIsomorphic(H,B));
@@ -295,7 +295,7 @@ TEST ///
 QQ[x,y]
 f = {x^2+1-y,y};
 p = ideal(x^2+1,y);
-assert(localAlgebraBasis(f,p) == {1,x}); 
+assert(getLocalAlgebraBasis(f,p) == {1,x}); 
 ///
 
 -- Tests for diagonalClass and diagonalEntries
@@ -356,7 +356,7 @@ assert((diagonalClass(G1)).matrix == M2);
 -- Test for p-adic valuation
 -- Test 16
 TEST ///
-assert(padicValuation(27,3) == 3);
+assert(getPadicValuation(27,3) == 3);
 ///
 
 -- Test for congruenceDiagonalize
@@ -364,11 +364,11 @@ assert(padicValuation(27,3) == 3);
 TEST ///
 B=matrix(QQ,{{0/1,1},{1,0}});
 eta = gwClass(B)
-assert(WittIndex(eta) == 1);
+assert(getWittIndex(eta) == 1);
 
 P=matrix(QQ,{{0/1, 5,1},{2,2,1},{0,0,1}});
 A=matrix(QQ,{{1/1,0,0},{0,-1,0},{0,0,1}});
-assert(WittIndex(gwClass(congruenceDiagonalize(P*A*transpose(P)))) == 1);
+assert(getWittIndex(gwClass(congruenceDiagonalize(P*A*transpose(P)))) == 1);
 ///
 
 

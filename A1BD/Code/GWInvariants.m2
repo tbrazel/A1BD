@@ -103,7 +103,7 @@ integralDiscriminant GrothendieckWittClass := ZZ => beta -> (
     if not kk === QQ then error "GrothendieckWittClass is not over QQ";
 
     -- Return a squarefree integral representative of the product of diagonal entries of a diagonal representative of the form 
-    squarefreePart product(diagonalEntries(beta))
+    getSquarefreePart product(diagonalEntries(beta))
     )
 
 -- Input: A Grothendieck-Witt class defined over QQ
@@ -120,7 +120,7 @@ relevantPrimes GrothendieckWittClass := List => beta -> (
     -- Make a list of all prime factors of diagonal entries
     L := {};
     for x in D do (
-	L = unique(L | primeFactors(sub(x,ZZ)));
+	L = unique(L | getPrimeFactors(sub(x,ZZ)));
 	);
     L
     )
@@ -139,7 +139,7 @@ HasseWittInvariant (List, ZZ) := ZZ => (L,p) -> (
     -- Replace every entry of L by its squarefree part so we can work with integers
     f := {};
     for x in L do (
-	f = append(f,squarefreePart(x));
+	f = append(f,getSquarefreePart(x));
 	);
     for i from 0 to len - 2 do (
        	for j from i + 1 to len - 1 do (

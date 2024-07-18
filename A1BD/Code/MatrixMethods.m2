@@ -149,7 +149,7 @@ congruenceDiagonalizeSimplify Matrix := Matrix => AnonMut -> (
     -- If the field is the rational numbers, replace each diagonal entry by its squarefree part
     else if k === QQ then (
 	for i from 0 to (n-1) do (
-            A_(i,i) = squarefreePart A_(i,i);
+            A_(i,i) = getSquarefreePart A_(i,i);
 	    );
 	)
 
@@ -158,9 +158,9 @@ congruenceDiagonalizeSimplify Matrix := Matrix => AnonMut -> (
         -- Initially let the nonsquare representative be -1
         nonSquareRep := sub(-1,k);
         -- If -1 is a square, then find another nonsquare representative
-        if legendreBoolean sub(-1,k) then (
+        if getLegendreBoolean sub(-1,k) then (
 	    for i from 0 to (n-1) do (
-	        if (A_(i,i) != 0 and (not legendreBoolean(A_(i,i)))) then (
+	        if (A_(i,i) != 0 and (not getLegendreBoolean(A_(i,i)))) then (
                     -- If there is a nonsquare on the diagonal, choose it as the nonsquare representative
 	     	    nonSquareRep = A_(i,i);
                     break;
@@ -168,10 +168,10 @@ congruenceDiagonalizeSimplify Matrix := Matrix => AnonMut -> (
                 );
 	    );
 	for i from 0 to (n-1) do (
-	    if (A_(i,i) != 0 and legendreBoolean(A_(i,i))) then (
+	    if (A_(i,i) != 0 and getLegendreBoolean(A_(i,i))) then (
 		A_(i,i) = 1;
 		);
-	    if (A_(i,i) != 0 and not legendreBoolean(A_(i,i))) then (
+	    if (A_(i,i) != 0 and not getLegendreBoolean(A_(i,i))) then (
 		A_(i,i) = nonSquareRep;
 		);
 	    );

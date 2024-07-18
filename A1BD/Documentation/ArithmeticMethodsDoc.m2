@@ -1,7 +1,7 @@
 -- document {
---     Key => {(squarefreePart, QQ), (squarefreePart, ZZ), squarefreePart},
+--     Key => {(getSquarefreePart, QQ), (getSquarefreePart, ZZ), getSquarefreePart},
 -- 	Headline => "smallest magnitude representative of a square class over the rationals or integers",
--- 	Usage => "squarefreePart(q)",
+-- 	Usage => "getSquarefreePart(q)",
 -- 	Inputs => {
 -- 	    QQ => "q" => {"a rational number"},
 -- 	    -- ZZ => "n" => {"an integer"}
@@ -13,16 +13,16 @@
 --                 TEX///$m$///, ", such that ", TEX///$q=lm$///, " for some rational number (or integer) ",
 -- 				TEX///$l$///, "."},
 -- 	EXAMPLE lines ///
--- 		 squarefreePart(15/72)
--- 		 squarefreePart(-1/3)
+-- 		 getSquarefreePart(15/72)
+-- 		 getSquarefreePart(-1/3)
 -- 	 	 ///,
 --         }
     
     
 -- document{
---     Key => {(legendreBoolean, RingElement), legendreBoolean},
+--     Key => {(getLegendreBoolean, RingElement), getLegendreBoolean},
 --     Headline => "Basic Legendre symbol over a finite field",
---     Usage => "legendreBoolean(a)",
+--     Usage => "getLegendreBoolean(a)",
 --     Inputs => {
 -- 	RingElement => "a" => {"Any element in a finite field ", TEX///$a\in \mathbb{F}_q$///, "."},
 -- 	},
@@ -32,16 +32,16 @@
 --     PARA{"Given an element of a finite field, will return a Boolean checking if it is a square."},
 --     EXAMPLE lines///
 --     a = sub(-1,GF(5));
---     legendreBoolean(a)
+--     getLegendreBoolean(a)
 --     b = sub(-1,GF(7));
---     legendreBoolean(b)
+--     getLegendreBoolean(b)
 --     ///,
 --     }
 
 document{
-    Key => {padicValuation, (padicValuation, ZZ, ZZ), (padicValuation, QQ, ZZ)},
+    Key => {getPadicValuation, (getPadicValuation, ZZ, ZZ), (getPadicValuation, QQ, ZZ)},
     Headline => "p-adic valuation of a rational number or integer",
-    Usage => "padicValuation(a, p)",
+    Usage => "getPadicValuation(a, p)",
     Inputs => {
 	ZZ => "a" => {"a non-zero rational number in ", TEX///$\mathbb{Q}_p$///},
 	ZZ => "p" => {"a rational prime number"},
@@ -51,15 +51,15 @@ document{
         },
     EXAMPLE lines///
     a = 363/7;
-    padicValuation(a, 11)
+    getPadicValuation(a, 11)
     ///,
     }
 
 
 document {
-    Key => {localAlgebraBasis, (localAlgebraBasis, List, Ideal)},
+    Key => {getLocalAlgebraBasis, (getLocalAlgebraBasis, List, Ideal)},
 	Headline => "produces a basis for a local finitely generated algebra over a field k",
-	Usage => "localAlgebraBasis(L,p)",
+	Usage => "getLocalAlgebraBasis(L,p)",
 	Inputs => {
 	    List => "L" => {"of polynomials ", TEX///$f=(f_1, \dots ,f_n)$///, " over the same ring"},
 	    Ideal => "p" => {"a prime ideal of an isolated zero"}
@@ -73,7 +73,7 @@ document {
 		 QQ[x,y];
 		 f = {x^2+1-y,y};
 		 p = ideal(x^2+1,y);
-		 localAlgebraBasis(f,p) 
+		 getLocalAlgebraBasis(f,p) 
 	 	 ///,
         PARA{EM "Citations:"},
     UL{

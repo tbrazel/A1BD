@@ -67,7 +67,7 @@ document{
 	},
     PARA{"It is a classical result that the ", TO2(HasseWittInvariant,"Hasse-Witt invariants"), " of a quadratic form are equal to 1 for all but finitely many primes (see e.g. [S73, IV Section 3.3]. As the Hasse-Witt invariants are computed as a product of ", TO2(HilbertSymbol,"Hilbert symbols") , " of the pairwise entries appearing on a diagonalization of the symbol, it suffices to consider primes dividing diagonal entries."},
    EXAMPLE lines ///
-   beta = diagonalForm(QQ,(6,7,22));
+   beta = makeDiagonalForm(QQ,(6,7,22));
    relevantPrimes(beta)
    ///,
    PARA{EM "Citations:"},
@@ -89,7 +89,7 @@ document {
            },
         PARA {"This computes the rank of the form given by ", TEX///$\beta$/// },
         EXAMPLE lines ///
-                 beta = diagonalForm(QQ,(3,5,7,11))
+                 beta = makeDiagonalForm(QQ,(3,5,7,11))
                  rankForm(beta)
 		 ///,                
         EXAMPLE lines ///

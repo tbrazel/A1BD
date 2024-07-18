@@ -28,7 +28,7 @@ globalA1Degree List := GrothendieckWittClass => Endo -> (
     
     -- If the field is CC, output the Grothendieck-Witt class of an identity matrix of the appropriate rank
     if instance(kk,ComplexField) then (
-    	rankAlgebra := rankGlobalAlgebra Endo;
+    	rankAlgebra := getGlobalAlgebraRank Endo;
     	return gwClass id_(CC^rankAlgebra);
         );
     
@@ -224,9 +224,9 @@ localA1Degree (List, Ideal) := GrothendieckWittClass => (Endo,p) -> (
     list1 := apply(toList(0..n-1), i-> mapxtoX(Endo_i)); -- list (f_1(X), ..., f_n(X))
     list2 := apply(toList(0..n-1), i-> mapxtoY(Endo_i)); -- list (f_1(Y), ..., f_n(Y))
     
-    -- Apply localAlgebraBasis to compute standard basis for localization
-    standBasisX := localAlgebraBasis(list1,mapxtoX p);
-    standBasisY := localAlgebraBasis(list2,mapxtoY p); 
+    -- Apply getLocalAlgebraBasis to compute standard basis for localization
+    standBasisX := getLocalAlgebraBasis(list1,mapxtoX p);
+    standBasisY := getLocalAlgebraBasis(list2,mapxtoY p); 
     
     -- Take the ideal sum of J in the X_i's with J in the Y_i's
     localIdeal := sub(mapxtoX(J),R)+sub(mapxtoY(J),R);

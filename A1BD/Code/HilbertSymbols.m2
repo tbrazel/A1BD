@@ -37,17 +37,17 @@ HilbertSymbol (ZZ, ZZ, ZZ) := ZZ => (a, b, p) -> (
     if (a == 0 or b == 0) then error "first two arguments of HilbertSymbol must be nonzero";
     if not isPrime(p) then error "third argument of HilbertSymbol must be prime";
     
-    alpha := padicValuation(a,p);
-    beta := padicValuation(b,p);
+    alpha := getPadicValuation(a,p);
+    beta := getPadicValuation(b,p);
     u := sub(a/p^alpha,ZZ);
     v := sub(b/p^beta, ZZ);
     
     if (p % 4 == 1) then (
-	return (((squareSymbol(u,p))^beta) * ((squareSymbol(v,p))^alpha));
+	return (((getSquareSymbol(u,p))^beta) * ((getSquareSymbol(v,p))^alpha));
 	);
     
     if (p % 4 == 3) then (
-	return (((-1)^(alpha*beta))*((squareSymbol(u,p))^beta) * ((squareSymbol(v,p))^alpha));
+	return (((-1)^(alpha*beta))*((getSquareSymbol(u,p))^beta) * ((getSquareSymbol(v,p))^alpha));
 	);
     
     if p == 2 then (
