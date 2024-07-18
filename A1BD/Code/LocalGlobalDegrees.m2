@@ -6,7 +6,7 @@
 -- Output: The Grothendieck-Witt class deg^(A^1)(f)
 
 globalA1Degree = method()
-globalA1Degree (List) := (GrothendieckWittClass) => (Endo) -> (
+globalA1Degree List := GrothendieckWittClass => Endo -> (
     -- Endo is the list {f_1, f_2, ..., f_n} of polynomials giving a map kk^n -> kk^n
     -- n is the number of polynomials
     n := #Endo;
@@ -135,7 +135,7 @@ globalA1Degree (List) := (GrothendieckWittClass) => (Endo) -> (
 -- Output: The Grothendieck-Witt class deg^(A^1)_p (f)
 
 localA1Degree = method()
-localA1Degree (List, Ideal) := (GrothendieckWittClass) => (Endo,p) -> (
+localA1Degree (List, Ideal) := GrothendieckWittClass => (Endo,p) -> (
     -- Endo is the list {f_1, f_2, ..., f_n} of polynomials giving a map kk^n -> kk^n
     -- n is the number of polynomials
     n := #Endo;
