@@ -64,7 +64,7 @@ diagonalForm(InexactFieldFamily, Sequence) := GrothendieckWittClass => (kk,L) ->
 -- Output: A Grothendieck-Witt class over kk represented by a totally hyperbolic form or rank n
 
 hyperbolicForm = method()
-hyperbolicForm(Ring) := GrothendieckWittClass => (kk) -> (
+hyperbolicForm Ring := GrothendieckWittClass => kk -> (
     gwClass matrix(kk,{{1,0},{0,-1}})
     )
 
@@ -79,7 +79,7 @@ hyperbolicForm(Ring,ZZ) := GrothendieckWittClass => (kk,n) -> (
     gwClass outputMatrix
     )
 
-hyperbolicForm(InexactFieldFamily) := GrothendieckWittClass => (kk) -> (
+hyperbolicForm InexactFieldFamily := GrothendieckWittClass => kk -> (
     gwClass matrix(kk,{{1,0},{0,-1}})
     )
 
