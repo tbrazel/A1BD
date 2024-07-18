@@ -27,7 +27,7 @@ document{
     }
 
 document {
-    Key => {makeGWClass, (makeGWClass, Matrix), (getMatrix, GrothendieckWittClass), (isWellDefined, Matrix)},
+    Key => {makeGWClass, (makeGWClass, Matrix), (isWellDefined, Matrix)},
 	Headline => "the Grothendieck Witt class of a symmetric matrix",
 	Usage => "makeGWClass(M)",
 	Inputs => {
@@ -52,6 +52,25 @@ document {
 		///,
 		
 	SeeAlso => {"getBaseField","GrothendieckWittClass"}
+        }
+
+document {
+    Key => {getMatrix, (getMatrix, GrothendieckWittClass)},
+	Headline => "the underlying matrix of a Grothendieck-Witt class",
+	Usage => "getMatrix(beta)",
+	Inputs => {
+	    GrothendieckWittClass => "beta" => {"the isomorphism class of a symmetric bilinear form"}
+	    },
+	Outputs => {
+	    Ring => { "the underlying matrix of the Grothendieck-Witt class ", TT "beta" }
+	    },
+	PARA {"Given the isomorphism class of a symmetric bilinear form, ", TT "beta", 
+                ", this command outputs the underlying matrix of the form."},
+	EXAMPLE lines ///
+		 beta = makeGWClass(matrix(QQ,{{0,2},{2,0}}));
+		 getMatrix beta
+	 	 ///,
+    SeeAlso => {"GrothendieckWittClass"}
         }
 
 document {
