@@ -6,7 +6,7 @@
 -- Output: A diagonalized form of beta, with squarefree entries on the diagonal
 
 diagonalClass = method()
-diagonalClass (GrothendieckWittClass) := (GrothendieckWittClass) => (beta) -> (
+diagonalClass GrothendieckWittClass := GrothendieckWittClass => beta -> (
 
     -- Check if the diagonalClass has already been computed; if so, recall it from the cache
     if beta.cache.?diagonalClass then return beta.cache.diagonalClass;
@@ -22,7 +22,7 @@ diagonalClass (GrothendieckWittClass) := (GrothendieckWittClass) => (beta) -> (
 -- Output: A list of the diagonal entries of a diagonal matrix representing beta
 
 diagonalEntries = method()
-diagonalEntries (GrothendieckWittClass) := (List) => (beta) -> (
+diagonalEntries GrothendieckWittClass := List => beta -> (
     
     M := congruenceDiagonalize(beta.matrix);
     n := numRows M;
