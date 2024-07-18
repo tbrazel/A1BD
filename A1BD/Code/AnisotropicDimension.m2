@@ -71,7 +71,7 @@ anisotropicDimensionQp (GrothendieckWittClass, ZZ) := ZZ => (beta, p) -> (
 -- Notes: Follows Algorithm 9 of Koprowski/Czogala
 
 anisotropicDimensionQQ = method()
-anisotropicDimensionQQ (GrothendieckWittClass) := ZZ => (beta) -> (
+anisotropicDimensionQQ GrothendieckWittClass := ZZ => beta -> (
     B := beta.matrix;
     rankFormBeta := rankForm beta;
     kk := ring B;
@@ -98,7 +98,7 @@ anisotropicDimensionQQ (GrothendieckWittClass) := ZZ => (beta) -> (
 -- Output: An integer, the rank of the anisotropic part of the quadratic form or GrothendieckWittClass
 
 anisotropicDimension = method()
-anisotropicDimension (Matrix) := (ZZ) => (A) -> (
+anisotropicDimension Matrix := ZZ => A -> (
     k := ring A;
     -- Ensure base field is supported
     if not (instance(k,ComplexField) or instance(k,RealField) or k === QQ or (instance(k, GaloisField) and k.char != 2)) then (
@@ -136,7 +136,7 @@ anisotropicDimension (Matrix) := (ZZ) => (A) -> (
         );
     )
 
-anisotropicDimension (GrothendieckWittClass) := (ZZ) => (alpha) -> (
+anisotropicDimension GrothendieckWittClass := ZZ => alpha -> (
     anisotropicDimension(alpha.matrix)
     )
 
@@ -144,6 +144,6 @@ anisotropicDimension (GrothendieckWittClass) := (ZZ) => (alpha) -> (
 -- Output: An integer, the Witt index of the class, i.e. the rank of the maximal totally isotropic subspace
 
 WittIndex = method()
-WittIndex (GrothendieckWittClass) := (ZZ) => (alpha) -> (
+WittIndex GrothendieckWittClass := ZZ => alpha -> (
     sub((rankForm(alpha) - anisotropicDimension(alpha))/2,ZZ)
     )
