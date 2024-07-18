@@ -3,7 +3,7 @@
 -- See Serre, III Theorem 1
 
 HilbertSymbolReal = method()
-HilbertSymbolReal (QQ, QQ) := (ZZ) => (a, b) -> (
+HilbertSymbolReal (QQ, QQ) := ZZ => (a, b) -> (
     if (a == 0 or b == 0) then error "the arguments of HilbertSymbolReal must be nonzero";
     if (a < 0 and b < 0) then (
 	return -1;
@@ -13,17 +13,17 @@ HilbertSymbolReal (QQ, QQ) := (ZZ) => (a, b) -> (
 	);
     )
 
-HilbertSymbolReal (QQ, ZZ) := (ZZ) => (a,b) -> (
+HilbertSymbolReal (QQ, ZZ) := ZZ => (a,b) -> (
     b1 := b/1;
     HilbertSymbolReal(a, b1)
     )
 
-HilbertSymbolReal (ZZ, QQ) := (ZZ) => (a,b) -> (
+HilbertSymbolReal (ZZ, QQ) := ZZ => (a,b) -> (
     a1 := a/1;
     HilbertSymbolReal(a1, b)
     )
 
-HilbertSymbolReal (ZZ, ZZ) := (ZZ) => (a,b) -> (
+HilbertSymbolReal (ZZ, ZZ) := ZZ => (a,b) -> (
     a1:= a/1;
     b1:= b/1;
     HilbertSymbolReal(a1, b1)
@@ -33,7 +33,7 @@ HilbertSymbolReal (ZZ, ZZ) := (ZZ) => (a,b) -> (
 -- Output: The Hilbert symbol (a,b)_p following Serre, III Theorem 1
 
 HilbertSymbol = method()
-HilbertSymbol (ZZ, ZZ, ZZ) := (ZZ) => (a, b, p) -> (
+HilbertSymbol (ZZ, ZZ, ZZ) := ZZ => (a, b, p) -> (
     if (a == 0 or b == 0) then error "first two arguments of HilbertSymbol must be nonzero";
     if not isPrime(p) then error "third argument of HilbertSymbol must be prime";
     
@@ -62,7 +62,7 @@ HilbertSymbol (ZZ, ZZ, ZZ) := (ZZ) => (a, b, p) -> (
 	);
     )
 
-HilbertSymbol (QQ, QQ, ZZ) := (ZZ) => (a, b, p) -> (
+HilbertSymbol (QQ, QQ, ZZ) := ZZ => (a, b, p) -> (
  
 -- If a and b are rational numbers with denominators, one can multiply by the square of their denominators to 
 -- get integers a' and b' and then evaluate HilbertSymbol (a', b', p)
@@ -79,10 +79,10 @@ HilbertSymbol (QQ, QQ, ZZ) := (ZZ) => (a, b, p) -> (
     HilbertSymbol(a,b,p)
     )
 
-HilbertSymbol (ZZ, QQ, ZZ) := (ZZ) => (a, b, p) -> (
+HilbertSymbol (ZZ, QQ, ZZ) := ZZ => (a, b, p) -> (
     HilbertSymbol(a/1,b,p)
     )
 
-HilbertSymbol (QQ, ZZ, ZZ) := (ZZ) => (a, b, p) -> (
+HilbertSymbol (QQ, ZZ, ZZ) := ZZ => (a, b, p) -> (
    HilbertSymbol(a,b/1,p)
    )
