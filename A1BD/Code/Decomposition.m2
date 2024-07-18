@@ -3,7 +3,7 @@
 -- Note: This is Koprowski/Rothkegel's Algorithm 5 in the case of QQ
 
 QQanisotropicDimension4 = method()
-QQanisotropicDimension4 (GrothendieckWittClass) := (GrothendieckWittClass) => beta -> (
+QQanisotropicDimension4 GrothendieckWittClass := GrothendieckWittClass => beta -> (
     if not (anisotropicDimensionQQ(beta) >= 4) then error "anisotropic dimension of form is not >= 4";
     
     -- If the signature is non-negative then return < 1 >
@@ -22,7 +22,7 @@ QQanisotropicDimension4 (GrothendieckWittClass) := (GrothendieckWittClass) => be
 -- Note: This is Koprowski/Rothkegel's Algorithm 7 in the case of QQ
 
 QQanisotropicDimension3 = method()
-QQanisotropicDimension3 (GrothendieckWittClass) := (GrothendieckWittClass) => beta -> (
+QQanisotropicDimension3 GrothendieckWittClass := GrothendieckWittClass => beta -> (
     if not (anisotropicDimensionQQ(beta) == 3) then error "anisotropic dimension of form is not 3";
 
     d := integralDiscriminant(beta);
@@ -55,7 +55,7 @@ QQanisotropicDimension3 (GrothendieckWittClass) := (GrothendieckWittClass) => be
 -- Note: This is Koprowski/Rothkegel's Algorithm 8 in the case of QQ
 
 QQanisotropicDimension2 = method()
-QQanisotropicDimension2 (GrothendieckWittClass) := (GrothendieckWittClass) => beta -> (
+QQanisotropicDimension2 GrothendieckWittClass := GrothendieckWittClass => beta -> (
     if not (anisotropicDimensionQQ(beta) == 2) then error "anisotropic dimension of form is not 2";
 
     n := rankForm beta;
@@ -163,7 +163,7 @@ QQanisotropicDimension2 (GrothendieckWittClass) := (GrothendieckWittClass) => be
 -- Output: The Grothendieck-Witt class representing the anisotropic part of this form
 
 QQanisotropicPart = method()
-QQanisotropicPart (GrothendieckWittClass) := (GrothendieckWittClass) => (beta) -> (
+QQanisotropicPart GrothendieckWittClass := GrothendieckWittClass => beta -> (
     beta = diagonalClass beta;
     n := rankForm beta;
     
@@ -201,7 +201,7 @@ QQanisotropicPart (GrothendieckWittClass) := (GrothendieckWittClass) => (beta) -
 -- Output: A symmetric matrix or GrothendieckWittClass that is the anisotropic part of the input
 
 anisotropicPart = method()
-anisotropicPart (Matrix) := (Matrix) => (A) -> (
+anisotropicPart Matrix := Matrix => A -> (
     k := ring A;
     -- Ensure base field is supported
     if not (instance(k,ComplexField) or instance(k,RealField) or k === QQ or (instance(k, GaloisField) and k.char != 2)) then (
@@ -253,7 +253,7 @@ anisotropicPart (Matrix) := (Matrix) => (A) -> (
         );
     )
 
-anisotropicPart (GrothendieckWittClass) := (GrothendieckWittClass) => (alpha) -> (
+anisotropicPart GrothendieckWittClass := GrothendieckWittClass => alpha -> (
     gwClass anisotropicPart(alpha.matrix)
     )
 
@@ -264,7 +264,7 @@ anisotropicPart (GrothendieckWittClass) := (GrothendieckWittClass) => (alpha) ->
 -- Input: A Grothendieck-Witt class beta over a field kk
 -- Output: A simplified diagonal representative of beta
 sumDecompositionVerbose = method()
-sumDecompositionVerbose (GrothendieckWittClass) := (GrothendieckWittClass, String) => beta -> (
+sumDecompositionVerbose GrothendieckWittClass := (GrothendieckWittClass, String) => beta -> (
     -- Get base field of beta
     kk := baseField beta;
 
@@ -299,7 +299,7 @@ sumDecompositionVerbose (GrothendieckWittClass) := (GrothendieckWittClass, Strin
 -- Output: A simplified diagonal representative of beta
 
 sumDecomposition = method()
-sumDecomposition (GrothendieckWittClass) := (GrothendieckWittClass) => beta -> (
+sumDecomposition GrothendieckWittClass := GrothendieckWittClass => beta -> (
     beta.cache.diagonalClass = (sumDecompositionVerbose(beta))_0;
     (sumDecompositionVerbose(beta))_0
     )
@@ -308,6 +308,6 @@ sumDecomposition (GrothendieckWittClass) := (GrothendieckWittClass) => beta -> (
 -- Output: The decomposition as a sum of hyperbolic and rank one forms
 
 sumDecompositionString = method()
-sumDecompositionString (GrothendieckWittClass) := (String) => beta -> (
+sumDecompositionString GrothendieckWittClass := String => beta -> (
     (sumDecompositionVerbose(beta))_1
     )
