@@ -76,3 +76,32 @@ document{
 	{"[S73] J.P. Serre, ", EM "A course in arithmetic,", " Springer-Verlag, 1973."},
     },
 }
+
+document {
+        Key => {rankForm, (rankForm, GrothendieckWittClass), (rankForm, Matrix)},
+        Headline => "Calculates the rank of a symmetric bilinear form",
+        Usage => "rankForm(beta)",
+        Inputs => {
+            GrothendieckWittClass => "beta" => {"denoted by ",  TEX///$\beta \in  GW(\mathbb{Q})$///, " or a symmetric matrix ", TEX///$\beta$///}
+            },
+        Outputs => {
+            ZZ => {" the rank of the form ", TEX///$\beta$///}
+           },
+        PARA {"This computes the rank of the form given by ", TEX///$\beta$/// },
+        EXAMPLE lines ///
+                 beta = diagonalForm(QQ,(3,5,7,11))
+                 rankForm(beta)
+		 ///,                
+        EXAMPLE lines ///
+                 M=matrix(QQ,{{1,4,7},{4,3,-1},{7,-1,5}})
+                 rankForm(M)
+                 ///,
+}
+
+
+
+
+
+
+
+
