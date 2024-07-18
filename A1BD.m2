@@ -74,8 +74,8 @@ export{
     "HilbertSymbolReal",
     
     --GWInvariants.m2
-    "signature",
-    "rankForm",
+    "getSignature",
+    "getRank",
     "integralDiscriminant",
     "relevantPrimes",
     "HasseWittInvariant",
@@ -97,9 +97,9 @@ export{
     "getWittIndex",
     
     --Decomposition.m2
-    "anisotropicPart",
-    "sumDecomposition",
-    "sumDecompositionString"
+    "getAnisotropicPart",
+    "getSumDecomposition",
+    "getSumDecompositionString"
     
     }
 
@@ -151,7 +151,7 @@ document{
     Key => A1BD,
     Headline => "for working with A1-Brouwer degree computations",
     PARA{"This package is intended computing and manipulating ", TO2(localA1Degree,"local"), " and ", TO2(globalA1Degree,"global"), " ", TEX///$\mathbb{A}^1$///, EM "-Brouwer degrees."," Global Brouwer degrees are non-degenerate symmetric bilinear forms valued in the Grothendieck-Witt ring of a field ", TEX///$\text{GW}(k)$///, "."},
-    PARA{"In order to simplify the forms produced, this package produces invariants of symmetric bilinear forms, including their ", TO2(getWittIndex,"Witt indices"), ", their ", TO2(integralDiscriminant,"discriminants"), ", and their ", TO2(HasseWittInvariant, "Hasse Witt invariants"), ". Quadratic forms can furthermore be ", TO2(sumDecomposition,"decomposed"), " into their isotropic and ", TO2(anisotropicPart,"anisotropic parts"), ". Finally, and perhaps most crucially, we can certify whether two symmetric bilinear forms are ", TO2(gwIsomorphic,"isomorphic") , " in the Grothendieck-Witt ring."},
+    PARA{"In order to simplify the forms produced, this package produces invariants of symmetric bilinear forms, including their ", TO2(getWittIndex,"Witt indices"), ", their ", TO2(integralDiscriminant,"discriminants"), ", and their ", TO2(HasseWittInvariant, "Hasse Witt invariants"), ". Quadratic forms can furthermore be ", TO2(getSumDecomposition,"decomposed"), " into their isotropic and ", TO2(getAnisotropicPart,"anisotropic parts"), ". Finally, and perhaps most crucially, we can certify whether two symmetric bilinear forms are ", TO2(gwIsomorphic,"isomorphic") , " in the Grothendieck-Witt ring."},
     }
 
 undocumented {
@@ -477,10 +477,10 @@ M2 = gwClass(matrix(QQ, {{1/1,0,0},{0, 23,0},{0,0,-2/5}}));
 M3 = gwClass(matrix(QQ, {{1/1,0,0},{0,-23,0},{0,0,-2/5}}));
 M4 = gwClass(matrix(QQ, {{-1/1,0,0},{0,-23,0},{0,0,-2/5}}));
 
-assert(signature(M1) == 1);
-assert(signature(M2) == 1);
-assert(signature(M3) == -1);
-assert(signature(M4) == -3);
+assert(getSignature(M1) == 1);
+assert(getSignature(M2) == 1);
+assert(getSignature(M3) == -1);
+assert(getSignature(M4) == -3);
 
 assert(integralDiscriminant(M1)==-5405);
 assert(relevantPrimes(M1) == {23, 5, 47} );

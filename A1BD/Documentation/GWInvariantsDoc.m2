@@ -1,7 +1,7 @@
 document{
-    Key => {signature, (signature, GrothendieckWittClass)},
     Headline => "outputs the signature of a symmetric bilinear form over the real or rational numbers",
-    Usage => "signature(beta)",
+    Key => {getSignature, (getSignature, GrothendieckWittClass)},
+    Usage => "getSignature(beta)",
     Inputs => {
 	GrothendieckWittClass => "beta" => {"a symmetric bilinear form defined over ", TEX///$\mathbb{Q}$///, " or ", TEX///$\mathbb{R}$///},
 	},
@@ -12,9 +12,9 @@ document{
     EXAMPLE lines ///
     M = matrix(RR,{{0,0,1},{0,1,0},{1,0,0}});
     beta = gwClass(M);
-    signature(beta)
+    getSignature(beta)
     ///,
-    SeeAlso => {"gwIsomorphic", "sumDecomposition", "sumDecompositionString"}
+    SeeAlso => {"gwIsomorphic", "getSumDecomposition", "getSumDecompositionString"}
     }
 
 document{
@@ -78,9 +78,9 @@ document{
 }
 
 document {
-        Key => {rankForm, (rankForm, GrothendieckWittClass), (rankForm, Matrix)},
+        Key => {getRank, (getRank, GrothendieckWittClass), (getRank, Matrix)},
         Headline => "Calculates the rank of a symmetric bilinear form",
-        Usage => "rankForm(beta)",
+        Usage => "getRank(beta)",
         Inputs => {
             GrothendieckWittClass => "beta" => {"denoted by ",  TEX///$\beta \in  GW(\mathbb{Q})$///, " or a symmetric matrix ", TEX///$\beta$///}
             },
@@ -90,11 +90,11 @@ document {
         PARA {"This computes the rank of the form given by ", TEX///$\beta$/// },
         EXAMPLE lines ///
                  beta = makeDiagonalForm(QQ,(3,5,7,11))
-                 rankForm(beta)
+                 getRank(beta)
 		 ///,                
         EXAMPLE lines ///
                  M=matrix(QQ,{{1,4,7},{4,3,-1},{7,-1,5}})
-                 rankForm(M)
+                 getRank(M)
                  ///,
 }
 

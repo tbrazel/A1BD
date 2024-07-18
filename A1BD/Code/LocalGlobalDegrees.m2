@@ -33,7 +33,7 @@ globalA1Degree List := GrothendieckWittClass => Endo -> (
         );
     
     -- If the field is RR, ask the user to run the computation over QQ instead and then base chnage to RR
-    if instance(kk,RealField) then error "globalA1Degree method does not work over the reals. Instead, define the polynomials over QQ to output a GrothendieckWittClass. Then extract the matrix, base change it to RR, and run sumDecomposition().";    
+    if instance(kk,RealField) then error "globalA1Degree method does not work over the reals. Instead, define the polynomials over QQ to output a GrothendieckWittClass. Then extract the matrix, base change it to RR, and run getSumDecomposition().";    
     
     -- Create internal rings/matrices
     
@@ -167,7 +167,7 @@ localA1Degree (List, Ideal) := GrothendieckWittClass => (Endo,p) -> (
         );
 
     -- If the field is RR, ask the user to run the computation over QQ instead and then base chnage to RR
-    if instance(kk,RealField) then error "localA1Degree method does not work over the reals. Instead, define the polynomials over QQ to output a GrothendieckWittClass. Then extract the matrix, base change it to RR, and run sumDecomposition().";
+    if instance(kk,RealField) then error "localA1Degree method does not work over the reals. Instead, define the polynomials over QQ to output a GrothendieckWittClass. Then extract the matrix, base change it to RR, and run getSumDecomposition().";
     
     -- Create internal rings/matrices
 

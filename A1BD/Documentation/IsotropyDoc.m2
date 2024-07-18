@@ -9,7 +9,7 @@ document{
         Boolean => {"whether ", TEX///$\beta$///, " is isotropic"},
 	},
     PARA{"This is the negation of the boolean-valued ", TO2(isAnisotropic,"isAnisotropic"), ". See documentation there."},    
-    SeeAlso => {"isAnisotropic", "HilbertSymbol", "signature"}
+    SeeAlso => {"isAnisotropic", "HilbertSymbol", "getSignature"}
 }
 
 
@@ -46,7 +46,7 @@ document{
     diagonalClass(beta)
     ///,
     PARA{"For forms of rank ", TEX///$\le 4$///, " the problem reduces to computing the maximum anisotropic dimension of the form over local fields. Ternary forms are isotropic away from primes dividing the coefficients of the form in a diagonal basis by e.g. [L05, VI.2.5(2)], so there are only finitely many places to check. Over these ",TO2(relevantPrimes,"relevant primes"), ", isotropy of a form ", TEX///$\beta \in \text{GW}(\mathbb{Q})$///, " over ", TEX///$\mathbb{Q}_p$///," is equivalent to the statement that ", TEX///$(-1,-\text{disc}(\beta))_p = H(\beta)$///, " where ", TEX///$H(\beta)$///, " denotes the ", TO2(HasseWittInvariant,"Hasse-Witt invariant"), " attached to ", TEX///$\beta$///, " and ", TEX///$(-,-)_p$///," is the ", TO2(HilbertSymbol, "Hilbert Symbol"), "."},
-    PARA{"A binary form ", TEX///$q$///, " is isotropic if and only if it is isomorphic to the hyperbolic form, which implies in particular that the rank, ", TO2(signature,"signature"), ", and ", TO2(integralDiscriminant,"discriminant"), " of ", TEX///$q$///, " agree with that of ", TEX///$\mathbb{H}=\langle 1,-1\rangle$///, ". " },
+    PARA{"A binary form ", TEX///$q$///, " is isotropic if and only if it is isomorphic to the hyperbolic form, which implies in particular that the rank, ", TO2(getSignature,"signature"), ", and ", TO2(integralDiscriminant,"discriminant"), " of ", TEX///$q$///, " agree with that of ", TEX///$\mathbb{H}=\langle 1,-1\rangle$///, ". " },
     PARA{EM "Citations:"},
     UL{
 	

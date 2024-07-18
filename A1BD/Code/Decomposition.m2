@@ -2,17 +2,17 @@
 -- Output: A form < a > so that q + < -a > has anisotropic dimension d - 1
 -- Note: This is Koprowski/Rothkegel's Algorithm 5 in the case of QQ
 
-QQanisotropicDimension4 = method()
-QQanisotropicDimension4 GrothendieckWittClass := GrothendieckWittClass => beta -> (
+reduceAnisotropicPartQQDimension4 = method()
+reduceAnisotropicPartQQDimension4 GrothendieckWittClass := GrothendieckWittClass => beta -> (
     if not (getAnisotropicDimensionQQ(beta) >= 4) then error "anisotropic dimension of form is not >= 4";
     
-    -- If the signature is non-negative then return < 1 >
-    if signature(beta) >= 0 then (
+    -- If the getSignature is non-negative then return < 1 >
+    if getSignature(beta) >= 0 then (
 	return makeDiagonalForm(QQ,1);
 	);
     
     -- Otherwise return < -1 >
-    if signature(beta) < 0 then (
+    if getSignature(beta) < 0 then (
 	return makeDiagonalForm(QQ,-1);        
         );	
     )
@@ -21,8 +21,8 @@ QQanisotropicDimension4 GrothendieckWittClass := GrothendieckWittClass => beta -
 -- Output: A form < a > so that q + < -a > has anisotropic dimension 2
 -- Note: This is Koprowski/Rothkegel's Algorithm 7 in the case of QQ
 
-QQanisotropicDimension3 = method()
-QQanisotropicDimension3 GrothendieckWittClass := GrothendieckWittClass => beta -> (
+reduceAnisotropicPartQQDimension3 = method()
+reduceAnisotropicPartQQDimension3 GrothendieckWittClass := GrothendieckWittClass => beta -> (
     if not (getAnisotropicDimensionQQ(beta) == 3) then error "anisotropic dimension of form is not 3";
 
     d := integralDiscriminant(beta);
@@ -54,11 +54,11 @@ QQanisotropicDimension3 GrothendieckWittClass := GrothendieckWittClass => beta -
 -- Output: The anisotropic part of q
 -- Note: This is Koprowski/Rothkegel's Algorithm 8 in the case of QQ
 
-QQanisotropicDimension2 = method()
-QQanisotropicDimension2 GrothendieckWittClass := GrothendieckWittClass => beta -> (
+getAnisotropicPartQQDimension2 = method()
+getAnisotropicPartQQDimension2 GrothendieckWittClass := GrothendieckWittClass => beta -> (
     if not (getAnisotropicDimensionQQ(beta) == 2) then error "anisotropic dimension of form is not 2";
 
-    n := rankForm beta;
+    n := getRank beta;
 
     -- Shortcut: if the form has anisotropic dimension 2 and the form is dimension 2, return the form itself
     if n == 2 then return beta; 
@@ -102,11 +102,11 @@ QQanisotropicDimension2 GrothendieckWittClass := GrothendieckWittClass => beta -
 	-- Step 5b / 5f: 
 	W = matrix(W);
     	if (d < 0) then (
-	    if abs(signature(q)) != 2 then error "signature isn't pm 2";
-	    if (signature(q) == 2) then (
+	    if abs(getSignature(q)) != 2 then error "getSignature isn't pm 2";
+	    if (getSignature(q) == 2) then (
 		W = matrix(QQ,{{0}}) || W;
 		);
-	    if (signature(q) == -2) then (
+	    if (getSignature(q) == -2) then (
 		W = matrix(QQ,{{1}}) || W;
 	        );
 	    );
@@ -162,10 +162,10 @@ QQanisotropicDimension2 GrothendieckWittClass := GrothendieckWittClass => beta -
 -- Input: A Grothendieck-Witt class representing a quadratic form over QQ
 -- Output: The Grothendieck-Witt class representing the anisotropic part of this form
 
-QQanisotropicPart = method()
-QQanisotropicPart GrothendieckWittClass := GrothendieckWittClass => beta -> (
+getAnisotropicPartQQ = method()
+getAnisotropicPartQQ GrothendieckWittClass := GrothendieckWittClass => beta -> (
     beta = diagonalClass beta;
-    n := rankForm beta;
+    n := getRank beta;
     
     -- If the form is anisotropic 
     if getAnisotropicDimension(beta) == n then return beta;
@@ -175,19 +175,19 @@ QQanisotropicPart GrothendieckWittClass := GrothendieckWittClass => beta -> (
     alpha := 1;
 
     while getAnisotropicDimension(beta) >= 4 do (
-	outputForm = addGw(outputForm,QQanisotropicDimension4(beta));
-	alpha = ((QQanisotropicDimension4(beta)).matrix)_(0,0);	
+	outputForm = addGw(outputForm,reduceAnisotropicPartQQDimension4(beta));
+	alpha = ((reduceAnisotropicPartQQDimension4(beta)).matrix)_(0,0);	
 	beta = addGw(beta, makeDiagonalForm(QQ,((-1)*alpha)));
 	);
     
     if getAnisotropicDimension(beta) == 3 then (
-	outputForm = addGw(outputForm,QQanisotropicDimension3(beta));
-	alpha = ((QQanisotropicDimension3(beta)).matrix)_(0,0);	
+	outputForm = addGw(outputForm,reduceAnisotropicPartQQDimension3(beta));
+	alpha = ((reduceAnisotropicPartQQDimension3(beta)).matrix)_(0,0);	
 	beta = addGw(beta, makeDiagonalForm(QQ,((-1)*alpha)));
 	);
     
     if getAnisotropicDimension(beta) == 2 then (
-        outputForm = addGw(outputForm, QQanisotropicDimension2(beta));
+        outputForm = addGw(outputForm, getAnisotropicPartQQDimension2(beta));
         );
     
     if getAnisotropicDimension(beta) == 1 then (
@@ -200,8 +200,8 @@ QQanisotropicPart GrothendieckWittClass := GrothendieckWittClass => beta -> (
 -- Input: A symmetric matrix representing a quadratic form or a GrothendieckWittClass; over QQ, RR, CC, or a finite field of characteristic not 2
 -- Output: A symmetric matrix or GrothendieckWittClass that is the anisotropic part of the input
 
-anisotropicPart = method()
-anisotropicPart Matrix := Matrix => A -> (
+getAnisotropicPart = method()
+getAnisotropicPart Matrix := Matrix => A -> (
     k := ring A;
     -- Ensure base field is supported
     if not (instance(k,ComplexField) or instance(k,RealField) or k === QQ or (instance(k, GaloisField) and k.char != 2)) then (
@@ -221,8 +221,8 @@ anisotropicPart Matrix := Matrix => A -> (
     --Over RR, the anisotropic part consists of the positive entries in excess of the number of negative entries, or vice versa
     else if instance(k,RealField) then (
         diagonalA := congruenceDiagonalize A;
-        posEntries := numPosDiagEntries diagonalA;
-        negEntries := numNegDiagEntries diagonalA;
+        posEntries := countPosDiagEntries diagonalA;
+        negEntries := countNegDiagEntries diagonalA;
         if (posEntries > negEntries) then (
             return id_(RR^(posEntries-negEntries));
             )
@@ -233,28 +233,28 @@ anisotropicPart Matrix := Matrix => A -> (
             return diagonalMatrix(RR,{});
             );
         )
-    -- Over QQ, call anisotropicPartQQ
+    -- Over QQ, call getAnisotropicPartQQ
     else if k === QQ then (
-        return (QQanisotropicPart(gwClass(nondegeneratePartDiagonal(A)))).matrix;
+        return (getAnisotropicPartQQ(gwClass(nondegeneratePartDiagonal(A)))).matrix;
         )
     -- Over a finite field, if the anisotropic dimension is 1, then the form is either < 1 > or < e >, where e is any nonsquare representative,
     -- and if the anisotropic dimension is 2 then the form is <1,-e>
     else if (instance(k, GaloisField) and k.char != 2) then (
         diagA := congruenceDiagonalize(A);
         if getAnisotropicDimension(A) == 1 then (
-            return matrix(k,{{sub((-1)^((rankForm(diagA)-1)/2),k)*det(nondegeneratePartDiagonal(diagA))}});
+            return matrix(k,{{sub((-1)^((getRank(diagA)-1)/2),k)*det(nondegeneratePartDiagonal(diagA))}});
             )
         else if getAnisotropicDimension(A) == 0 then (
             return diagonalMatrix(k,{});
             )
         else (
-            return matrix(k,{{1,0},{0,sub((-1)^((rankForm(diagA)-2)/2),k)*det(nondegeneratePartDiagonal(diagA))}});
+            return matrix(k,{{1,0},{0,sub((-1)^((getRank(diagA)-2)/2),k)*det(nondegeneratePartDiagonal(diagA))}});
             );
         );
     )
 
-anisotropicPart GrothendieckWittClass := GrothendieckWittClass => alpha -> (
-    gwClass anisotropicPart(alpha.matrix)
+getAnisotropicPart GrothendieckWittClass := GrothendieckWittClass => alpha -> (
+    gwClass getAnisotropicPart(alpha.matrix)
     )
 
 ---------------------------------------
@@ -263,12 +263,12 @@ anisotropicPart GrothendieckWittClass := GrothendieckWittClass => alpha -> (
 
 -- Input: A Grothendieck-Witt class beta over a field kk
 -- Output: A simplified diagonal representative of beta
-sumDecompositionVerbose = method()
-sumDecompositionVerbose GrothendieckWittClass := (GrothendieckWittClass, String) => beta -> (
+getSumDecompositionVerbose = method()
+getSumDecompositionVerbose GrothendieckWittClass := (GrothendieckWittClass, String) => beta -> (
     -- Get base field of beta
     kk := baseField beta;
 
-    if rankForm(beta) == 0 then (
+    if getRank(beta) == 0 then (
 	return (gwClass(diagonalMatrix(kk,{})),"empty form");
 	);
     
@@ -282,9 +282,9 @@ sumDecompositionVerbose GrothendieckWittClass := (GrothendieckWittClass, String)
 	);
     
     hyperbolicPart := makeHyperbolicForm(kk,2*w);
-    alpha := anisotropicPart beta;
+    alpha := getAnisotropicPart beta;
     
-    if rankForm(alpha) > 0 then (
+    if getRank(alpha) > 0 then (
         D := diagonalEntries alpha;
         for i from 0 to (length(D) - 1) do (
 	    outputString = outputString | "+ <" | toString(D_i) | ">";
@@ -298,16 +298,16 @@ sumDecompositionVerbose GrothendieckWittClass := (GrothendieckWittClass, String)
 -- Input: A Grothendieck-Witt class beta over a field k
 -- Output: A simplified diagonal representative of beta
 
-sumDecomposition = method()
-sumDecomposition GrothendieckWittClass := GrothendieckWittClass => beta -> (
-    beta.cache.diagonalClass = (sumDecompositionVerbose(beta))_0;
-    (sumDecompositionVerbose(beta))_0
+getSumDecomposition = method()
+getSumDecomposition GrothendieckWittClass := GrothendieckWittClass => beta -> (
+    beta.cache.diagonalClass = (getSumDecompositionVerbose(beta))_0;
+    (getSumDecompositionVerbose(beta))_0
     )
 
 -- Input: A Grothendieck-Witt class beta over a field k
 -- Output: The decomposition as a sum of hyperbolic and rank one forms
 
-sumDecompositionString = method()
-sumDecompositionString GrothendieckWittClass := String => beta -> (
-    (sumDecompositionVerbose(beta))_1
+getSumDecompositionString = method()
+getSumDecompositionString GrothendieckWittClass := String => beta -> (
+    (getSumDecompositionVerbose(beta))_1
     )

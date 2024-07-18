@@ -18,12 +18,12 @@ document{
     gwIsomorphic(alpha,beta)
     ///,
     PARA{"The two forms are isomorphic since they can be diagonalized, after which they can be rewritten as the identity matrix after a change of basis, since every nonzero element is a square class over ", TEX///$\mathbb{C}$///, " (the same is true for any quadratically closed field). Thus we have that the ", EM "rank", " of a form completely determines it over the complex numbers. That is, it provides an isomorphism ", TEX///$\text{GW}(\mathbb{C}) \to \mathbb{Z}$/// ,"."},
-    PARA{"Over the reals, the story is a bit different. Since there are two classes over the reals, ", TEX///$ \mathbb{R}^\times / \left(\mathbb{R}^\times\right)^2 \cong \left\{\pm 1\right\}$///," we have a further invariant which classifies symmetric bilinear forms, called the ", TO2(signature, "signature"), ". This is computed as first diagonalizing, then taking the number of positive entries appearing on the diagonal minus the number of negative entries appearing on the diagonal."},
+    PARA{"Over the reals, the story is a bit different. Since there are two classes over the reals, ", TEX///$ \mathbb{R}^\times / \left(\mathbb{R}^\times\right)^2 \cong \left\{\pm 1\right\}$///," we have a further invariant which classifies symmetric bilinear forms, called the ", TO2(getSignature, "signature"), ". This is computed as first diagonalizing, then taking the number of positive entries appearing on the diagonal minus the number of negative entries appearing on the diagonal."},
     EXAMPLE lines ///
     gamma = gwClass(matrix(RR,{{1,0,0},{0,-1,0},{0,0,1}}));
-    signature(gamma)
+    getSignature(gamma)
     ///,
-    PARA{"Rank and signature completely classify symmetric bilinear forms over the reals."},
+    PARA{"Rank and getSignature completely classify symmetric bilinear forms over the reals."},
     EXAMPLE lines ///
     delta = gwClass(matrix(RR,{{0,0,1},{0,1,0},{1,0,0}}));
     gwIsomorphic(gamma,delta)
@@ -63,6 +63,6 @@ document{
 	{"[L05] T.Y. Lam, ", EM "Introduction to quadratic forms over fields,", " American Mathematical Society, 2005."},
 	{"[MH73] Milnor and Husemoller, ", EM "Symmetric bilinear forms,", " Springer-Verlag, 1973."},
     },
-    SeeAlso => {"signature", "sumDecomposition", "sumDecompositionString"}
+    SeeAlso => {"getSignature", "getSumDecomposition", "getSumDecompositionString"}
 }
 

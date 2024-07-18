@@ -68,5 +68,5 @@ document {
 	EXAMPLE lines ///
         makeHyperbolicForm(RR,4)
 	///,
-    SeeAlso => {"isAnisotropic", "sumDecomposition", "sumDecompositionString"}
+    SeeAlso => {"isAnisotropic", "getSumDecomposition", "getSumDecompositionString"}
 }

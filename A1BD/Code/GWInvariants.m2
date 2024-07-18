@@ -5,21 +5,21 @@
 -- Input: A Grothendieck-Witt class
 -- Output: The rank of a quadratic form representing the Grothendieck-Witt class
 
-rankForm = method()
-rankForm GrothendieckWittClass := ZZ => alpha -> (
+getRank = method()
+getRank GrothendieckWittClass := ZZ => alpha -> (
     numRows(alpha.matrix)
     )
 
-rankForm Matrix := ZZ => M -> (
+getRank Matrix := ZZ => M -> (
     rank M
     )
 
 -- Input: A symmetric matrix over QQ or RR
 -- Output: The number of positive entries on the diagonal of a diagonal matrix to which it is congruent
--- Note: numPosDiagEntries is *not* included as a method in the A1BrowerDegrees package
+-- Note: countPosDiagEntries is *not* included as a method in the A1BrowerDegrees package
 
-numPosDiagEntries = method()
-numPosDiagEntries Matrix := Matrix => A -> (
+countPosDiagEntries = method()
+countPosDiagEntries Matrix := Matrix => A -> (
     -- Ensure matrix is symmetric
     if not isSquareAndSymmetric(A) then error "Matrix is not symmetric";
     -- Ensure base field is QQ or RR
@@ -41,10 +41,10 @@ numPosDiagEntries Matrix := Matrix => A -> (
 
 -- Input: A diagonal matrix over QQ or RR
 -- Output: The number of positive entries on the diagonal of a diagonal matrix to which it is congruent
--- Note: numPosDiagEntries is *not* included as a method in the A1BrowerDegrees package
+-- Note: countPosDiagEntries is *not* included as a method in the A1BrowerDegrees package
 
-numNegDiagEntries = method()
-numNegDiagEntries Matrix := Matrix => A -> (
+countNegDiagEntries = method()
+countNegDiagEntries Matrix := Matrix => A -> (
     -- Ensure matrix is symmetric
     if not isSquareAndSymmetric(A) then error "Matrix is not symmetric";
     -- Ensure base field is QQ or RR
@@ -66,28 +66,26 @@ numNegDiagEntries Matrix := Matrix => A -> (
 
 -- Input: A Grothendieck-Witt class defined over QQ or RR
 -- Output: The number of positive entries on the diagonal of a diagonal matrix representing the Grothendieck-Witt class
--- Note: numPosEntries is *not* included as a method in the A1BrowerDegrees package
+-- Note: countPosDiagEntries is *not* included as a method in the A1BrowerDegrees package
 
-numPosEntries = method()
-numPosEntries GrothendieckWittClass := ZZ => beta -> (
-    numPosDiagEntries(beta.matrix)
+countPosDiagEntries GrothendieckWittClass := ZZ => beta -> (
+    countPosDiagEntries(beta.matrix)
     )
 
 -- Input: A Grothendieck-Witt class beta defined over QQ or RR
 -- Output: The number of negative entries on the diagonal of a diagonal matrix representing the Grothendieck-Witt class
--- Note: numNegEntries is *not* included as a method in the A1BrowerDegrees package
+-- Note: countNegDiagEntries is *not* included as a method in the A1BrowerDegrees package
 
-numNegEntries = method()
-numNegEntries GrothendieckWittClass := ZZ => beta -> (
-    numNegDiagEntries(beta.matrix)
+countNegDiagEntries GrothendieckWittClass := ZZ => beta -> (
+    countNegDiagEntries(beta.matrix)
     )
 
 -- Input: A Grothendieck-Witt class beta defined over QQ or RR
--- Output: The signature of beta
+-- Output: The getSignature of beta
 
-signature = method()
-signature GrothendieckWittClass := ZZ => beta -> (
-    numPosEntries(beta) - numNegEntries(beta)
+getSignature = method()
+getSignature GrothendieckWittClass := ZZ => beta -> (
+    countPosDiagEntries(beta) - countNegDiagEntries(beta)
     )
 
 ---------------------------
