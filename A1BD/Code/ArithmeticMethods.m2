@@ -6,13 +6,13 @@
 -- Output: The smallest magnitude integer in the same integer square class as the input
 
 squarefreePart = method()
-squarefreePart (ZZ) := (ZZ) => (n) -> (
+squarefreePart ZZ := ZZ => n -> (
     if n == 0 then return 0;
     tableOfPrimeFactors := hashTable(factor(abs(n)));
     return sub(n/abs(n),ZZ)*product(apply(keys(tableOfPrimeFactors),p -> p^(tableOfPrimeFactors#p%2)));
     )
 
-squarefreePart (QQ) := (ZZ) => (n) -> (
+squarefreePart QQ := ZZ => n -> (
     squarefreePart(numerator(n)*denominator(n))
     )
 
@@ -20,12 +20,12 @@ squarefreePart (QQ) := (ZZ) => (n) -> (
 -- Output: A list of prime factors of n
 
 primeFactors = method()
-primeFactors (ZZ) := List => (n) -> (
+primeFactors ZZ := List => n -> (
     if abs(n) == 1 then return {};
     sort keys(hashTable(factor(abs(n))))
     )
 
-primeFactors (QQ) := List => (n) -> (
+primeFactors QQ := List => n -> (
     if not liftable(n,ZZ) then error "tried to take prime factors of a rational";
     primeFactors(sub(n,ZZ))   
     )
@@ -34,7 +34,7 @@ primeFactors (QQ) := List => (n) -> (
 -- Output: The p-adic valuation of the integer or rational number
 
 padicValuation = method()
-padicValuation (ZZ, ZZ) := (ZZ) => (n, p) -> (
+padicValuation (ZZ, ZZ) := ZZ => (n, p) -> (
     if n == 0 then error "Trying to find prime factorization of 0";
     H := hashTable(factor(abs(n)));
     if H#?p then (
@@ -45,7 +45,7 @@ padicValuation (ZZ, ZZ) := (ZZ) => (n, p) -> (
 	);
     )
 
-padicValuation (QQ, ZZ) := (ZZ) => (q, p) -> (
+padicValuation (QQ, ZZ) := ZZ => (q, p) -> (
     padicValuation(numerator(q),p) - padicValuation(denominator(q),p)
     )
 
@@ -53,7 +53,7 @@ padicValuation (QQ, ZZ) := (ZZ) => (q, p) -> (
 -- Output: Boolean that gives whether the element is a square
 
 legendreBoolean = method()
-legendreBoolean (RingElement) := (Boolean) => a -> (
+legendreBoolean RingElement := Boolean => a -> (
     if not instance(ring(a),GaloisField) then error "legendreBoolean only works for Galois fields";
     q := (ring a).order;
     -- Detects if a is a square in F_q
@@ -65,7 +65,7 @@ legendreBoolean (RingElement) := (Boolean) => a -> (
 -- Note: The terminology "Square Symbol" comes from John Voight's Quaternion Algebra book
 
 squareSymbol = method()
-squareSymbol(ZZ, ZZ) := (ZZ) => (a, p) -> (
+squareSymbol (ZZ, ZZ) := ZZ => (a, p) -> (
     x := getSymbol "x";
     R := GF(p, Variable => x);
     e1 := padicValuation(a,p);
@@ -89,7 +89,7 @@ squareSymbol(ZZ, ZZ) := (ZZ) => (a, p) -> (
 -- Input: Two integers a and b, and a prime number p
 -- Output: Boolean that gives whether a and b differ by a square in Q_p
 equalUptoPadicSquare = method()
-equalUptoPadicSquare (ZZ, ZZ, ZZ) := (Boolean) => (a, b, p) -> (
+equalUptoPadicSquare (ZZ, ZZ, ZZ) := Boolean => (a, b, p) -> (
     
 -- One has to separately handle the cases when p is odd and when p = 2
 
@@ -128,7 +128,7 @@ equalUptoPadicSquare (ZZ, ZZ, ZZ) := (Boolean) => (a, b, p) -> (
 -- Output: Boolean that gives whether a is a square in QQ_p
 
 isPadicSquare = method()
-isPadicSquare (ZZ, ZZ) := (Boolean) => (a, p) -> (
+isPadicSquare (ZZ, ZZ) := Boolean => (a, p) -> (
     equalUptoPadicSquare(a,1,p)
     )
 
@@ -140,7 +140,7 @@ isPadicSquare (ZZ, ZZ) := (Boolean) => (a, p) -> (
 -- Output: A list of basis elements of the local k-algebra Q_p(f) = R[x]_p/(f)
 
 localAlgebraBasis = method()
-localAlgebraBasis (List, Ideal) := (List) => (L,p) -> (
+localAlgebraBasis (List, Ideal) := List => (L,p) -> (
     
     -- Verify that the ideal p is prime
     if not isPrime(p) then error "ideal is not prime";
@@ -162,7 +162,7 @@ localAlgebraBasis (List, Ideal) := (List) => (L,p) -> (
 -- Output: The rank of the global algebra as a k-vector space.
 
 rankGlobalAlgebra = method()
-rankGlobalAlgebra (List) := (ZZ) => (Endo) -> (
+rankGlobalAlgebra List := ZZ => Endo -> (
     
     -- Get the underlying field    
     kk := coefficientRing(ring(Endo#0));    
