@@ -56,7 +56,6 @@ export{
     --GrothendieckWittClasses.m2    
     "GrothendieckWittClass",
     "baseField",
-    "matrix",
     "gwClass",
     "gwAdd",
     "gwMultiply",
