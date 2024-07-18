@@ -6,7 +6,7 @@
 -- Output: Boolean that gives whether the matrix is square
 
 isSquare = method()
-isSquare (Matrix) := Boolean => M -> (
+isSquare Matrix := Boolean => M -> (
     numRows(M) == numColumns(M)
     )
 
@@ -14,7 +14,7 @@ isSquare (Matrix) := Boolean => M -> (
 -- Output: Boolean that gives whether the matrix is square and symmetric
 
 isSquareAndSymmetric = method()
-isSquareAndSymmetric (Matrix) := Boolean => M -> (
+isSquareAndSymmetric Matrix := Boolean => M -> (
     transpose(M) == M
     )
 
@@ -22,7 +22,7 @@ isSquareAndSymmetric (Matrix) := Boolean => M -> (
 -- Output: Boolean that gives whether the matrix represents a degenerate bilinear form
 
 isDegenerate = method()
-isDegenerate (Matrix) := Boolean => M -> (
+isDegenerate Matrix := Boolean => M -> (
     if not isSquareAndSymmetric(M) then error "matrix is not symmetric";
     if numRows(M) == 0 then (
 	return false;
@@ -36,7 +36,7 @@ isDegenerate (Matrix) := Boolean => M -> (
 -- Output: Boolean that gives whether the matrix represents a nondegenerate bilinear form
 
 isNondegenerate = method()
-isNondegenerate (Matrix) := Boolean => M -> (
+isNondegenerate Matrix := Boolean => M -> (
     not isDegenerate(M)
     )
  
@@ -44,7 +44,7 @@ isNondegenerate (Matrix) := Boolean => M -> (
 -- Output: Boolean that gives whether the matrix is diagonal
 
 isDiagonal = method()
-isDiagonal (Matrix) := Boolean => M -> (
+isDiagonal Matrix := Boolean => M -> (
 
     if not isSquare(M) then error "matrix is not a square";
 
@@ -64,7 +64,7 @@ isDiagonal (Matrix) := Boolean => M -> (
 -- Output: A diagonal matrix congruent to the original matrix
 
 congruenceDiagonalize = method()
-congruenceDiagonalize (Matrix) := (Matrix) => (AnonMut) -> (
+congruenceDiagonalize Matrix := Matrix => AnonMut -> (
     k := ring AnonMut;
     if not isField(k) then error "expected matrix entries from a field";
     if not isSquareAndSymmetric(AnonMut) then error "matrix is not symmetric";
@@ -115,7 +115,7 @@ congruenceDiagonalize (Matrix) := (Matrix) => (AnonMut) -> (
 -- Output: A diagonal matrix congruent to the original matrix, with squarefree entries on the diagonal
 
 congruenceDiagonalizeSimplify = method()
-congruenceDiagonalizeSimplify (Matrix) := (Matrix) => (AnonMut) -> (
+congruenceDiagonalizeSimplify Matrix := Matrix => AnonMut -> (
     k := ring AnonMut;
     if not (instance(k,ComplexField) or instance(k,RealField) or k === QQ or (instance(k, GaloisField) and k.char != 2)) then (
         error "Base field not supported; only implemented over QQ, RR, CC, and finite fields of characteristic not 2";
@@ -183,7 +183,7 @@ congruenceDiagonalizeSimplify (Matrix) := (Matrix) => (AnonMut) -> (
 -- Output: A diagonal matrix representing the nondegenerate part of the symmetric bilinear form
 
 nondegeneratePartDiagonal = method()
-nondegeneratePartDiagonal (Matrix) := (Matrix) => (A) -> (
+nondegeneratePartDiagonal Matrix := Matrix => A -> (
     diagA := congruenceDiagonalize A;
     i := 0;
     while (i < numRows(diagA)) do (
