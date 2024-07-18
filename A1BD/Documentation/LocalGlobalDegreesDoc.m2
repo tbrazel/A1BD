@@ -40,7 +40,7 @@ document {
     globalA1Degree(f);
     localA1Degree(f,point1);
     localA1Degree(f,point2);
-    gwIsomorphic(globalA1Degree(f), gwAdd(localA1Degree(f,point1), localA1Degree(f,point2)));
+    gwIsomorphic(globalA1Degree(f), addGw(localA1Degree(f,point1), localA1Degree(f,point2)));
     ///,
     
     PARA{EM "Citations:"},
@@ -80,7 +80,7 @@ document {
     r=ideal {z_1-1,z_2^2-(9/85)};
     f1LDq= localA1Degree(f1,q)
     f1LDr= localA1Degree(f1,r)
-    f1LDsum = gwAdd(f1LDq, f1LDr)
+    f1LDsum = addGw(f1LDq, f1LDr)
     ///,
     PARA{"The sum of the local A1-degrees is equal to the global A1-degree:"},
     EXAMPLE lines///

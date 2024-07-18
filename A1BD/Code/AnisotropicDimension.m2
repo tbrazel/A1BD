@@ -60,7 +60,7 @@ anisotropicDimensionQp (GrothendieckWittClass, ZZ) := ZZ => (beta, p) -> (
     
     if odd rankFormBeta then (
 	c := (-1)^(rankFormBeta*(rankFormBeta+1)/2) * integralDiscriminant(beta);
-	gamma := gwAdd(beta, diagonalForm(QQ,(c)));
+	gamma := addGw(beta, diagonalForm(QQ,(c)));
 	if isHyperbolicQp(gamma,p) then return 1;
 	return 3;
 	);

@@ -66,8 +66,8 @@ baseField GrothendieckWittClass := Ring => beta -> (
 -- Input: Two Grothendieck-Witt classes beta and gamma
 -- Output: The direct sum of beta and gamma
 
-gwAdd = method()
-gwAdd (GrothendieckWittClass, GrothendieckWittClass) := GrothendieckWittClass => (beta, gamma) -> (
+addGw = method()
+addGw (GrothendieckWittClass, GrothendieckWittClass) := GrothendieckWittClass => (beta, gamma) -> (
     Kb := baseField beta;
     Kg := baseField gamma;
     

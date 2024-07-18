@@ -69,7 +69,7 @@ QQanisotropicDimension2 GrothendieckWittClass := GrothendieckWittClass => beta -
     q := beta;
     if (w % 4) != 0 then (
 	w = w % 4;
-	q = gwAdd(q, hyperbolicForm(QQ,2*(4-w)));
+	q = addGw(q, hyperbolicForm(QQ,2*(4-w)));
 	n = n + 2*(4-w);
 	);
 
@@ -175,23 +175,23 @@ QQanisotropicPart GrothendieckWittClass := GrothendieckWittClass => beta -> (
     alpha := 1;
 
     while anisotropicDimension(beta) >= 4 do (
-	outputForm = gwAdd(outputForm,QQanisotropicDimension4(beta));
+	outputForm = addGw(outputForm,QQanisotropicDimension4(beta));
 	alpha = ((QQanisotropicDimension4(beta)).matrix)_(0,0);	
-	beta = gwAdd(beta, diagonalForm(QQ,((-1)*alpha)));
+	beta = addGw(beta, diagonalForm(QQ,((-1)*alpha)));
 	);
     
     if anisotropicDimension(beta) == 3 then (
-	outputForm = gwAdd(outputForm,QQanisotropicDimension3(beta));
+	outputForm = addGw(outputForm,QQanisotropicDimension3(beta));
 	alpha = ((QQanisotropicDimension3(beta)).matrix)_(0,0);	
-	beta = gwAdd(beta, diagonalForm(QQ,((-1)*alpha)));
+	beta = addGw(beta, diagonalForm(QQ,((-1)*alpha)));
 	);
     
     if anisotropicDimension(beta) == 2 then (
-        outputForm = gwAdd(outputForm, QQanisotropicDimension2(beta));
+        outputForm = addGw(outputForm, QQanisotropicDimension2(beta));
         );
     
     if anisotropicDimension(beta) == 1 then (
-	outputForm = gwAdd(outputForm, diagonalForm(QQ,((-1)^((n-1)/2))*integralDiscriminant(beta)));
+	outputForm = addGw(outputForm, diagonalForm(QQ,((-1)^((n-1)/2))*integralDiscriminant(beta)));
 	);
     
     outputForm
@@ -292,7 +292,7 @@ sumDecompositionVerbose GrothendieckWittClass := (GrothendieckWittClass, String)
 	);
     
     -- Return a simplified form of beta
-    return (gwAdd(alpha,hyperbolicPart),outputString);
+    return (addGw(alpha,hyperbolicPart),outputString);
     )    
 
 -- Input: A Grothendieck-Witt class beta over a field k

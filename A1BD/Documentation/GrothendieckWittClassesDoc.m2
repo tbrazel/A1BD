@@ -75,9 +75,9 @@ document {
 
 
 document {
-    Key => {gwAdd, (gwAdd, GrothendieckWittClass, GrothendieckWittClass)},
+    Key => {addGw, (addGw, GrothendieckWittClass, GrothendieckWittClass)},
     Headline => "the direct sum of two Grothendieck-Witt classes",     
-    Usage => "gwAdd(beta, gamma)",
+    Usage => "addGw(beta, gamma)",
 	Inputs => {
 	    GrothendieckWittClass => "beta" => {"the isomorphism class of a non-degenerate symmetric bilinear form represented by a matrix ", TT "M"},
 	    GrothendieckWittClass => "gamma" => {"the isomorphism class of a non-degenerate symmetric bilinear form represented by a matrix ", TT "N"},
@@ -91,7 +91,7 @@ document {
 		 N = matrix(QQ, {{1, 2}, {2, 5}});
 		 beta = gwClass(M);
 		 gamma = gwClass(N);
-    	    	 gwAdd(beta, gamma)
+    	    	 addGw(beta, gamma)
 	 	 ///,
     SeeAlso => {"GrothendieckWittClass", "gwClass", "gwMultiply"}
 }
@@ -115,6 +115,6 @@ document {
 		 gamma = gwClass(N);
     	    	 gwMultiply(beta, gamma)
 	 	 ///,
-    SeeAlso => {"GrothendieckWittClass", "gwClass", "gwAdd"}
+    SeeAlso => {"GrothendieckWittClass", "gwClass", "addGw"}
 }
 
