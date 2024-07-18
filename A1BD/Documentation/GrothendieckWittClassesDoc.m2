@@ -27,7 +27,7 @@ document{
     }
 
 document {
-    Key => {makeGWClass, (makeGWClass, Matrix), (matrix, GrothendieckWittClass), (isWellDefined, Matrix)},
+    Key => {makeGWClass, (makeGWClass, Matrix), (getMatrix, GrothendieckWittClass), (isWellDefined, Matrix)},
 	Headline => "the Grothendieck Witt class of a symmetric matrix",
 	Usage => "makeGWClass(M)",
 	Inputs => {
