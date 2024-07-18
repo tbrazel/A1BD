@@ -51,7 +51,7 @@ document{
 	},
     PARA{"By Witt decomposition, any form decomposes uniquely as ", TEX///$\beta \cong k \mathbb{H} \oplus \beta_a$///," where the form ", TEX///$\beta_a$///," is anisotropic. The rank of ", TEX///$\beta_a$///, " is called the ", EM "anisotropic dimension", " of ", TEX///$\beta$///, "."},
     PARA{"The anisotropic dimension of a form defined over the rationals is the maximum of the ", TO2(getAnisotropicDimensionQQp,"anistropic dimension at each of the completions"), " of ", TEX///$\mathbb{Q}$///, "."},
-    SeeAlso => {"getWittIndex", "getAnisotropicDimensionQQp", "getAnisotropicDimension"}   
+    SeeAlso => {"getWittIndex", "getAnisotropicDimensionQQp","getAnisotropicPart"}   
 }
 
 

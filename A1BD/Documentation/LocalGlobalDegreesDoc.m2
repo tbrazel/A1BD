@@ -37,10 +37,10 @@ document {
     f = {x^3 - x^2 - y, y};
     point1 = ideal{x-1, y};
     point2 = ideal{x, y};
-    getGlobalA1Degree(f);
-    getLocalA1Degree(f,point1);
-    getLocalA1Degree(f,point2);
-    isIsomorphicForm(getGlobalA1Degree(f), addGW(getLocalA1Degree(f,point1), getLocalA1Degree(f,point2)));
+    getGlobalA1Degree(f)
+    getLocalA1Degree(f,point1)
+    getLocalA1Degree(f,point2)
+    isIsomorphicForm(getGlobalA1Degree(f), addGW(getLocalA1Degree(f,point1), getLocalA1Degree(f,point2)))
     ///,
     
     PARA{EM "Citations:"},
