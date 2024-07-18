@@ -64,7 +64,7 @@ baseField GrothendieckWittClass := Ring => beta -> (
 -- Output: The direct sum of beta and gamma
 
 gwAdd = method()
-gwAdd(GrothendieckWittClass, GrothendieckWittClass) := GrothendieckWittClass => (beta, gamma) -> (
+gwAdd (GrothendieckWittClass, GrothendieckWittClass) := GrothendieckWittClass => (beta, gamma) -> (
     Kb := baseField beta;
     Kg := baseField gamma;
     
@@ -84,7 +84,7 @@ gwAdd(GrothendieckWittClass, GrothendieckWittClass) := GrothendieckWittClass => 
 -- Output: The tensor product of beta and gamma
 
 gwMultiply = method()
-gwMultiply(GrothendieckWittClass, GrothendieckWittClass) := GrothendieckWittClass => (beta, gamma) -> (
+gwMultiply (GrothendieckWittClass, GrothendieckWittClass) := GrothendieckWittClass => (beta, gamma) -> (
     Kb := baseField beta;
     Kg := baseField gamma;
     
