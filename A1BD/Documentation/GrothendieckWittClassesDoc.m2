@@ -24,6 +24,29 @@ document{
     EXAMPLE lines///
     beta.cache.getDiagonalClass
     ///,
+    PARA{"We additionally have the following methods which can be applied to Grothendieck Witt classes:"},
+    UL{
+	{TO2(getRank,"getRank"),": returns the rank of a form,"},
+	{TO2(getSignature,"getSignature"),": returns the signature of a form,"},
+	{TO2(getIntegralDiscriminant,"getIntegralDiscriminant"),": returns an integral representative for the signature of a form over the rationals,"},
+	{TO2(getHasseWittInvariant,"getHasseWittInvariant"),": returns the Hasse-Witt invariant for a form over the rationals at a particular prime,"},
+	{TO2(getAnisotropicDimension,"getAnisotropicDimension"),": returns the anisotropic dimension of a form,"},
+	{TO2(getAnisotropicPart,"getAnisotropicPart"),": returns the anisotropic part of a form,"},
+	{TO2(getSumDecomposition,"getSumDecomposition"),": returns a simplified diagonal representative of a form,"},
+	{TO2(getSumDecompositionString,"getSumDecompositionString"),": returns a string to quickly read a form,"},
+	},
+    PARA{"and Boolean methods for Grothendieck--Witt classes:"},
+    UL{
+	{TO2(isIsotropic,"isIsotropic"),": returns true if the form is isotropic,"},
+	{TO2(isAnisotropic,"isAnisotropic"),": returns true if the form is anisotropic."},
+	},
+    PARA{"Forms can be created via the following methods:"},
+    UL{
+	{TO2(makeDiagonalForm,"makeDiagonalForm"),": creates a diagonal form over a field out of an element or list of field elements,"},
+	{TO2(makeHyperbolicForm,"makeHyperbolicForm"),": creates a hyperbolic form over a field,"},
+	{TO2(makePfisterForm,"makePfisterForm"),": creates a Pfister form over a field out of an element or list of field elements."},
+	
+	},
     SeeAlso => {"makeGWClass","getDiagonalClass","getBaseField","getMatrix"},
     }
 
