@@ -6,19 +6,19 @@
 -- Output: The Grothendieck-Witt class represented by the diagonal form <a_1,...,a_n> 
 
 diagonalForm = method()
-diagonalForm(Ring,RingElement) := GrothendieckWittClass => (kk,a) -> (
+diagonalForm (Ring,RingElement) := GrothendieckWittClass => (kk,a) -> (
     gwClass matrix(kk,{{sub(a,kk)}})
     )
 
-diagonalForm(Ring,ZZ) := GrothendieckWittClass => (kk,a) -> (
+diagonalForm (Ring,ZZ) := GrothendieckWittClass => (kk,a) -> (
     gwClass matrix(kk,{{sub(a,kk)}})
     )
 
-diagonalForm(Ring,QQ) := GrothendieckWittClass => (kk,a) -> (
+diagonalForm (Ring,QQ) := GrothendieckWittClass => (kk,a) -> (
     gwClass matrix(kk,{{sub(a,kk)}})
     )
 
-diagonalForm(Ring, Sequence) := GrothendieckWittClass => (kk,L) -> (
+diagonalForm (Ring, Sequence) := GrothendieckWittClass => (kk,L) -> (
     -- Get the length of the input sequence
     n := #L;
     
@@ -33,19 +33,19 @@ diagonalForm(Ring, Sequence) := GrothendieckWittClass => (kk,L) -> (
     gwClass matrix(A)
     )
 
-diagonalForm(InexactFieldFamily,RingElement) := GrothendieckWittClass => (kk,a) -> (
+diagonalForm (InexactFieldFamily,RingElement) := GrothendieckWittClass => (kk,a) -> (
     gwClass matrix(kk,{{sub(a,kk)}})
     )
 
-diagonalForm(InexactFieldFamily,ZZ) := GrothendieckWittClass => (kk,a) -> (
+diagonalForm (InexactFieldFamily,ZZ) := GrothendieckWittClass => (kk,a) -> (
     gwClass matrix(kk,{{sub(a,kk)}})
     )
 
-diagonalForm(InexactFieldFamily,QQ) := GrothendieckWittClass => (kk,a) -> (
+diagonalForm (InexactFieldFamily,QQ) := GrothendieckWittClass => (kk,a) -> (
     gwClass matrix(kk,{{sub(a,kk)}})
     )
 
-diagonalForm(InexactFieldFamily, Sequence) := GrothendieckWittClass => (kk,L) -> (
+diagonalForm (InexactFieldFamily, Sequence) := GrothendieckWittClass => (kk,L) -> (
     -- Get the length of the input sequence
     n := #L;
     
@@ -68,7 +68,7 @@ hyperbolicForm Ring := GrothendieckWittClass => kk -> (
     gwClass matrix(kk,{{1,0},{0,-1}})
     )
 
-hyperbolicForm(Ring,ZZ) := GrothendieckWittClass => (kk,n) -> (
+hyperbolicForm (Ring,ZZ) := GrothendieckWittClass => (kk,n) -> (
     if odd n then error "entered rank is odd";
     H := matrix(kk,{{1,0},{0,-1}});
     m := sub(n/2,ZZ);
@@ -83,7 +83,7 @@ hyperbolicForm InexactFieldFamily := GrothendieckWittClass => kk -> (
     gwClass matrix(kk,{{1,0},{0,-1}})
     )
 
-hyperbolicForm(InexactFieldFamily,ZZ) := GrothendieckWittClass => (kk,n) -> (
+hyperbolicForm (InexactFieldFamily,ZZ) := GrothendieckWittClass => (kk,n) -> (
     if odd n then error "entered rank is odd";
     H := matrix(kk,{{1,0},{0,-1}});
     m := sub(n/2,ZZ);
@@ -98,19 +98,19 @@ hyperbolicForm(InexactFieldFamily,ZZ) := GrothendieckWittClass => (kk,n) -> (
 -- Output: The Pfister form <<a_1,...,a_n>>
 
 PfisterForm = method()
-PfisterForm(Ring,RingElement) := GrothendieckWittClass => (kk,a) -> (
+PfisterForm (Ring,RingElement) := GrothendieckWittClass => (kk,a) -> (
     diagonalForm(kk,(1,sub((-1)*a,kk)))
     )
 
-PfisterForm(Ring,ZZ) := GrothendieckWittClass => (kk,a) -> (
+PfisterForm (Ring,ZZ) := GrothendieckWittClass => (kk,a) -> (
     diagonalForm(kk,(1,sub((-1)*a,kk)))
     )
 
-PfisterForm(Ring,QQ) := GrothendieckWittClass => (kk,a) -> (
+PfisterForm (Ring,QQ) := GrothendieckWittClass => (kk,a) -> (
     diagonalForm(kk,(1,sub((-1)*a,kk)))
     )
 
-PfisterForm(Ring,Sequence) := GrothendieckWittClass => (kk,L) -> (
+PfisterForm (Ring,Sequence) := GrothendieckWittClass => (kk,L) -> (
     -- Get the length of the input sequence
     n := #L;
     
@@ -123,19 +123,19 @@ PfisterForm(Ring,Sequence) := GrothendieckWittClass => (kk,L) -> (
     outputForm
     )
 
-PfisterForm(InexactFieldFamily,RingElement) := GrothendieckWittClass => (kk,a) -> (
+PfisterForm (InexactFieldFamily,RingElement) := GrothendieckWittClass => (kk,a) -> (
     diagonalForm(kk,(1,sub((-1)*a,kk)))
     )
 
-PfisterForm(InexactFieldFamily,ZZ) := GrothendieckWittClass => (kk,a) -> (
+PfisterForm (InexactFieldFamily,ZZ) := GrothendieckWittClass => (kk,a) -> (
     diagonalForm(kk,(1,sub((-1)*a,kk)))
     )
 
-PfisterForm(InexactFieldFamily,QQ) := GrothendieckWittClass => (kk,a) -> (
+PfisterForm (InexactFieldFamily,QQ) := GrothendieckWittClass => (kk,a) -> (
     diagonalForm(kk,(1,sub((-1)*a,kk)))
     )
 
-PfisterForm(InexactFieldFamily,Sequence) := GrothendieckWittClass => (kk,L) -> (
+PfisterForm (InexactFieldFamily,Sequence) := GrothendieckWittClass => (kk,L) -> (
     -- Get the length of the input sequence
     n := #L;
     
