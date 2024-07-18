@@ -1,5 +1,5 @@
 document{
-    Key => GrothendieckWittClass,
+    Key => {GrothendieckWittClass, (net, GrothendieckWittClass),(texMath, GrothendieckWittClass)},
     Headline => "a new type, intended to capture the isomorphism class of an element of the Grothendieck-Witt ring of a base field",
     PARA {"A ", TT "GrothendieckWittClass" ," object is a type of ", TO2(HashTable, "HashTable"), " encoding the isomorphism class of a non-degenerate symmetric bilinear form ", TEX///$V \times V \to k$///, " over a field ", TEX///$k$///, "."},
     PARA{"Given any basis ", TEX///$e_1,\ldots,e_n$///, " for ", TEX///$V$///, " as a ", TEX///$k$///, "-vector space, we can encode the symmetric bilinear form ", TEX///$\beta$///, " by how it acts on basis elements. That is, we can produce a matrix ", TEX///$\left(\beta(e_i,e_j)\right)_{i,j}$///, ". This is called a ", EM "Gram matrix", " for the symmetric bilinear form. A change of basis will produce a congruent Gram matrix, thus a matrix represents a symmetric bilinear form uniquely up to matrix congruence."},
@@ -15,15 +15,15 @@ document{
     beta.matrix
     getBaseField(beta)
     ///,
-    PARA{"For computational purposes, it is often desirable to diagonalize a Gram matrix. Any symmetric bilinear form admits a diagonal Gram matrix representative by ", EM "Sylvester's law of inertia", ", and this is implemented via the ", TO2(diagonalClass, "diagonalClass"), " method."},
+    PARA{"For computational purposes, it is often desirable to diagonalize a Gram matrix. Any symmetric bilinear form admits a diagonal Gram matrix representative by ", EM "Sylvester's law of inertia", ", and this is implemented via the ", TO2(getDiagonalClass, "getDiagonalClass"), " method."},
     EXAMPLE lines///
-    diagonalClass(beta)
+    getDiagonalClass(beta)
     ///,
     PARA{"Once a form has been diagonalized, it is recorded in the cache for ", TT "GrothendieckWittClass", " and can therefore be quickly recovered."},
     EXAMPLE lines///
-    beta.cache.diagonalClass
+    beta.cache.getDiagonalClass
     ///,
-    SeeAlso => {"makeGWClass","diagonalClass","getBaseField"},
+    SeeAlso => {"makeGWClass","getDiagonalClass","getBaseField"},
     }
 
 document {

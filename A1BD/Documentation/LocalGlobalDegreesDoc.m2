@@ -55,7 +55,7 @@ document {
 	{"[BMP23] T. Brazelton, S. McKean, S. Pauli, ", EM "Bezoutians and the A1-Degree,", " Algebra & Number Theory, 2023."},
 	{"[SS76] S. Scheja, S. Storch, ", EM "Uber Spurfunktionen bei vollstandigen Durchschnitten,", " J. Reine Angew. Math., 1975."},
 	},
-    SeeAlso => {"getLocalA1Degree", "sumDecomposition", "sumDecompositionString"}
+    SeeAlso => {"getLocalA1Degree", "getSumDecomposition", "getSumDecompositionString"}
     }
 
 document {
@@ -86,7 +86,7 @@ document {
     EXAMPLE lines///
     isIsomorphicForm(f1GD,f1LDsum)
     ///,
-    SeeAlso => {"getGlobalA1Degree", "sumDecomposition", "sumDecompositionString"}
+    SeeAlso => {"getGlobalA1Degree", "getSumDecomposition", "getSumDecompositionString"}
     }
 
 

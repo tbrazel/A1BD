@@ -25,7 +25,7 @@ reduceAnisotropicPartQQDimension3 = method()
 reduceAnisotropicPartQQDimension3 GrothendieckWittClass := GrothendieckWittClass => beta -> (
     if not (getAnisotropicDimensionQQ(beta) == 3) then error "anisotropic dimension of form is not 3";
 
-    d := integralDiscriminant(beta);
+    d := getIntegralDiscriminant(beta);
     
     -- Build lists of relevant primes where the p-adic valuation of the discriminant is even or is odd
     L1 := {1};
@@ -74,7 +74,7 @@ getAnisotropicPartQQDimension2 GrothendieckWittClass := GrothendieckWittClass =>
 	);
 
     -- Step 2: Compute discriminant (note they use a signed version of the discriminant in their algorithm)
-    d := ((-1)^(n*(n-1)/2))*integralDiscriminant(q);
+    d := ((-1)^(n*(n-1)/2))*getIntegralDiscriminant(q);
     
     -- Step 3: Take relevant primes plus dyadic ones
     S := getRelevantPrimes(beta);
@@ -164,7 +164,7 @@ getAnisotropicPartQQDimension2 GrothendieckWittClass := GrothendieckWittClass =>
 
 getAnisotropicPartQQ = method()
 getAnisotropicPartQQ GrothendieckWittClass := GrothendieckWittClass => beta -> (
-    beta = diagonalClass beta;
+    beta = getDiagonalClass beta;
     n := getRank beta;
     
     -- If the form is anisotropic 
@@ -191,7 +191,7 @@ getAnisotropicPartQQ GrothendieckWittClass := GrothendieckWittClass => beta -> (
         );
     
     if getAnisotropicDimension(beta) == 1 then (
-	outputForm = addGW(outputForm, makeDiagonalForm(QQ,((-1)^((n-1)/2))*integralDiscriminant(beta)));
+	outputForm = addGW(outputForm, makeDiagonalForm(QQ,((-1)^((n-1)/2))*getIntegralDiscriminant(beta)));
 	);
     
     outputForm
@@ -285,7 +285,7 @@ getSumDecompositionVerbose GrothendieckWittClass := (GrothendieckWittClass, Stri
     alpha := getAnisotropicPart beta;
     
     if getRank(alpha) > 0 then (
-        D := diagonalEntries alpha;
+        D := getDiagonalEntries alpha;
         for i from 0 to (length(D) - 1) do (
 	    outputString = outputString | "+ <" | toString(D_i) | ">";
             );
@@ -300,7 +300,7 @@ getSumDecompositionVerbose GrothendieckWittClass := (GrothendieckWittClass, Stri
 
 getSumDecomposition = method()
 getSumDecomposition GrothendieckWittClass := GrothendieckWittClass => beta -> (
-    beta.cache.diagonalClass = (getSumDecompositionVerbose(beta))_0;
+    beta.cache.getDiagonalClass = (getSumDecompositionVerbose(beta))_0;
     (getSumDecompositionVerbose(beta))_0
     )
 

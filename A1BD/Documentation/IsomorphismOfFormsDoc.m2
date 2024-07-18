@@ -1,5 +1,5 @@
 document{
-    Key => {isIsomorphicForm, (isIsomorphicForm, GrothendieckWittClass, GrothendieckWittClass)},
+    Key => {isIsomorphicForm, (isIsomorphicForm, GrothendieckWittClass, GrothendieckWittClass), (isIsomorphicForm, Matrix, Matrix)},
     Headline => "determines whether two Grothendieck Witt classes are isomorphic over CC, RR, QQ, or a finite field.",
     Usage => "isIsomorphicForm(alpha,beta)",
     Inputs => {

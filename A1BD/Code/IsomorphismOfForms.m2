@@ -13,7 +13,7 @@ isIsomorphicFormQQ (GrothendieckWittClass, GrothendieckWittClass) := Boolean => 
     if getSignature(alpha) != getSignature(beta) then return false;
     
     -- If the discriminants differ, then the forms are not isomorphic
-    if integralDiscriminant(alpha) != integralDiscriminant(beta) then return false;
+    if getIntegralDiscriminant(alpha) != getIntegralDiscriminant(beta) then return false;
     
     -- Check the Hasse-Witt invariants
     PrimesToCheck := unique(getRelevantPrimes(alpha) | getRelevantPrimes(beta));

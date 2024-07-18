@@ -43,10 +43,10 @@ document{
     EXAMPLE lines///
     beta = makeGWClass(matrix(QQ,{{1, 0, 2, 0, 3}, {0, 6, 1, 1, -1},{2, 1, 5, 2, 0}, {0, 1, 2, 4, -1}, {3, -1, 0,-1, 1}}));
     isAnisotropic(beta)
-    diagonalClass(beta)
+    getDiagonalClass(beta)
     ///,
     PARA{"For forms of rank ", TEX///$\le 4$///, " the problem reduces to computing the maximum anisotropic dimension of the form over local fields. Ternary forms are isotropic away from primes dividing the coefficients of the form in a diagonal basis by e.g. [L05, VI.2.5(2)], so there are only finitely many places to check. Over these ",TO2(getRelevantPrimes,"relevant primes"), ", isotropy of a form ", TEX///$\beta \in \text{GW}(\mathbb{Q})$///, " over ", TEX///$\mathbb{Q}_p$///," is equivalent to the statement that ", TEX///$(-1,-\text{disc}(\beta))_p = H(\beta)$///, " where ", TEX///$H(\beta)$///, " denotes the ", TO2(getHasseWittInvariant,"Hasse-Witt invariant"), " attached to ", TEX///$\beta$///, " and ", TEX///$(-,-)_p$///," is the ", TO2(getHilbertSymbol, "Hilbert Symbol"), "."},
-    PARA{"A binary form ", TEX///$q$///, " is isotropic if and only if it is isomorphic to the hyperbolic form, which implies in particular that the rank, ", TO2(getSignature,"signature"), ", and ", TO2(integralDiscriminant,"discriminant"), " of ", TEX///$q$///, " agree with that of ", TEX///$\mathbb{H}=\langle 1,-1\rangle$///, ". " },
+    PARA{"A binary form ", TEX///$q$///, " is isotropic if and only if it is isomorphic to the hyperbolic form, which implies in particular that the rank, ", TO2(getSignature,"signature"), ", and ", TO2(getIntegralDiscriminant,"discriminant"), " of ", TEX///$q$///, " agree with that of ", TEX///$\mathbb{H}=\langle 1,-1\rangle$///, ". " },
     PARA{EM "Citations:"},
     UL{
 	

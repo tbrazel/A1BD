@@ -95,13 +95,13 @@ getSignature GrothendieckWittClass := ZZ => beta -> (
 -- Input: A Grothendieck-Witt class defined over QQ
 -- Output: A squarefree integral representative of its discriminant
 
-integralDiscriminant = method()
-integralDiscriminant GrothendieckWittClass := ZZ => beta -> (
+getIntegralDiscriminant = method()
+getIntegralDiscriminant GrothendieckWittClass := ZZ => beta -> (
     kk := getBaseField beta;
     if not kk === QQ then error "GrothendieckWittClass is not over QQ";
 
     -- Return a squarefree integral representative of the product of diagonal entries of a diagonal representative of the form 
-    getSquarefreePart product(diagonalEntries(beta))
+    getSquarefreePart product(getDiagonalEntries(beta))
     )
 
 -- Input: A Grothendieck-Witt class defined over QQ
@@ -113,7 +113,7 @@ getRelevantPrimes GrothendieckWittClass := List => beta -> (
     if not kk === QQ then error "GrothendieckWittClass is not over QQ";
     
     -- Find the diagonal entries of a diagonal integral representative of the form
-    D := diagonalEntries( diagonalClass beta );
+    D := getDiagonalEntries( getDiagonalClass beta );
     
     -- Make a list of all prime factors of diagonal entries
     L := {};
@@ -150,6 +150,6 @@ getHasseWittInvariant (List, ZZ) := ZZ => (L,p) -> (
 getHasseWittInvariant(GrothendieckWittClass, ZZ) := ZZ => (beta,p) -> (
     kk := getBaseField beta;
     if not (kk === QQ) then error "method is only implemented over the rationals";
-    getHasseWittInvariant(diagonalEntries(beta),p)
+    getHasseWittInvariant(getDiagonalEntries(beta),p)
     )
 

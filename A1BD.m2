@@ -66,8 +66,8 @@ export{
     "makePfisterForm",
     
     --SimplifiedRepresentatives.m2
-    "diagonalClass",
-    "diagonalEntries",
+    "getDiagonalClass",
+    "getDiagonalEntries",
     
     --getHilbertSymbols.m2
     "getHilbertSymbol",
@@ -76,7 +76,7 @@ export{
     --GWInvariants.m2
     "getSignature",
     "getRank",
-    "integralDiscriminant",
+    "getIntegralDiscriminant",
     "getRelevantPrimes",
     "getHasseWittInvariant",
 
@@ -151,7 +151,7 @@ document{
     Key => A1BD,
     Headline => "for working with A1-Brouwer degree computations",
     PARA{"This package is intended computing and manipulating ", TO2(getLocalA1Degree,"local"), " and ", TO2(getGlobalA1Degree,"global"), " ", TEX///$\mathbb{A}^1$///, EM "-Brouwer degrees."," Global Brouwer degrees are non-degenerate symmetric bilinear forms valued in the Grothendieck-Witt ring of a field ", TEX///$\text{GW}(k)$///, "."},
-    PARA{"In order to simplify the forms produced, this package produces invariants of symmetric bilinear forms, including their ", TO2(getWittIndex,"Witt indices"), ", their ", TO2(integralDiscriminant,"discriminants"), ", and their ", TO2(getHasseWittInvariant, "Hasse Witt invariants"), ". Quadratic forms can furthermore be ", TO2(getSumDecomposition,"decomposed"), " into their isotropic and ", TO2(getAnisotropicPart,"anisotropic parts"), ". Finally, and perhaps most crucially, we can certify whether two symmetric bilinear forms are ", TO2(isIsomorphicForm,"isomorphic") , " in the Grothendieck-Witt ring."},
+    PARA{"In order to simplify the forms produced, this package produces invariants of symmetric bilinear forms, including their ", TO2(getWittIndex,"Witt indices"), ", their ", TO2(getIntegralDiscriminant,"discriminants"), ", and their ", TO2(getHasseWittInvariant, "Hasse Witt invariants"), ". Quadratic forms can furthermore be ", TO2(getSumDecomposition,"decomposed"), " into their isotropic and ", TO2(getAnisotropicPart,"anisotropic parts"), ". Finally, and perhaps most crucially, we can certify whether two symmetric bilinear forms are ", TO2(isIsomorphicForm,"isomorphic") , " in the Grothendieck-Witt ring."},
     }
 
 undocumented {
@@ -194,7 +194,7 @@ TEST ///
 print("diagonal form testing");
 M1=matrix(RR, {{0, 1}, {1, 0}});
 G1=makeGWClass(M1);
-M2=diagonalClass(G1);
+M2=getDiagonalClass(G1);
 assert(M2.matrix===matrix(RR, {{1, 0}, {0, -1}}));
 ///
 
@@ -202,7 +202,7 @@ assert(M2.matrix===matrix(RR, {{1, 0}, {0, -1}}));
 TEST ///
 M3=matrix(CC, {{1, 2, 3}, {2, 4, 5}, {3, 5, 7}});
 G2=makeGWClass(M3);
-M4=diagonalClass(G2);
+M4=getDiagonalClass(G2);
 assert(M4.matrix===matrix(CC, {{1, 0, 0}, {0, 1, 0}, {0, 0, 1}}));
 ///
 
@@ -210,7 +210,7 @@ assert(M4.matrix===matrix(CC, {{1, 0, 0}, {0, 1, 0}, {0, 0, 1}}));
 TEST ///
 M3=matrix(QQ, {{1, 2, 3}, {2, 4, 5}, {3, 5, 7}});
 G2=makeGWClass(M3);
-M4=diagonalClass(G2);
+M4=getDiagonalClass(G2);
 assert(M4.matrix===matrix(QQ,{{1, 0, 0}, {0, -2, 0}, {0, 0, 2}}));
 ///
 
@@ -298,14 +298,14 @@ p = ideal(x^2+1,y);
 assert(getLocalAlgebraBasis(f,p) == {1,x}); 
 ///
 
--- Tests for diagonalClass and diagonalEntries
+-- Tests for getDiagonalClass and getDiagonalEntries
 -- Test 10
 TEST ///
 M1 = matrix(CC,{{1,0,0},{0,2,0},{0,0,-3}});
 M2 = matrix(CC,{{1,0,0},{0,1,0},{0,0,1}});
 G = makeGWClass(M1);
-assert((diagonalClass(G)).matrix == M2);
-assert(diagonalEntries(G) == {1,2,-3});
+assert((getDiagonalClass(G)).matrix == M2);
+assert(getDiagonalEntries(G) == {1,2,-3});
 
 ///
 
@@ -314,24 +314,24 @@ TEST ///
 M1 = matrix(RR,{{1,0,0},{0,2,0},{0,0,-3}});
 M2 = matrix(RR,{{1,0,0},{0,1,0},{0,0,-1}});
 G = makeGWClass(M1);
-assert((diagonalClass(G)).matrix == M2);
-assert(diagonalEntries(G) == {1,2,-3});
+assert((getDiagonalClass(G)).matrix == M2);
+assert(getDiagonalEntries(G) == {1,2,-3});
 ///
 
 -- Test 12
 TEST ///
 M = matrix(QQ,{{1,0,0},{0,2,0},{0,0,-3}});
 G = makeGWClass(M);
-assert((diagonalClass(G)).matrix == M);
-assert(diagonalEntries(G) == {1,2,-3})
+assert((getDiagonalClass(G)).matrix == M);
+assert(getDiagonalEntries(G) == {1,2,-3})
 ///
     
 -- Test 13
 TEST ///
 M = matrix(GF(5),{{1,0,0},{0,2,0},{0,0,-3}});
 G = makeGWClass(M);
-assert((diagonalClass(G)).matrix == M);
-assert(diagonalEntries(G) == {1,2,-3});
+assert((getDiagonalClass(G)).matrix == M);
+assert(getDiagonalEntries(G) == {1,2,-3});
 ///
 
 -- Test 14
@@ -340,8 +340,8 @@ kk = GF(7);
 M1 = matrix(kk,{{1,0,0},{0,2,0},{0,0,-3}});
 M2 = matrix(kk,{{1,0,0},{0,1,0},{0,0,1}});
 G = makeGWClass(M1);
-assert((diagonalClass(G)).matrix == M2);
-assert(diagonalEntries(G) == {1,2,-3});
+assert((getDiagonalClass(G)).matrix == M2);
+assert(getDiagonalEntries(G) == {1,2,-3});
 ///
 
 -- Test 15
@@ -349,7 +349,7 @@ TEST ///
 M1 = matrix(QQ,{{18,0,0},{0,125/9,0},{0,0,-8/75}});
 M2 = matrix(QQ,{{2,0,0},{0,5,0},{0,0,-6}});
 G1 = makeGWClass(M1);
-assert((diagonalClass(G1)).matrix == M2);
+assert((getDiagonalClass(G1)).matrix == M2);
 ///
 
 
@@ -482,7 +482,7 @@ assert(getSignature(M2) == 1);
 assert(getSignature(M3) == -1);
 assert(getSignature(M4) == -3);
 
-assert(integralDiscriminant(M1)==-5405);
+assert(getIntegralDiscriminant(M1)==-5405);
 assert(getRelevantPrimes(M1) == {23, 5, 47} );
 assert(getHasseWittInvariant(M1, 5) == -1);
 assert(getHasseWittInvariant(M1, 23) == 1);

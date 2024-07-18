@@ -20,7 +20,7 @@ isHyperbolicQQp (GrothendieckWittClass, ZZ) := Boolean => (beta, p) -> (
     
     -- Hyperbolic forms always have square discriminants
     -- Note that Koprowski and Czogala are using a different, signed, version of the discriminant
-    d := (-1)^(getRankBeta*(getRankBeta-1)/2) *integralDiscriminant(beta);
+    d := (-1)^(getRankBeta*(getRankBeta-1)/2) *getIntegralDiscriminant(beta);
     
     -- If this discriminant is not a square in Q_p then return false
     if not isPadicSquare(d,p) then return false;
@@ -53,13 +53,13 @@ getAnisotropicDimensionQQp (GrothendieckWittClass, ZZ) := ZZ => (beta, p) -> (
 	if isHyperbolicQQp(beta,p) then return 0;
        	
 	-- Note Koprowski and Czogala use a signed version of the discriminant
-	d := (-1)^(getRankBeta*(getRankBeta-1)/2) * integralDiscriminant(beta);
+	d := (-1)^(getRankBeta*(getRankBeta-1)/2) * getIntegralDiscriminant(beta);
 	if isPadicSquare(d,p) then return 4;
 	return 2;
 	);
     
     if odd getRankBeta then (
-	c := (-1)^(getRankBeta*(getRankBeta+1)/2) * integralDiscriminant(beta);
+	c := (-1)^(getRankBeta*(getRankBeta+1)/2) * getIntegralDiscriminant(beta);
 	gamma := addGW(beta, makeDiagonalForm(QQ,(c)));
 	if isHyperbolicQQp(gamma,p) then return 1;
 	return 3;

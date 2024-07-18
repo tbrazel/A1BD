@@ -13,5 +13,5 @@ document {
 		 M=matrix(GF(17), {{7, 9}, {9, 6}});
 		 diagonalizeViaCongruence(M)
 	 	 ///,
-	SeeAlso => {"diagonalClass"}
+	SeeAlso => {"getDiagonalClass"}
      	}

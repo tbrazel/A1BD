@@ -18,9 +18,9 @@ document{
     }
 
 document{
-    Key => {integralDiscriminant, (integralDiscriminant, GrothendieckWittClass)},
+    Key => {getIntegralDiscriminant, (getIntegralDiscriminant, GrothendieckWittClass)},
     Headline => "outputs an integral discriminant for a rational symmetric bilinear form",
-    Usage => "integralDiscriminant(beta)",
+    Usage => "getIntegralDiscriminant(beta)",
     Inputs => {
 	GrothendieckWittClass => "beta" => {"denoted by ", TEX///$\beta\in\text{GW}(\mathbb{Q})$///},
 	},
@@ -29,8 +29,8 @@ document{
 	},
     EXAMPLE lines ///
     beta = makeGWClass(matrix(QQ,{{1,4,7},{4,3,-1},{7,-1,5}}));
-    integralDiscriminant(beta)
-    diagonalClass(beta)
+    getIntegralDiscriminant(beta)
+    getDiagonalClass(beta)
     ///,
 }
 
