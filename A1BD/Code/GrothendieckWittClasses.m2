@@ -20,15 +20,15 @@ gwClass Matrix := GrothendieckWittClass => M -> (
         )
     )
 
-Input: A GrothendieckWittClass
-Output: A net for printing the underlying matrix
+-- Input: A GrothendieckWittClass
+-- Output: A net for printing the underlying matrix
 
 net GrothendieckWittClass := Net => alpha -> (
     net(alpha.matrix)
     )
 
-Input: A GrothendieckWittClass
-Output: A string for printing the underlying matrix
+-- Input: A GrothendieckWittClass
+-- Output: A string for printing the underlying matrix
 
 texMath GrothendieckWittClass := String => alpha -> (
     texMath(alpha.matrix)
