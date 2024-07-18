@@ -10,8 +10,9 @@ document{
     beta = makeGWClass(matrix(QQ,{{0,1},{1,0}}))
     class beta
     ///,
-    PARA{"The underlying matrix representative of a form can be recovered via the ", TT "matrix", " command, and its underlying field can be recovered using ", TO2(getBaseField,"getBaseField"), "."},
+    PARA{"The underlying matrix representative of a form can be recovered via the ", TO2(getMatrix, "getMatrix"), " command or the ", TT "matrix", " command, and its underlying field can be recovered using ", TO2(getBaseField,"getBaseField"), "."},
     EXAMPLE lines///
+    getMatrix(beta)
     beta.matrix
     getBaseField(beta)
     ///,
@@ -23,7 +24,7 @@ document{
     EXAMPLE lines///
     beta.cache.getDiagonalClass
     ///,
-    SeeAlso => {"makeGWClass","getDiagonalClass","getBaseField"},
+    SeeAlso => {"makeGWClass","getDiagonalClass","getBaseField","getMatrix"},
     }
 
 document {
@@ -42,9 +43,10 @@ document {
 		 M := matrix(QQ,{{0,0,1},{0,1,0},{1,0,0}});
 		 beta = makeGWClass(M)
 	 	 ///,
-	PARA{"The matrix representing a ", TT "GrothendieckWittClass", " element can be recovered using the ", TT "matrix", " command:"},
+	PARA{"The matrix representing a ", TT "GrothendieckWittClass", " element can be recovered using the ",  TO2(getMatrix, "getMatrix"), " command or the ", TT "matrix", " command:"},
 	EXAMPLE lines ///
-	    	beta.matrix
+	    	getMatrix beta
+		beta.matrix
 		///,
         PARA{"The base field which the form ", TEX///$\beta$///, " is implicitly defined over can be recovered with the ", TO2(getBaseField,"getBaseField"), " method."},
 	EXAMPLE lines ///
