@@ -8,7 +8,7 @@
 getSquarefreePart = method()
 getSquarefreePart ZZ := ZZ => n -> (
     if n == 0 then return 0;
-    tableOfPrimeFactors := hashTable(factor(abs(n)));
+    tableOfPrimeFactors := hashTable factor(abs(n));
     return sub(n/abs(n),ZZ)*product(apply(keys(tableOfPrimeFactors),p -> p^(tableOfPrimeFactors#p%2)));
     )
 
@@ -22,7 +22,7 @@ getSquarefreePart QQ := ZZ => n -> (
 getPrimeFactors = method()
 getPrimeFactors ZZ := List => n -> (
     if abs(n) == 1 then return {};
-    sort keys(hashTable(factor(abs(n))))
+    sort keys hashTable(factor(abs(n)))
     )
 
 getPrimeFactors QQ := List => n -> (
@@ -36,7 +36,7 @@ getPrimeFactors QQ := List => n -> (
 getPadicValuation = method()
 getPadicValuation (ZZ, ZZ) := ZZ => (n, p) -> (
     if n == 0 then error "Trying to find prime factorization of 0";
-    H := hashTable(factor(abs(n)));
+    H := hashTable factor(abs(n));
     if H#?p then (
     	return(H#p);
 	)
@@ -98,12 +98,14 @@ isEqualUpToPadicSquare (ZZ, ZZ, ZZ) := Boolean => (a, b, p) -> (
         -- differ by a square in GF(p)
         a1 := getSquarefreePart a;
         b1 := getSquarefreePart b;
-        if (getPadicValuation(a1, p) != getPadicValuation(b1, p)) then (return false;)
+        if (getPadicValuation(a1, p) != getPadicValuation(b1, p)) then (
+            return false;
+            )
         else (
     	    -- c1 will be an integer prime to p
 	    c1 := getSquarefreePart(a1*b1);
 	    x := getSymbol "x";
-	    return isGFSquare(sub(c1, GF(p, Variable => x))); 
+	    return isGFSquare sub(c1, GF(p, Variable => x)); 
 	    );
         )
     else (
@@ -111,7 +113,7 @@ isEqualUpToPadicSquare (ZZ, ZZ, ZZ) := Boolean => (a, b, p) -> (
         -- that the units agree mod 8.
         a1 = getSquarefreePart a;
         b1 = getSquarefreePart b;
-        if (getPadicValuation(a1, p) != getPadicValuation(b1, p)) then (
+        if getPadicValuation(a1, p) != getPadicValuation(b1, p) then (
 	    return false;
             )
         else (
@@ -143,7 +145,7 @@ getLocalAlgebraBasis = method()
 getLocalAlgebraBasis (List, Ideal) := List => (L,p) -> (
     
     -- Verify that the ideal p is prime
-    if not isPrime(p) then error "ideal is not prime";
+    if not isPrime p then error "ideal is not prime";
     
     -- Ambient ring
     R := ring L#0;
@@ -155,7 +157,7 @@ getLocalAlgebraBasis (List, Ideal) := List => (L,p) -> (
     J := I:saturate(I,p);
     A := R/J;
     B := basis A;
-    flatten entries(B)
+    flatten entries B
     )
 
 -- Input: A zero-dimensional ideal (f_1,...,f_n) < k[x_1,...,x_n].
@@ -165,8 +167,8 @@ getGlobalAlgebraRank = method()
 getGlobalAlgebraRank List := ZZ => Endo -> (
     
     -- Get the underlying field    
-    kk := coefficientRing(ring(Endo#0));    
-    if not isField(kk) then (
+    kk := coefficientRing ring(Endo#0);    
+    if not isField kk then (
     	kk = toField kk;
     	);
     
