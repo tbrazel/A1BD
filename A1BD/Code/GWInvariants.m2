@@ -7,7 +7,7 @@
 
 getRank = method()
 getRank GrothendieckWittClass := ZZ => alpha -> (
-    numRows(alpha.matrix)
+    numRows(getMatrix alpha)
     )
 
 getRank Matrix := ZZ => M -> (
@@ -69,7 +69,7 @@ countNegDiagEntries Matrix := Matrix => A -> (
 -- Note: countPosDiagEntries is *not* included as a method in the A1BrowerDegrees package
 
 countPosDiagEntries GrothendieckWittClass := ZZ => beta -> (
-    countPosDiagEntries(beta.matrix)
+    countPosDiagEntries(getMatrix beta)
     )
 
 -- Input: A Grothendieck-Witt class beta defined over QQ or RR
@@ -77,7 +77,7 @@ countPosDiagEntries GrothendieckWittClass := ZZ => beta -> (
 -- Note: countNegDiagEntries is *not* included as a method in the A1BrowerDegrees package
 
 countNegDiagEntries GrothendieckWittClass := ZZ => beta -> (
-    countNegDiagEntries(beta.matrix)
+    countNegDiagEntries(getMatrix beta)
     )
 
 -- Input: A Grothendieck-Witt class beta defined over QQ or RR
