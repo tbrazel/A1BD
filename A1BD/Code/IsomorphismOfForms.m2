@@ -27,15 +27,15 @@ isIsomorphicFormQQ (GrothendieckWittClass, GrothendieckWittClass) := Boolean => 
     true
     )
 
-isIsomorphicFormQQ (Matrix, Matrix) := Boolean => (M,N) -> (
-    isIsomorphicFormQQ(makeGWClass(M),makeGWClass(N))
+isIsomorphicFormQQ (Matrix, Matrix) := Boolean => (M, N) -> (
+    isIsomorphicFormQQ(makeGWClass M, makeGWClass N)
     )
 
 -- Input: Two matrices representing symmetric bilinear forms over CC, RR, QQ, or a finite field of characteristic not 2
 -- Output: Boolean that gives whether the bilinear forms are isometric
 
 isIsomorphicForm = method()
-isIsomorphicForm (Matrix,Matrix) := Boolean => (A,B) -> (
+isIsomorphicForm (Matrix, Matrix) := Boolean => (A, B) -> (
     k1 := ring A;
     k2 := ring B;
     -- Ensure both base fields are supported
@@ -94,6 +94,6 @@ isIsomorphicForm (Matrix,Matrix) := Boolean => (A,B) -> (
 -- Input: Two Grothendieck-Witt classes alpha and beta, defined over CC, RR, QQ, or a finite field of characteristic not 2
 -- Output: Boolean that gives whether alpha and beta are the same Grothendieck-Witt class
 
-isIsomorphicForm (GrothendieckWittClass,GrothendieckWittClass) := Boolean => (alpha,beta) -> (
+isIsomorphicForm (GrothendieckWittClass,GrothendieckWittClass) := Boolean => (alpha, beta) -> (
     isIsomorphicForm(getMatrix alpha, getMatrix beta)
     )
