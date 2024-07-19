@@ -11,7 +11,7 @@ getDiagonalClass GrothendieckWittClass := GrothendieckWittClass => beta -> (
     -- Check if the getDiagonalClass has already been computed; if so, recall it from the cache
     if beta.cache.?getDiagonalClass then return beta.cache.getDiagonalClass;
 
-    getDiagonalClassOfBetaMatrix := diagonalizeAndSimplifyViaCongruence(getMatrix beta);
+    getDiagonalClassOfBetaMatrix := diagonalizeAndSimplifyViaCongruence getMatrix beta;
 
     -- The diagonal form gets cached in the GWClass type
     beta.cache.getDiagonalClass = makeGWClass getDiagonalClassOfBetaMatrix;
@@ -24,11 +24,11 @@ getDiagonalClass GrothendieckWittClass := GrothendieckWittClass => beta -> (
 getDiagonalEntries = method()
 getDiagonalEntries GrothendieckWittClass := List => beta -> (
     
-    M := diagonalizeViaCongruence(getMatrix beta);
+    M := diagonalizeViaCongruence getMatrix beta;
     n := numRows M;
     L := {};
     
-    for i from 0 to (n-1) do (
+    for i from 0 to n - 1 do (
 	L = append(L, M_(i,i));
 	);
     L
