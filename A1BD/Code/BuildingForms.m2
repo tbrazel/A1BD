@@ -25,12 +25,12 @@ makeDiagonalForm (Ring, Sequence) := GrothendieckWittClass => (kk,L) -> (
     -- Build an n x n mutable identity matrix
     A := mutableIdentity(kk, n);
     
-    for i from 0 to (n-1) do (
+    for i from 0 to n - 1 do (
 	A_(i,i) = sub(L_i,kk);
 	);
     
     -- A is mutable so we take matrix(A) and form a Grothendieck-Witt class
-    makeGWClass matrix(A)
+    makeGWClass matrix A
     )
 
 makeDiagonalForm (InexactFieldFamily,RingElement) := GrothendieckWittClass => (kk,a) -> (
@@ -57,7 +57,7 @@ makeDiagonalForm (InexactFieldFamily, Sequence) := GrothendieckWittClass => (kk,
 	);
     
     -- A is mutable so we take matrix(A) and form a Grothendieck-Witt class
-    makeGWClass matrix(A)
+    makeGWClass matrix A
     )
 
 -- Input: A field kk and an optional even rank n (default is n = 2)
@@ -141,7 +141,7 @@ makePfisterForm (InexactFieldFamily,Sequence) := GrothendieckWittClass => (kk,L)
     
     -- Iteratively multiply <1,-L_0>*<1,-L_1>*...
     outputForm := makeDiagonalForm(kk,1);
-    for i from 0 to (n-1) do (
+    for i from 0 to n - 1 do (
 	ithPfister := makePfisterForm(kk,L_i);
 	outputForm = multiplyGW(outputForm,ithPfister);
 	);
