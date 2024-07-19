@@ -1,7 +1,7 @@
 document {
     Key => {getGlobalA1Degree, (getGlobalA1Degree, List)},
     Headline => "computes a global A1-Brouwer degree of a list of n polynomials in n variables over a field k",
-    Usage => "getGlobalA1Degree(L)",
+    Usage => "getGlobalA1Degree L",
     Inputs => {
 	List => "L" => {"of polynomials ", TEX///$f = (f_1, \ldots, f_n)$///, " in the polynomial ring ", TEX///$k[x_1,\ldots,x_n]$///, " over a field ", TEX///$k$///}
 	},
@@ -19,15 +19,15 @@ document {
     PARA{"Following recent work of B. McKean and Pauli [BMP23], the ", TEX///$\mathbb{A}^1$///, "-Brouwer degree can be computed as a multivariate ", EM "Bezoutian bilinear form.", " The algorithms for producing such a form are developed here."},
     EXAMPLE lines ///
     QQ[x];
-    f = {x^2+1};
-    getGlobalA1Degree(f)
+    f = {x^2 + 1};
+    getGlobalA1Degree f
     ///,
     PARA{"The previous example produces a rank two form with signature zero. This corresponds to the fact that the degree of the complex map ", TEX///$\mathbb{C}\to\mathbb{C},\ z\mapsto z^2$///, " has degree two, while the associated real map ", TEX///$\mathbb{R}\to\mathbb{R},\ x\mapsto x^2$///, " has global degree zero."},
     PARA{"Following [M21] we may think about the ",TEX///$\mathbb{A}^1$///, "-Brouwer degree ", TEX///$\text{deg}^{\mathbb{A}^1}(f)$///, " as a quadratically enriched intersection multiplicity of the hyperplanes ", TEX///$V(f_1)\cap \cdots \cap V(f_n).$///, " As a toy example, consider the curve ", TEX///$y=x(x-1)(x+1)$///, " intersecting the ", TEX///$x$///, "-axis."},
     EXAMPLE lines ///
     QQ[x,y];
     f = {x^3 - x^2 - y, y};
-    getGlobalA1Degree(f)
+    getGlobalA1Degree f
     ///,
     PARA{"The rank of this form is three, as cubics over the complex numbers have three roots counted with multiplicity. This form has signature one, which indicates that when the cubic intersects the ", TEX///$x$///, "-axis, when the three points of intersection are counted with a sign corresponding to a right hand rule, the sum equals one."},
     
@@ -35,17 +35,16 @@ document {
     EXAMPLE lines///
     QQ[x,y];
     f = {x^3 - x^2 - y, y};
-    point1 = ideal{x-1, y};
-    point2 = ideal{x, y};
+    point1 = ideal(x - 1, y);
+    point2 = ideal(x, y);
     getGlobalA1Degree(f)
-    getLocalA1Degree(f,point1)
-    getLocalA1Degree(f,point2)
-    isIsomorphicForm(getGlobalA1Degree(f), addGW(getLocalA1Degree(f,point1), getLocalA1Degree(f,point2)))
+    getLocalA1Degree(f, point1)
+    getLocalA1Degree(f, point2)
+    isIsomorphicForm(getGlobalA1Degree f, addGW(getLocalA1Degree(f, point1), getLocalA1Degree(f, point2)))
     ///,
     
     PARA{EM "Citations:"},
     UL{
-	
 	{"[BW23] T. Bachmann, K. Wickelgren, ", EM "Euler classes: six-functors formalism, dualities, integrality and linear subspaces of complete intersections,", " J. Inst. Math. Jussieu, 2023."},
 	{"[EL77] D. Eisenbud, H. Levine, ", EM "An algebraic formula for the degree of a C^infinity map germ,", " Annals of Mathematics, 1977."},
 	{"[K77] G. Khimshiashvili, ", EM "The local degree of a smooth mapping,", " Sakharth. SSR Mcn. Akad. Moambe, 1977."},
@@ -58,10 +57,11 @@ document {
     SeeAlso => {"getLocalA1Degree", "getSumDecomposition", "getSumDecompositionString"}
     }
 
+
 document {
     Key => {getLocalA1Degree, (getLocalA1Degree, List, Ideal)},
     Headline => "computes a local A1-Brouwer degree of a list of n polynomials in n variables over a field k at a prime ideal in the zero locus",
-    Usage => "locallA1Degree(L,p)",
+    Usage => "locallA1Degree(L, p)",
     Inputs => {
 	List => "L" => {"of polynomials ", TEX///$f = (f_1, \ldots, f_n)$///, " in the polynomial ring ", TEX///$k[x_1,\ldots,x_n]$///, " over a field ", TEX///$k$///},
 	Ideal => "p" => {"a prime ideal ", TEX///$p \trianglelefteq k[x_1,\ldots,x_n]$///, " in the zero locus ", TEX///$V(f)$///},
@@ -74,17 +74,17 @@ document {
     PARA{"For historical and mathematical background, see ", TO2(getGlobalA1Degree, "global A1-degrees"), "."},
     EXAMPLE lines ///
     T1 = QQ[z_1..z_2];
-    f1 = {(z_1-1)*z_1*z_2, (3/5)*z_1^2 - (17/3)*z_2^2};
+    f1 = {(z_1 - 1)*z_1*z_2, (3/5)*z_1^2 - (17/3)*z_2^2};
     f1GD = getGlobalA1Degree(f1);
-    q=ideal {z_1,z_2};
-    r=ideal {z_1-1,z_2^2-(9/85)};
-    f1LDq= getLocalA1Degree(f1,q)
-    f1LDr= getLocalA1Degree(f1,r)
+    q = ideal(z_1, z_2);
+    r = ideal(z_1-1, z_2^2 - 9/85);
+    f1LDq = getLocalA1Degree(f1,q)
+    f1LDr = getLocalA1Degree(f1,r)
     f1LDsum = addGW(f1LDq, f1LDr)
     ///,
     PARA{"The sum of the local A1-degrees is equal to the global A1-degree:"},
     EXAMPLE lines///
-    isIsomorphicForm(f1GD,f1LDsum)
+    isIsomorphicForm(f1GD, f1LDsum)
     ///,
     SeeAlso => {"getGlobalA1Degree", "getSumDecomposition", "getSumDecompositionString"}
     }

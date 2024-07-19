@@ -8,7 +8,7 @@
 getSquarefreePart = method()
 getSquarefreePart ZZ := ZZ => n -> (
     if n == 0 then return 0;
-    tableOfPrimeFactors := hashTable factor(abs(n));
+    tableOfPrimeFactors := hashTable factor abs(n);
     return sub(n/abs(n),ZZ)*product(apply(keys(tableOfPrimeFactors),p -> p^(tableOfPrimeFactors#p%2)));
     )
 
@@ -22,7 +22,7 @@ getSquarefreePart QQ := ZZ => n -> (
 getPrimeFactors = method()
 getPrimeFactors ZZ := List => n -> (
     if abs(n) == 1 then return {};
-    sort keys hashTable(factor(abs(n)))
+    sort keys hashTable(factor abs n)
     )
 
 getPrimeFactors QQ := List => n -> (
@@ -36,7 +36,7 @@ getPrimeFactors QQ := List => n -> (
 getPadicValuation = method()
 getPadicValuation (ZZ, ZZ) := ZZ => (n, p) -> (
     if n == 0 then error "Trying to find prime factorization of 0";
-    H := hashTable factor(abs(n));
+    H := hashTable factor abs(n);
     if H#?p then (
     	return(H#p);
 	)
@@ -54,7 +54,7 @@ getPadicValuation (QQ, ZZ) := ZZ => (q, p) -> (
 
 isGFSquare = method()
 isGFSquare RingElement := Boolean => a -> (
-    if not instance(ring(a),GaloisField) then error "isGFSquare only works for Galois fields";
+    if not instance(ring a,GaloisField) then error "isGFSquare only works for Galois fields";
     q := (ring a).order;
     -- Detects if a is a square in F_q
     a^((q-1)//2) == 1 
@@ -66,8 +66,7 @@ isGFSquare RingElement := Boolean => a -> (
 
 getSquareSymbol = method()
 getSquareSymbol (ZZ, ZZ) := ZZ => (a, p) -> (
-    x := getSymbol "x";
-    R := GF(p, Variable => x);
+    R := GF(p);
     e1 := getPadicValuation(a,p);
     if even e1 then (
     	a1 := sub(a/(p^e1), ZZ);
@@ -104,8 +103,7 @@ isEqualUpToPadicSquare (ZZ, ZZ, ZZ) := Boolean => (a, b, p) -> (
         else (
     	    -- c1 will be an integer prime to p
 	    c1 := getSquarefreePart(a1*b1);
-	    x := getSymbol "x";
-	    return isGFSquare sub(c1, GF(p, Variable => x)); 
+	    return isGFSquare sub(c1, GF(p)); 
 	    );
         )
     else (
@@ -142,7 +140,7 @@ isPadicSquare (ZZ, ZZ) := Boolean => (a, p) -> (
 -- Output: A list of basis elements of the local k-algebra Q_p(f) = R[x]_p/(f)
 
 getLocalAlgebraBasis = method()
-getLocalAlgebraBasis (List, Ideal) := List => (L,p) -> (
+getLocalAlgebraBasis (List, Ideal) := List => (L, p) -> (
     
     -- Verify that the ideal p is prime
     if not isPrime p then error "ideal is not prime";

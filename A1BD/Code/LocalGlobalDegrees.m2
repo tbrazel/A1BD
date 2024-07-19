@@ -58,7 +58,7 @@ getGlobalA1Degree List := GrothendieckWittClass => Endo -> (
             -- Take the difference f_i(Y_1, ..., Y_(j-1), X_j, ..., X_n) - f_i(Y_1, ... Y_j, X_(j+1), ..., X_n)
             numeratorD := (map(R,S,targetList1))(Endo_i) - (map(R,S,targetList2))(Endo_i); 
             -- Divide this by X_j - Y_j. Note Macaulay2 is 0-indexed hence the difference in notation. 
-	    D_(i,j)= numeratorD / ((X_(j+1))_R-(Y_(j+1))_R); 
+	    D_(i,j) = numeratorD / ((X_(j+1))_R-(Y_(j+1))_R); 
 	    ); 
         );
     
@@ -67,14 +67,14 @@ getGlobalA1Degree List := GrothendieckWittClass => Endo -> (
     bezDetR:="";
 
     -- The determinant of D is interpreted as an element of Frac(k[x_1..x_n]), so we can try to lift it to k[x_1..x_n]           
-    if liftable(det(D),R) then (
-	bezDetR = lift(det(D),R);
+    if liftable(det D, R) then (
+	bezDetR = lift(det D, R);
 	);
     
     -- In some computations, applying lift(-,R) doesn't work, so we instead lift the numerator and
     -- then divide by a lift of the denominator (which will be a scalar) to the coefficient ring k
     if not liftable(det D,R) then (
-	bezDet = lift(numerator(det D), R) / lift(denominator(det D),coefficientRing R);
+	bezDet = lift(numerator det D, R) / lift(denominator det D, coefficientRing R);
     	bezDetR = lift(bezDet, R);
 	);
 
@@ -96,7 +96,7 @@ getGlobalA1Degree List := GrothendieckWittClass => Endo -> (
     id2 := ideal apply(toList(0..n-1), i-> mapxtoY(Endo_i)); 
 
     -- Take the sum of ideals (f_1(X),...,f_n(X)) + (f_1(Y),...,f_n(Y)) in the ring kk[X_1..Y_n]
-    promotedEndo := sub(id1,R)+sub(id2,R); 
+    promotedEndo := sub(id1,R) + sub(id2,R); 
 
     -- Here we're using that (R/I) \otimes_R (R/J) = R/(I+J) in order to express Q(f) \otimes Q(f),
     -- where X's are the variables in first term, Y's are variables in second part
@@ -167,7 +167,9 @@ getLocalA1Degree (List, Ideal) := GrothendieckWittClass => (Endo,p) -> (
         );
 
     -- If the field is RR, ask the user to run the computation over QQ instead and then base chnage to RR
-    if instance(kk,RealField) then error "getLocalA1Degree method does not work over the reals. Instead, define the polynomials over QQ to output a GrothendieckWittClass. Then extract the matrix, base change it to RR, and run getSumDecomposition().";
+    if instance(kk,RealField) then (
+        error "getLocalA1Degree method does not work over the reals. Instead, define the polynomials over QQ to output a GrothendieckWittClass. Then extract the matrix, base change it to RR, and run getSumDecomposition().";
+        );
     
     -- Create internal rings/matrices
 
@@ -178,7 +180,7 @@ getLocalA1Degree (List, Ideal) := GrothendieckWittClass => (Endo,p) -> (
 
     -- Create an (n x n) matrix D to be populated by \Delta_{ij} from the Brazelton-McKean-Pauli paper
     D := "";
-    try D = mutableMatrix id_((frac R)^n) else D= mutableMatrix id_(R^n);
+    try D = mutableMatrix id_((frac R)^n) else D = mutableMatrix id_(R^n);
     
     for i from 0 to n - 1 do (
 	for j from 0 to n - 1 do (
@@ -192,7 +194,7 @@ getLocalA1Degree (List, Ideal) := GrothendieckWittClass => (Endo,p) -> (
             -- Take the difference f_i(Y_1, ..., Y_(j-1), X_j, ..., X_n) - f_i(Y_1, ... Y_j, X_(j+1), ..., X_n)
             numeratorD := (map(R,S,targetList1))(Endo_i) - (map(R,S,targetList2))(Endo_i); 
             -- Divide this by X_j - Y_j. Note Macaulay2 is 0-indexed hence the difference in notation. 
-	    D_(i,j)= numeratorD / ((X_(j+1))_R-(Y_(j+1))_R); 
+	    D_(i,j)= numeratorD / ((X_(j+1))_R - (Y_(j+1))_R); 
 	    ); 
         );
     
@@ -201,14 +203,14 @@ getLocalA1Degree (List, Ideal) := GrothendieckWittClass => (Endo,p) -> (
     bezDetR := "";   
     
     -- The determinant of D is interpreted as an element of Frac(k[x_1..x_n]), so we can try to lift it to k[x_1..x_n]           
-    if liftable(det(D),R) then (
-	bezDetR = lift(det(D),R);
+    if liftable(det D, R) then (
+	bezDetR = lift(det D, R);
 	);
 
     -- In some computations, applying lift(-,R) doesn't work, so we instead lift the numerator and
     -- then divide by a lift of the denominator (which will be a scalar) to the coefficient ring k
-    if not liftable(det D,R) then (
-	bezDet = lift(numerator(det D), R) / lift(denominator(det D),coefficientRing R);
+    if not liftable(det D, R) then (
+	bezDet = lift(numerator det D, R) / lift(denominator det D, coefficientRing R);
     	bezDetR = lift(bezDet, R);
 	);    
     
@@ -229,7 +231,7 @@ getLocalA1Degree (List, Ideal) := GrothendieckWittClass => (Endo,p) -> (
     standBasisY := getLocalAlgebraBasis(list2,mapxtoY p); 
     
     -- Take the ideal sum of J in the X_i's with J in the Y_i's
-    localIdeal := sub(mapxtoX(J),R)+sub(mapxtoY(J),R);
+    localIdeal := sub(mapxtoX J, R) + sub(mapxtoY J, R);
 
     -- Here we're using that (R/I) \otimes_R (R/J) = R/(I+J) in order to express Q(f) \otimes Q(f),
     -- where X's are the variables in first term, Y's are variables in second part

@@ -13,17 +13,17 @@ getHilbertSymbolReal (QQ, QQ) := ZZ => (a, b) -> (
 	);
     )
 
-getHilbertSymbolReal (QQ, ZZ) := ZZ => (a,b) -> (
+getHilbertSymbolReal (QQ, ZZ) := ZZ => (a, b) -> (
     b1 := b/1;
     getHilbertSymbolReal(a, b1)
     )
 
-getHilbertSymbolReal (ZZ, QQ) := ZZ => (a,b) -> (
+getHilbertSymbolReal (ZZ, QQ) := ZZ => (a, b) -> (
     a1 := a/1;
     getHilbertSymbolReal(a1, b)
     )
 
-getHilbertSymbolReal (ZZ, ZZ) := ZZ => (a,b) -> (
+getHilbertSymbolReal (ZZ, ZZ) := ZZ => (a, b) -> (
     a1:= a/1;
     b1:= b/1;
     getHilbertSymbolReal(a1, b1)
@@ -43,11 +43,11 @@ getHilbertSymbol (ZZ, ZZ, ZZ) := ZZ => (a, b, p) -> (
     v := sub(b/p^beta, ZZ);
     
     if (p % 4 == 1) then (
-	return (((getSquareSymbol(u,p))^beta) * ((getSquareSymbol(v,p))^alpha));
+	return ((getSquareSymbol(u,p))^beta) * ((getSquareSymbol(v,p))^alpha);
 	);
     
     if (p % 4 == 3) then (
-	return (((-1)^(alpha*beta))*((getSquareSymbol(u,p))^beta) * ((getSquareSymbol(v,p))^alpha));
+	return ((-1)^(alpha*beta))*((getSquareSymbol(u,p))^beta) * ((getSquareSymbol(v,p))^alpha);
 	);
     
     if p == 2 then (
