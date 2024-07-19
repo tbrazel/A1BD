@@ -121,7 +121,7 @@ isEqualUpToPadicSquare (ZZ, ZZ, ZZ) := Boolean => (a, b, p) -> (
 	    c1 = getSquarefreePart(a1*b1);
 	    c1 = c1 % 8;
 	    -- If c1 = 1, then the two odd units are congruent mod 8, and are squares in Q_2
-	    return c1==1; 
+	    return c1 == 1; 
 	    );
         );
     )
@@ -179,6 +179,6 @@ getGlobalAlgebraRank List := ZZ => Endo -> (
     if dim ideal(Endo) > 0  then error "ideal is not zero-dimensional";
     
     -- Get the rank of S/ideal(Endo) as a kk-vector space
-    numColumns(basis(S/ideal(Endo)))
+    numColumns basis(S/ideal(Endo))
     )
 
