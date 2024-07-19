@@ -8,8 +8,8 @@
 
 isHyperbolicQQp = method()
 isHyperbolicQQp (GrothendieckWittClass, ZZ) := Boolean => (beta, p) -> (
-    rankBeta := getRank beta;
     kk := getBaseField beta;
+    rankBeta := getRank beta;
     
     if not kk === QQ then error "GrothendieckWittClass is not over QQ";
     if not isPrime p then error "second argument must be a prime number";
@@ -40,8 +40,8 @@ isHyperbolicQQp (GrothendieckWittClass, ZZ) := Boolean => (beta, p) -> (
 
 getAnisotropicDimensionQQp = method()
 getAnisotropicDimensionQQp (GrothendieckWittClass, ZZ) := ZZ => (beta, p) -> (
-    rankBeta := getRank beta;
     kk := getBaseField beta;
+    rankBeta := getRank beta;
     
     if not kk === QQ then error "GrothendieckWittClass is not over QQ";
     if not isPrime p then error "second argument must be a prime number";
@@ -70,7 +70,6 @@ getAnisotropicDimensionQQp (GrothendieckWittClass, ZZ) := ZZ => (beta, p) -> (
 
 getAnisotropicDimensionQQ = method()
 getAnisotropicDimensionQQ GrothendieckWittClass := ZZ => beta -> (
-    rankBeta := getRank beta;
     kk := getBaseField beta;
     
     if not kk === QQ then error "GrothendieckWittClass is not over QQ";
