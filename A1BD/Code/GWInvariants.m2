@@ -101,7 +101,7 @@ getIntegralDiscriminant GrothendieckWittClass := ZZ => beta -> (
     if not kk === QQ then error "GrothendieckWittClass is not over QQ";
 
     -- Return a squarefree integral representative of the product of diagonal entries of a diagonal representative of the form 
-    getSquarefreePart product getDiagonalEntries beta
+    getSquarefreePart product getDiagonalEntries(beta)
     )
 
 -- Input: A Grothendieck-Witt class defined over QQ
