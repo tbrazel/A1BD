@@ -145,9 +145,9 @@ getAnisotropicPartQQDimension2 GrothendieckWittClass := GrothendieckWittClass =>
 	    break;
 	    )
 	else (
-	    p = nextPrime(p+1);
+	    p = nextPrime(p + 1);
 	    while member(p,S) do (
-		p = nextPrime(p+1);
+		p = nextPrime(p + 1);
 		);
 	    S = append(S,p);
 	    );
@@ -254,7 +254,7 @@ getAnisotropicPart Matrix := Matrix => A -> (
     )
 
 getAnisotropicPart GrothendieckWittClass := GrothendieckWittClass => alpha -> (
-    makeGWClass getAnisotropicPart getMatrix alpha
+    makeGWClass getAnisotropicPart getMatrix(alpha)
     )
 
 ---------------------------------------
