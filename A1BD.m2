@@ -33,9 +33,7 @@ newPackage(
 	 HomePage=>"https://wgabrielong.github.io/"}
 	},
     Headline=>"for working with A1-Brouwer degree computations",
-    PackageImports=>{
-	"Parametrization",
-	},
+    PackageImports=>{},
     PackageExports=>{},
     AuxiliaryFiles=>true,
     DebuggingMode=>true
