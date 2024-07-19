@@ -4,7 +4,7 @@
 
 reduceAnisotropicPartQQDimension4 = method()
 reduceAnisotropicPartQQDimension4 GrothendieckWittClass := GrothendieckWittClass => beta -> (
-    if not (getAnisotropicDimensionQQ(beta) >= 4) then error "anisotropic dimension of form is not >= 4";
+    if getAnisotropicDimensionQQ(beta) < 4 then error "anisotropic dimension of form is not >= 4";
     
     -- If the getSignature is non-negative then return < 1 >
     if getSignature(beta) >= 0 then (
@@ -23,9 +23,9 @@ reduceAnisotropicPartQQDimension4 GrothendieckWittClass := GrothendieckWittClass
 
 reduceAnisotropicPartQQDimension3 = method()
 reduceAnisotropicPartQQDimension3 GrothendieckWittClass := GrothendieckWittClass => beta -> (
-    if not (getAnisotropicDimensionQQ(beta) == 3) then error "anisotropic dimension of form is not 3";
+    if getAnisotropicDimensionQQ(beta) != 3 then error "anisotropic dimension of form is not 3";
 
-    d := getIntegralDiscriminant(beta);
+    d := getIntegralDiscriminant beta;
     
     -- Build lists of relevant primes where the p-adic valuation of the discriminant is even or is odd
     L1 := {1};
@@ -56,7 +56,7 @@ reduceAnisotropicPartQQDimension3 GrothendieckWittClass := GrothendieckWittClass
 
 getAnisotropicPartQQDimension2 = method()
 getAnisotropicPartQQDimension2 GrothendieckWittClass := GrothendieckWittClass => beta -> (
-    if not (getAnisotropicDimensionQQ(beta) == 2) then error "anisotropic dimension of form is not 2";
+    if getAnisotropicDimensionQQ(beta) != 2 then error "anisotropic dimension of form is not 2";
 
     n := getRank beta;
 
@@ -77,7 +77,7 @@ getAnisotropicPartQQDimension2 GrothendieckWittClass := GrothendieckWittClass =>
     d := ((-1)^(n*(n-1)/2))*getIntegralDiscriminant(q);
     
     -- Step 3: Take relevant primes plus dyadic ones
-    S := getRelevantPrimes(beta);
+    S := getRelevantPrimes beta;
     if not member(2,S) then (
 	S = append(S,2);
 	);
@@ -95,35 +95,35 @@ getAnisotropicPartQQDimension2 GrothendieckWittClass := GrothendieckWittClass =>
 
     	-- Step 5c: Make a vector of exponents of Hasse invariants
 	W := mutableMatrix(QQ,s,1);
-	for i from 0 to (s-1) do (
+	for i from 0 to s - 1 do (
 	    W_(i,0) = (1 - (getHasseWittInvariant(q,S_i)))/2;
 	    );
        	
 	-- Step 5b / 5f: 
-	W = matrix(W);
-    	if (d < 0) then (
+	W = matrix W;
+    	if d < 0 then (
 	    if abs(getSignature(q)) != 2 then error "getSignature isn't pm 2";
-	    if (getSignature(q) == 2) then (
+	    if getSignature(q) == 2 then (
 		W = matrix(QQ,{{0}}) || W;
 		);
-	    if (getSignature(q) == -2) then (
+	    if getSignature(q) == -2 then (
 		W = matrix(QQ,{{1}}) || W;
 	        );
 	    );
         
     	-- Step 5e: Make a matrix of Hilbert symbols
     	B := mutableMatrix(QQ,s,m);	
-    	for i from 0 to (s-1) do (
-	    for j from 0 to (m-1) do (
+    	for i from 0 to s - 1 do (
+	    for j from 0 to m - 1 do (
 	    	B_(i,j) = (1 - getHilbertSymbol(basisES_j, d, S_i))/2;
 	    	);
 	    );
-	B = matrix(B);
+	B = matrix B;
     	
 	-- Step 5d: Append a zero column on the front if the discriminant is negative
     	if (d < 0) then (
 	    A := mutableMatrix(QQ,1,m);
-	    for i from 0 to (m-1) do (
+	    for i from 0 to m - 1 do (
 	    	if basisES_i > 0 then (
 		    A_(0,i) = 0;
 		    )
@@ -139,7 +139,7 @@ getAnisotropicPartQQDimension2 GrothendieckWittClass := GrothendieckWittClass =>
     	W = matrix(kk,entries(W));
     	B = matrix(kk,entries(B));
 
-	if (class(solve(B,W)) === Matrix) then (
+	if class(solve(B,W)) === Matrix then (
 	    X := solve(B,W);
 	    solnFound = true;
 	    break;
@@ -153,8 +153,8 @@ getAnisotropicPartQQDimension2 GrothendieckWittClass := GrothendieckWittClass =>
 	    );
 	);
     alpha := sub(1,ZZ);
-    for j from 0 to (m-1) do (
-	alpha = alpha * ((basisES_j)^(sub(X_(j,0),ZZ)));
+    for j from 0 to m - 1 do (
+	alpha = alpha * (basisES_j)^(sub(X_(j,0),ZZ));
 	);
     makeDiagonalForm(QQ,(alpha, -getSquarefreePart(alpha*d)))
     )
@@ -208,7 +208,7 @@ getAnisotropicPart Matrix := Matrix => A -> (
         error "Base field not supported; only implemented over QQ, RR, CC, and finite fields of characteristic not 2";
         );
     -- Ensure underlying matrix is symmetric
-    if not isSquareAndSymmetric(A) then error "Underlying matrix is not symmetric";
+    if not isSquareAndSymmetric A then error "Underlying matrix is not symmetric";
     -- Over CC, the anisotropic part is either the rank 0 form or the rank 1 form, depending on the anisotropic dimension
     if instance(k,ComplexField) then (
         if (getAnisotropicDimension(A) == 0) then (
@@ -223,10 +223,10 @@ getAnisotropicPart Matrix := Matrix => A -> (
         diagonalA := diagonalizeViaCongruence A;
         posEntries := countPosDiagEntries diagonalA;
         negEntries := countNegDiagEntries diagonalA;
-        if (posEntries > negEntries) then (
+        if posEntries > negEntries then (
             return id_(RR^(posEntries-negEntries));
             )
-        else if (posEntries < negEntries) then (
+        else if posEntries < negEntries then (
             return -id_(RR^(negEntries-posEntries));
             )
         else (
@@ -254,7 +254,7 @@ getAnisotropicPart Matrix := Matrix => A -> (
     )
 
 getAnisotropicPart GrothendieckWittClass := GrothendieckWittClass => alpha -> (
-    makeGWClass getAnisotropicPart(getMatrix alpha)
+    makeGWClass getAnisotropicPart getMatrix alpha
     )
 
 ---------------------------------------
@@ -286,7 +286,7 @@ getSumDecompositionVerbose GrothendieckWittClass := (GrothendieckWittClass, Stri
     
     if getRank(alpha) > 0 then (
         D := getDiagonalEntries alpha;
-        for i from 0 to (length(D) - 1) do (
+        for i from 0 to length(D) - 1 do (
 	    outputString = outputString | " + <" | toString(D_i) | ">";
             );
 	);
