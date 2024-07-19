@@ -15,7 +15,7 @@ isAnisotropic Matrix := Boolean => A -> (
 -- Output: Boolean that gives whether the Grothendieck-Witt class is anisotropic
 
 isAnisotropic GrothendieckWittClass := Boolean => alpha -> (
-    isAnisotropic(getMatrix alpha)
+    isAnisotropic getMatrix alpha
     )
 
 -- Input: A matrix representing a symmetric bilinear form over QQ, RR, CC, or a finite field of characteristic not 2
@@ -23,12 +23,12 @@ isAnisotropic GrothendieckWittClass := Boolean => alpha -> (
 
 isIsotropic = method()
 isIsotropic Matrix := Boolean => A -> (
-    not isAnisotropic(A)
+    not isAnisotropic A
     )
 
 -- Input: A Grothendieck-Witt class over QQ, RR, CC, or a finite field of characteristic not 2
 -- Output: Boolean that gives whether the Grothendieck-Witt class is isotropic
 
 isIsotropic GrothendieckWittClass := Boolean => alpha -> (
-    not isAnisotropic(alpha)
+    not isAnisotropic alpha
     )
