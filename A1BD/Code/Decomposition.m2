@@ -287,7 +287,7 @@ getSumDecompositionVerbose GrothendieckWittClass := (GrothendieckWittClass, Stri
     if getRank(alpha) > 0 then (
         D := getDiagonalEntries alpha;
         for i from 0 to (length(D) - 1) do (
-	    outputString = outputString | "+ <" | toString(D_i) | ">";
+	    outputString = outputString | " + <" | toString(D_i) | ">";
             );
 	);
     
