@@ -242,13 +242,13 @@ getAnisotropicPart Matrix := Matrix => A -> (
     else if (instance(k, GaloisField) and k.char != 2) then (
         diagA := diagonalizeViaCongruence(A);
         if getAnisotropicDimension(A) == 1 then (
-            return matrix(k,{{sub((-1)^((getRank(diagA)-1)/2),k)*det(getNondegeneratePartDiagonal diagA)}});
+            return matrix(k,{{sub((-1)^((rank(diagA)-1)/2),k)*det(getNondegeneratePartDiagonal diagA)}});
             )
         else if getAnisotropicDimension(A) == 0 then (
             return diagonalMatrix(k,{});
             )
         else (
-            return matrix(k,{{1,0},{0,sub((-1)^((getRank(diagA)-2)/2),k)*det(getNondegeneratePartDiagonal diagA)}});
+            return matrix(k,{{1,0},{0,sub((-1)^((rank(diagA)-2)/2),k)*det(getNondegeneratePartDiagonal diagA)}});
             );
         );
     )

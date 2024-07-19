@@ -8,26 +8,25 @@
 
 isHyperbolicQQp = method()
 isHyperbolicQQp (GrothendieckWittClass, ZZ) := Boolean => (beta, p) -> (
-    B := getMatrix beta;
-    getRankBeta := getRank beta;
-    kk := ring B;
+    rankBeta := getRank beta;
+    kk := getBaseField beta;
     
     if not kk === QQ then error "GrothendieckWittClass is not over QQ";
     if not isPrime p then error "second argument must be a prime number";
     
     -- Odd rank forms are not hyperbolic
-    if odd getRankBeta then return false; 
+    if odd rankBeta then return false; 
     
     -- Hyperbolic forms always have square discriminants
     -- Note that Koprowski and Czogala are using a different, signed, version of the discriminant
-    d := (-1)^(getRankBeta*(getRankBeta-1)/2) * getIntegralDiscriminant(beta);
+    d := (-1)^(rankBeta*(rankBeta-1)/2) * getIntegralDiscriminant(beta);
     
     -- If this discriminant is not a square in Q_p then return false
     if not isPadicSquare(d,p) then return false;
     
     -- At this stage, the rank and discriminant of our beta agrees with that of a hyperbolic form,
     -- so by e.g. Lam V.3.25 it suffices to check whether their Hasse-Witt invariants agree
-    m := sub(getRankBeta/2,ZZ);
+    m := sub(rankBeta/2,ZZ);
     HasseWittHyperbolicForm := (getHilbertSymbol(-1,-1,p))^(m*(m - 1)/2);
     HasseWittBeta := getHasseWittInvariant(beta,p);
     HasseWittHyperbolicForm == HasseWittBeta
@@ -41,25 +40,24 @@ isHyperbolicQQp (GrothendieckWittClass, ZZ) := Boolean => (beta, p) -> (
 
 getAnisotropicDimensionQQp = method()
 getAnisotropicDimensionQQp (GrothendieckWittClass, ZZ) := ZZ => (beta, p) -> (
-    B := getMatrix beta;
-    getRankBeta := getRank beta;
-    kk := ring B;
+    rankBeta := getRank beta;
+    kk := getBaseField beta;
     
     if not kk === QQ then error "GrothendieckWittClass is not over QQ";
     if not isPrime p then error "second argument must be a prime number";
     
-    if even getRankBeta then (
+    if even rankBeta then (
 	-- If the form is hyperbolic it has no anisotropic part
 	if isHyperbolicQQp(beta,p) then return 0;
        	
 	-- Note Koprowski and Czogala use a signed version of the discriminant
-	d := (-1)^(getRankBeta*(getRankBeta-1)/2) * getIntegralDiscriminant(beta);
+	d := (-1)^(rankBeta*(rankBeta-1)/2) * getIntegralDiscriminant(beta);
 	if isPadicSquare(d,p) then return 4;
 	return 2;
 	);
     
-    if odd getRankBeta then (
-	c := (-1)^(getRankBeta*(getRankBeta+1)/2) * getIntegralDiscriminant(beta);
+    if odd rankBeta then (
+	c := (-1)^(rankBeta*(rankBeta+1)/2) * getIntegralDiscriminant(beta);
 	gamma := addGW(beta, makeDiagonalForm(QQ,(c)));
 	if isHyperbolicQQp(gamma,p) then return 1;
 	return 3;
@@ -72,9 +70,8 @@ getAnisotropicDimensionQQp (GrothendieckWittClass, ZZ) := ZZ => (beta, p) -> (
 
 getAnisotropicDimensionQQ = method()
 getAnisotropicDimensionQQ GrothendieckWittClass := ZZ => beta -> (
-    B := getMatrix beta;
-    getRankBeta := getRank beta;
-    kk := ring B;
+    rankBeta := getRank beta;
+    kk := getBaseField beta;
     
     if not kk === QQ then error "GrothendieckWittClass is not over QQ";
     
@@ -108,7 +105,7 @@ getAnisotropicDimension Matrix := ZZ => A -> (
     if not isSquareAndSymmetric A then error "Matrix is not symmetric";
     -- Over CC, the anisotropic dimension is 0 or 1 depending on the parity of the rank
     if instance(k,ComplexField) then (
-        return getRank(A)%2;
+        return rank(A)%2;
         )
     -- Over RR, the anisotropic dimension is the absolute value of the getSignature
     else if instance(k,RealField) then (
@@ -124,10 +121,10 @@ getAnisotropicDimension Matrix := ZZ => A -> (
     -- depending on whether the nondegenerate part of the form is totally hyperbolic
     else if (instance(k, GaloisField) and k.char != 2) then (
         diagA := diagonalizeViaCongruence A;
-        if (getRank(diagA)%2 == 1) then (
+        if (rank(diagA)%2 == 1) then (
             return 1;
             )
-        else if isGFSquare(det getNondegeneratePartDiagonal diagA) == isGFSquare(sub((-1)^(getRank(diagA)/2),k)) then (
+        else if isGFSquare(det getNondegeneratePartDiagonal diagA) == isGFSquare(sub((-1)^(rank(diagA)/2),k)) then (
             return 0;
             )
         else (
