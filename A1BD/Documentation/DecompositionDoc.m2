@@ -68,7 +68,7 @@ document {
     Outputs => { 
 	GrothendieckWittClass => {"the anisotropic part of ", TEX///$\beta$///},
     },
-    PARA {"Given a form ", TEX///$\beta$///, " we may compute its anisotropic part inductively by reference to its ", TO2(getAnisotropicDimension,"anisotropic dimension"), ". Over the complex numbers and the reals this is trivial, and over finite fields it is a fairly routine computation, however over the rationals some more sophisticated algorithms are needed from the literature. For this methods we implement algorithms developed for number fields by Koprowski and Rothkegel [KR23]. Note also that a Chinese Remainder Theorem method is needed in reducing from anisotropic dimension three as in [KR23, Algorithm 7], so we import one from the ", TT "Parametrization", " package."},
+    PARA {"Given a form ", TEX///$\beta$///, " we may compute its anisotropic part inductively by reference to its ", TO2(getAnisotropicDimension,"anisotropic dimension"), ". Over the complex numbers and the reals this is trivial, and over finite fields it is a fairly routine computation, however over the rationals some more sophisticated algorithms are needed from the literature. For this methods we implement algorithms developed for number fields by Koprowski and Rothkegel [KR23]."},
     EXAMPLE lines ///
     alpha = makeDiagonalForm(QQ, (3,-3,2,5,1,-9));
     getAnisotropicPart alpha
