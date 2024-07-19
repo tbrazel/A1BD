@@ -27,7 +27,7 @@ getPrimeFactors ZZ := List => n -> (
 
 getPrimeFactors QQ := List => n -> (
     if not liftable(n,ZZ) then error "tried to take prime factors of a rational";
-    getPrimeFactors(sub(n,ZZ))   
+    getPrimeFactors sub(n,ZZ)  
     )
 
 -- Input: An integer or rational number and a prime number p
@@ -87,6 +87,7 @@ getSquareSymbol (ZZ, ZZ) := ZZ => (a, p) -> (
 
 -- Input: Two integers a and b, and a prime number p
 -- Output: Boolean that gives whether a and b differ by a square in Q_p
+
 isEqualUpToPadicSquare = method()
 isEqualUpToPadicSquare (ZZ, ZZ, ZZ) := Boolean => (a, b, p) -> (
     
@@ -180,46 +181,46 @@ getGlobalAlgebraRank List := ZZ => Endo -> (
     numColumns basis(S/ideal(Endo))
     )
 
--- This is adapted from the igcdx method from the Parametrization package
 -- Input: A pair of integers a,b
 -- Output: x,y such that a*x + b*y = gcd(a,b)
-computeExtendedEuclidean = method()
-computeExtendedEuclidean(ZZ,ZZ):=(a, b)->(
-if a % b == 0 then 
-(
-  return {0, 1};
-)
-else 
-(
-  L:= computeExtendedEuclidean(b, a % b);
-  return {L#1, L#0-L#1*(a // b)};
-);
-);
+-- This is adapted from the igcdx method from the Parametrization package
 
--- This is adapted from the chineseRemainder0 method from the Parametrization package
+computeExtendedEuclidean = method()
+computeExtendedEuclidean(ZZ, ZZ) := (a, b) -> (
+    if a % b == 0 then (
+        return {0, 1};
+        )
+    else (
+        L := computeExtendedEuclidean(b, a % b);
+        return {L#1, L#0 - L#1*(a // b)};
+        );
+    )
+
 -- Input: A set of four integers a, b, p, q
 -- Output: An integer solution x to the congruences x = a (mod p) and x = b (mod q)
+-- This is adapted from the chineseRemainder0 method from the Parametrization package
 
 solveCongruencePair = method()
-solveCongruencePair(ZZ,ZZ,ZZ,ZZ):=(a,b,n,m)->(
-k:=a-b;
-L:=computeExtendedEuclidean(n,m);
-u:=L#0;
-v:=L#1;
-a-k*u*n % n*m
-);
+solveCongruencePair(ZZ, ZZ, ZZ, ZZ) := (a, b, n, m) -> (
+    k := a - b;
+    L := computeExtendedEuclidean(n, m);
+    u := L#0;
+    v := L#1;
+    a - k*u*n % n*m
+    )
 
 -- This is adapted from the chineseRemainder method from the Parametrization package
 
 solveCongruenceList = method()
-solveCongruenceList(List,List):=(L1,L2)->(
-q:=1;
-a:=L1#0;
-n:=L2#0;
-L:={};
-while q<#L1 do (
-  a=solveCongruencePair(a,L1#q,n,L2#q);
-  n=n*L2#q;
-q=q+1);
-a
-);
+solveCongruenceList(List, List) := (L1, L2) -> (
+    q := 1;
+    a := L1#0;
+    n := L2#0;
+    L := {};
+    while q<#L1 do (
+        a = solveCongruencePair(a, L1#q, n, L2#q);
+        n = n*L2#q;
+        q = q + 1
+        );
+    a
+    )
