@@ -12,8 +12,8 @@ getGlobalA1Degree List := GrothendieckWittClass => Endo -> (
     n := #Endo;
 
     -- Get the underlying ring, and ensure it is a field
-    kk := coefficientRing(ring(Endo#0)); 
-    if not isField(kk) then (
+    kk := coefficientRing ring(Endo#0); 
+    if not isField kk then (
 	kk = toField kk;
 	);
     
@@ -56,7 +56,7 @@ getGlobalA1Degree List := GrothendieckWittClass => Endo -> (
             -- Suppose our endomorphisms are given in the variables x_1, ..., x_n
             -- Map f_i(x_1, ..., x_n) to f_i(Y_1, ..., Y_(j-1), X_j, ..., X_n) resp.
             -- Take the difference f_i(Y_1, ..., Y_(j-1), X_j, ..., X_n) - f_i(Y_1, ... Y_j, X_(j+1), ..., X_n)
-            numeratorD := ((map(R,S,targetList1))(Endo_i) - (map(R,S,targetList2))(Endo_i)); 
+            numeratorD := (map(R,S,targetList1))(Endo_i) - (map(R,S,targetList2))(Endo_i); 
             -- Divide this by X_j - Y_j. Note Macaulay2 is 0-indexed hence the difference in notation. 
 	    D_(i,j)= numeratorD / ((X_(j+1))_R-(Y_(j+1))_R); 
 	    ); 
@@ -73,8 +73,8 @@ getGlobalA1Degree List := GrothendieckWittClass => Endo -> (
     
     -- In some computations, applying lift(-,R) doesn't work, so we instead lift the numerator and
     -- then divide by a lift of the denominator (which will be a scalar) to the coefficient ring k
-    if not liftable(det(D),R) then (
-	bezDet = lift(numerator(det(D)), R) / lift(denominator(det(D)),coefficientRing R);
+    if not liftable(det D,R) then (
+	bezDet = lift(numerator(det D), R) / lift(denominator(det D),coefficientRing R);
     	bezDetR = lift(bezDet, R);
 	);
 
@@ -113,7 +113,7 @@ getGlobalA1Degree List := GrothendieckWittClass => Endo -> (
     phi0 := map(kk,Rquot,(toList ((2*n):0))); 
 
     -- m is the dimension of the basis for the algebra
-    m := numColumns(sBXProm);
+    m := numColumns sBXProm;
 
     -- Create the Bezoutian matrix B for the quadratic form by reading off the coefficients. 
     -- B is an (m x m) matrix. The coefficient B_(i,j) is the coefficient of the (ith basis vector x jth basis vector) in tensor product.
@@ -124,7 +124,7 @@ getGlobalA1Degree List := GrothendieckWittClass => Endo -> (
             B_(i,j) = phi0(coefficient((sBXProm_(0,i)**sBYProm_(0,j))_(0,0), bezDetRed));
             );
         );
-    makeGWClass matrix(B)
+    makeGWClass matrix B
     )
 
 ---------
@@ -141,8 +141,8 @@ getLocalA1Degree (List, Ideal) := GrothendieckWittClass => (Endo,p) -> (
     n := #Endo;
 
     -- Get the underlying ring, and ensure it is a field
-    kk := coefficientRing(ring(Endo#0)); 
-    if not isField(kk) then (
+    kk := coefficientRing ring(Endo#0); 
+    if not isField kk then (
 	kk = toField kk;
 	);
 
@@ -190,7 +190,7 @@ getLocalA1Degree (List, Ideal) := GrothendieckWittClass => (Endo,p) -> (
             -- Suppose our endomorphisms are given in the variables x_1, ..., x_n
             -- Map f_i(x_1, ..., x_n) to f_i(Y_1, ..., Y_(j-1), X_j, ..., X_n) resp.
             -- Take the difference f_i(Y_1, ..., Y_(j-1), X_j, ..., X_n) - f_i(Y_1, ... Y_j, X_(j+1), ..., X_n)
-            numeratorD := ((map(R,S,targetList1))(Endo_i) - (map(R,S,targetList2))(Endo_i)); 
+            numeratorD := (map(R,S,targetList1))(Endo_i) - (map(R,S,targetList2))(Endo_i); 
             -- Divide this by X_j - Y_j. Note Macaulay2 is 0-indexed hence the difference in notation. 
 	    D_(i,j)= numeratorD / ((X_(j+1))_R-(Y_(j+1))_R); 
 	    ); 
@@ -207,8 +207,8 @@ getLocalA1Degree (List, Ideal) := GrothendieckWittClass => (Endo,p) -> (
 
     -- In some computations, applying lift(-,R) doesn't work, so we instead lift the numerator and
     -- then divide by a lift of the denominator (which will be a scalar) to the coefficient ring k
-    if not liftable(det(D),R) then (
-	bezDet = lift(numerator(det(D)), R) / lift(denominator(det(D)),coefficientRing R);
+    if not liftable(det D,R) then (
+	bezDet = lift(numerator(det D), R) / lift(denominator(det D),coefficientRing R);
     	bezDetR = lift(bezDet, R);
 	);    
     
@@ -257,5 +257,5 @@ getLocalA1Degree (List, Ideal) := GrothendieckWittClass => (Endo,p) -> (
             B_(i,j) = phi0(coefficient((sBXProm_i**sBYProm_j)_(0,0), bezDetRed));
             );
         );
-    makeGWClass matrix(B)
+    makeGWClass matrix B
     )
