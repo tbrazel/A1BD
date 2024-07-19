@@ -12,15 +12,15 @@ isHyperbolicQQp (GrothendieckWittClass, ZZ) := Boolean => (beta, p) -> (
     getRankBeta := getRank beta;
     kk := ring B;
     
-    if not (kk === QQ) then error "GrothendieckWittClass is not over QQ";
-    if not isPrime(p) then error "second argument must be a prime number";
+    if not kk === QQ then error "GrothendieckWittClass is not over QQ";
+    if not isPrime p then error "second argument must be a prime number";
     
     -- Odd rank forms are not hyperbolic
     if odd getRankBeta then return false; 
     
     -- Hyperbolic forms always have square discriminants
     -- Note that Koprowski and Czogala are using a different, signed, version of the discriminant
-    d := (-1)^(getRankBeta*(getRankBeta-1)/2) *getIntegralDiscriminant(beta);
+    d := (-1)^(getRankBeta*(getRankBeta-1)/2) * getIntegralDiscriminant(beta);
     
     -- If this discriminant is not a square in Q_p then return false
     if not isPadicSquare(d,p) then return false;
@@ -45,8 +45,8 @@ getAnisotropicDimensionQQp (GrothendieckWittClass, ZZ) := ZZ => (beta, p) -> (
     getRankBeta := getRank beta;
     kk := ring B;
     
-    if not (kk === QQ) then error "GrothendieckWittClass is not over QQ";
-    if not isPrime(p) then error "second argument must be a prime number";
+    if not kk === QQ then error "GrothendieckWittClass is not over QQ";
+    if not isPrime p then error "second argument must be a prime number";
     
     if even getRankBeta then (
 	-- If the form is hyperbolic it has no anisotropic part
@@ -76,7 +76,7 @@ getAnisotropicDimensionQQ GrothendieckWittClass := ZZ => beta -> (
     getRankBeta := getRank beta;
     kk := ring B;
     
-    if not (kk === QQ) then error "GrothendieckWittClass is not over QQ";
+    if not kk === QQ then error "GrothendieckWittClass is not over QQ";
     
     -- The anisotropic dimension of a form over Q is the maximum of its anisotropic dimensions at any of its completions or over Q_2
     ListOfLocalAnistropicDimensions := {};
@@ -105,7 +105,7 @@ getAnisotropicDimension Matrix := ZZ => A -> (
         error "Base field not supported; only implemented over QQ, RR, CC, and finite fields of characteristic not 2";
         );
     -- Ensure matrix is symmetric
-    if not isSquareAndSymmetric(A) then error "Matrix is not symmetric";
+    if not isSquareAndSymmetric A then error "Matrix is not symmetric";
     -- Over CC, the anisotropic dimension is 0 or 1 depending on the parity of the rank
     if instance(k,ComplexField) then (
         return getRank(A)%2;
@@ -116,7 +116,7 @@ getAnisotropicDimension Matrix := ZZ => A -> (
         return abs(countPosDiagEntries(diagonalA) - countNegDiagEntries(diagonalA));
         )
     -- Over QQ, call getAnisotropicDimensionQQ
-    else if (k === QQ) then (
+    else if k === QQ then (
         return getAnisotropicDimensionQQ(makeGWClass(getNondegeneratePartDiagonal(A)));
         )
     -- Over a finite field, if the number of nonzero diagonal entries is odd, then the anisotropic dimension is 1
@@ -127,7 +127,7 @@ getAnisotropicDimension Matrix := ZZ => A -> (
         if (getRank(diagA)%2 == 1) then (
             return 1;
             )
-        else if (isGFSquare(det(getNondegeneratePartDiagonal(diagA))) == isGFSquare(sub((-1)^(getRank(diagA)/2),k))) then (
+        else if isGFSquare(det(getNondegeneratePartDiagonal(diagA))) == isGFSquare(sub((-1)^(getRank(diagA)/2),k)) then (
             return 0;
             )
         else (
