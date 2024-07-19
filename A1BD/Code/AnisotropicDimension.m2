@@ -137,7 +137,7 @@ getAnisotropicDimension Matrix := ZZ => A -> (
     )
 
 getAnisotropicDimension GrothendieckWittClass := ZZ => alpha -> (
-    getAnisotropicDimension(getMatrix alpha)
+    getAnisotropicDimension getMatrix alpha
     )
 
 -- Input: A Grothendieck-Witt class over the complex numbers, the real numbers, the rational numbers, or a finite field of characteristic not 2
