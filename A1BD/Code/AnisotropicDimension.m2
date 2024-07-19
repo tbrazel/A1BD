@@ -117,7 +117,7 @@ getAnisotropicDimension Matrix := ZZ => A -> (
         )
     -- Over QQ, call getAnisotropicDimensionQQ
     else if k === QQ then (
-        return getAnisotropicDimensionQQ(makeGWClass(getNondegeneratePartDiagonal(A)));
+        return getAnisotropicDimensionQQ makeGWClass(getNondegeneratePartDiagonal(A));
         )
     -- Over a finite field, if the number of nonzero diagonal entries is odd, then the anisotropic dimension is 1
     -- if the number of nonzero diagonal entries is even, then the anisotropic dimension is either 0 or 2
@@ -127,7 +127,7 @@ getAnisotropicDimension Matrix := ZZ => A -> (
         if (getRank(diagA)%2 == 1) then (
             return 1;
             )
-        else if isGFSquare(det(getNondegeneratePartDiagonal(diagA))) == isGFSquare(sub((-1)^(getRank(diagA)/2),k)) then (
+        else if isGFSquare(det getNondegeneratePartDiagonal diagA) == isGFSquare(sub((-1)^(getRank(diagA)/2),k)) then (
             return 0;
             )
         else (
