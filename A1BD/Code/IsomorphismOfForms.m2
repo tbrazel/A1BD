@@ -95,5 +95,5 @@ isIsomorphicForm (Matrix,Matrix) := Boolean => (A,B) -> (
 -- Output: Boolean that gives whether alpha and beta are the same Grothendieck-Witt class
 
 isIsomorphicForm (GrothendieckWittClass,GrothendieckWittClass) := Boolean => (alpha,beta) -> (
-    isIsomorphicForm(alpha.matrix,beta.matrix)
+    isIsomorphicForm(getMatrix alpha, getMatrix beta)
     )
