@@ -24,14 +24,14 @@ makeGWClass Matrix := GrothendieckWittClass => M -> (
 -- Output: A net for printing the underlying matrix
 
 net GrothendieckWittClass := Net => alpha -> (
-    net(alpha.matrix)
+    net(getMatrix alpha)
     )
 
 -- Input: A GrothendieckWittClass
 -- Output: A string for printing the underlying matrix
 
 texMath GrothendieckWittClass := String => alpha -> (
-    texMath(alpha.matrix)
+    texMath(getMatrix alpha)
     )
 
 -- Input: A matrix
@@ -60,7 +60,7 @@ isWellDefined Matrix := Boolean => M -> (
 
 getBaseField = method()
 getBaseField GrothendieckWittClass := Ring => beta -> (
-    ring(beta.matrix)
+    ring(getMatrix beta)
     )
 
 -- Input: A GrothendieckWittClass representing a symmetric bilinear form determined by a matrix M
@@ -83,12 +83,12 @@ addGW (GrothendieckWittClass, GrothendieckWittClass) := GrothendieckWittClass =>
     if instance(Kb, GaloisField) and instance(Kg, GaloisField) then (
 	-- Return an error if the underlying fields of the two classes are different
 	if not Kb.order == Kg.order  then error "these classes have different underlying fields";
-	return makeGWClass(beta.matrix ++ substitute(gamma.matrix,Kb));
+	return makeGWClass(getMatrix beta ++ substitute(getMatrix gamma,Kb));
 	);
     
     -- Remaining cases
     if not Kb === Kg then error "these classes have different underlying fields";
-    makeGWClass(beta.matrix ++ gamma.matrix)
+    makeGWClass(getMatrix beta ++ getMatrix gamma)
     )
 
 -- Input: Two Grothendieck-Witt classes beta and gamma
@@ -103,10 +103,10 @@ multiplyGW (GrothendieckWittClass, GrothendieckWittClass) := GrothendieckWittCla
     if instance(Kb, GaloisField) and instance(Kg, GaloisField) then (
 	-- Return an error if the underlying fields of the two classes are different
 	if not Kb.order == Kg.order  then error "these classes have different underlying fields";
-	return makeGWClass(beta.matrix ** substitute(gamma.matrix,Kb));
+	return makeGWClass(getMatrix beta ** substitute(getMatrix gamma,Kb));
 	);
     
     -- Remaining cases
     if not Kb === Kg then error "these classes have different underlying fields";
-    makeGWClass(beta.matrix ** gamma.matrix)
+    makeGWClass(getMatrix beta ** getMatrix gamma)
     )
