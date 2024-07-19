@@ -8,7 +8,7 @@
 
 isHyperbolicQQp = method()
 isHyperbolicQQp (GrothendieckWittClass, ZZ) := Boolean => (beta, p) -> (
-    B := beta.matrix;
+    B := getMatrix beta;
     getRankBeta := getRank beta;
     kk := ring B;
     
@@ -41,7 +41,7 @@ isHyperbolicQQp (GrothendieckWittClass, ZZ) := Boolean => (beta, p) -> (
 
 getAnisotropicDimensionQQp = method()
 getAnisotropicDimensionQQp (GrothendieckWittClass, ZZ) := ZZ => (beta, p) -> (
-    B := beta.matrix;
+    B := getMatrix beta;
     getRankBeta := getRank beta;
     kk := ring B;
     
@@ -72,7 +72,7 @@ getAnisotropicDimensionQQp (GrothendieckWittClass, ZZ) := ZZ => (beta, p) -> (
 
 getAnisotropicDimensionQQ = method()
 getAnisotropicDimensionQQ GrothendieckWittClass := ZZ => beta -> (
-    B := beta.matrix;
+    B := getMatrix beta;
     getRankBeta := getRank beta;
     kk := ring B;
     
@@ -137,7 +137,7 @@ getAnisotropicDimension Matrix := ZZ => A -> (
     )
 
 getAnisotropicDimension GrothendieckWittClass := ZZ => alpha -> (
-    getAnisotropicDimension(alpha.matrix)
+    getAnisotropicDimension(getMatrix alpha)
     )
 
 -- Input: A Grothendieck-Witt class over the complex numbers, the real numbers, the rational numbers, or a finite field of characteristic not 2
