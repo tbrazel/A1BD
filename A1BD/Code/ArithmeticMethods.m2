@@ -66,8 +66,7 @@ isGFSquare RingElement := Boolean => a -> (
 
 getSquareSymbol = method()
 getSquareSymbol (ZZ, ZZ) := ZZ => (a, p) -> (
-    x := getSymbol "x";
-    R := GF(p, Variable => x);
+    R := GF(p);
     e1 := getPadicValuation(a,p);
     if even e1 then (
     	a1 := sub(a/(p^e1), ZZ);
@@ -104,8 +103,7 @@ isEqualUpToPadicSquare (ZZ, ZZ, ZZ) := Boolean => (a, b, p) -> (
         else (
     	    -- c1 will be an integer prime to p
 	    c1 := getSquarefreePart(a1*b1);
-	    x := getSymbol "x";
-	    return isGFSquare sub(c1, GF(p, Variable => x)); 
+	    return isGFSquare sub(c1, GF(p)); 
 	    );
         )
     else (
