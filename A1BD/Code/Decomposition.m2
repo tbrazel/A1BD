@@ -176,13 +176,13 @@ getAnisotropicPartQQ GrothendieckWittClass := GrothendieckWittClass => beta -> (
 
     while getAnisotropicDimension(beta) >= 4 do (
 	outputForm = addGW(outputForm,reduceAnisotropicPartQQDimension4(beta));
-	alpha = ((reduceAnisotropicPartQQDimension4(beta)).matrix)_(0,0);	
+	alpha = (getMatrix(reduceAnisotropicPartQQDimension4(beta)))_(0,0);	
 	beta = addGW(beta, makeDiagonalForm(QQ,((-1)*alpha)));
 	);
     
     if getAnisotropicDimension(beta) == 3 then (
 	outputForm = addGW(outputForm,reduceAnisotropicPartQQDimension3(beta));
-	alpha = ((reduceAnisotropicPartQQDimension3(beta)).matrix)_(0,0);	
+	alpha = (getMatrix(reduceAnisotropicPartQQDimension3(beta)))_(0,0);	
 	beta = addGW(beta, makeDiagonalForm(QQ,((-1)*alpha)));
 	);
     
@@ -235,7 +235,7 @@ getAnisotropicPart Matrix := Matrix => A -> (
         )
     -- Over QQ, call getAnisotropicPartQQ
     else if k === QQ then (
-        return (getAnisotropicPartQQ(makeGWClass(getNondegeneratePartDiagonal(A)))).matrix;
+        return getMatrix(getAnisotropicPartQQ(makeGWClass(getNondegeneratePartDiagonal(A))));
         )
     -- Over a finite field, if the anisotropic dimension is 1, then the form is either < 1 > or < e >, where e is any nonsquare representative,
     -- and if the anisotropic dimension is 2 then the form is <1,-e>
@@ -254,7 +254,7 @@ getAnisotropicPart Matrix := Matrix => A -> (
     )
 
 getAnisotropicPart GrothendieckWittClass := GrothendieckWittClass => alpha -> (
-    makeGWClass getAnisotropicPart(alpha.matrix)
+    makeGWClass getAnisotropicPart(getMatrix alpha)
     )
 
 ---------------------------------------
