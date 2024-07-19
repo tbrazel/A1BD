@@ -150,11 +150,45 @@ beginDocumentation()
 
 document{
     Key => A1BD,
-    Headline => "for working with A1-Brouwer degree computations",
-    PARA{"This package is intended computing and manipulating ", TO2(getLocalA1Degree,"local"), " and ", TO2(getGlobalA1Degree,"global"), " ", TEX///$\mathbb{A}^1$///, EM "-Brouwer degrees."," Global Brouwer degrees are non-degenerate symmetric bilinear forms valued in the Grothendieck-Witt ring of a field ", TEX///$\text{GW}(k)$///, "."},
-    PARA{"In order to simplify the forms produced, this package produces invariants of symmetric bilinear forms, including their ", TO2(getWittIndex,"Witt indices"), ", their ", TO2(getIntegralDiscriminant,"discriminants"), ", and their ", TO2(getHasseWittInvariant, "Hasse Witt invariants"), ". Quadratic forms can furthermore be ", TO2(getSumDecomposition,"decomposed"), " into their isotropic and ", TO2(getAnisotropicPart,"anisotropic parts"), ". Finally, and perhaps most crucially, we can certify whether two symmetric bilinear forms are ", TO2(isIsomorphicForm,"isomorphic") , " in the Grothendieck-Witt ring."},
-    }
+    Headline => "package for working with A1-Brouwer degree computations",
+    PARA{"This package is intended to allow the computation and manipulation of ", TO2(getLocalA1Degree,"local"), 
+	" and ", TO2(getGlobalA1Degree,"global"), " ", TEX///$\mathbb{A}^1$///, EM "-Brouwer degrees.",
+	" Global Brouwer degrees are non-degenerate symmetric bilinear forms valued in the Grothendieck-Witt ring of a field ", TEX///$\text{GW}(k)$///, "."},
+    PARA{"In order to simplify the forms produced, this package produces invariants of symmetric bilinear forms, including their ", 
+	TO2(getWittIndex,"Witt indices"), ", their ", 
+	TO2(getIntegralDiscriminant,"discriminants"), ", and their ", 
+	TO2(getHasseWittInvariant, "Hasse-Witt invariants"), ". Quadratic forms can be ", 
+	TO2(getSumDecomposition,"decomposed"), " into their isotropic and ", TO2(getAnisotropicPart,"anisotropic parts"), 
+	". Finally, and perhaps most crucially, we can certify whether two symmetric bilinear forms are ", TO2(isIsomorphicForm,"isomorphic") , " in the Grothendieck-Witt ring."},
+PARA{"Below is an example using the methods provided by this package to compute the ", TO2(getLocalA1Degree,"local"),
+        " and ", TO2(getGlobalA1Degree,"global"), " ", TEX///$\mathbb{A}^1$///,  "-Brouwer degrees for an endomorphism ",
+	TEX///$\mathbb{A}_{\mathbb{Q}}^1\rightarrow \mathbb{A}_{\mathbb{Q}}^1.$///, " defined by ",TEX///$$ f(x)=(x^2+x+1)(x-3)(x+2).$$///,
+	" We first compute the global degree."},
+    EXAMPLE {
+    "R = QQ[x]",
+    "f = {x^4 - 6*x^2 - 7*x - 6}",
+    "alpha = getGlobalA1Degree f",
+    "beta = getSumDecomposition alpha",
+    },
+    PARA{"We can also compute the local degrees at the respective ideals."},   
+    EXAMPLE {
+    "I1 = ideal(x^2 + x + 1);",
+    "alpha1 = getLocalA1Degree(f, I1)",
+    "I2 = ideal(x - 3)",
+    "alpha2 = getLocalA1Degree(f, I2)",
+    "I3 = ideal(x + 2);",
+    "alpha3 = getLocalA1Degree(f, I3)", 
+    },
 
+    PARA{"We can then use the ", TO isIsomorphicForm, "  method to verify that the ", 
+    TO2(getLocalA1Degree, "local"), " degrees sum to the ", TO2(getGlobalA1Degree, "global"), 
+    " degree."},
+    EXAMPLE{
+	"alpha' = addGW(alpha1, addGW(alpha2, alpha3))",
+	"isIsomorphicForm(alpha,alpha')",
+	"beta' = getSumDecomposition alpha'",
+	},
+    },
 undocumented {
     }
 
