@@ -101,7 +101,7 @@ diagonalizeViaCongruence Matrix := Matrix => AnonMut -> (
         if A_(col,col) != 0 then (
             for row from col + 1 to n - 1 do (
                 temp := A_(row,col);
-                -- Row operation make A_(row,col) zero
+                -- Row operation to make A_(row,col) zero
                 rowAdd(A,row,-temp/A_(col,col),col);
 	        -- Column operation to keep reduced matrix congruent
                 columnAdd(A,row,-temp/A_(col,col),col);
