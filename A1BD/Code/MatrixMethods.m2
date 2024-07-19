@@ -160,7 +160,7 @@ diagonalizeAndSimplifyViaCongruence Matrix := Matrix => AnonMut -> (
         -- If -1 is a square, then find another nonsquare representative
         if isGFSquare sub(-1,k) then (
 	    for i from 0 to n - 1 do (
-	        if (A_(i,i) != 0 and (not isGFSquare(A_(i,i)))) then (
+	        if (A_(i,i) != 0 and not isGFSquare(A_(i,i))) then (
                     -- If there is a nonsquare on the diagonal, choose it as the nonsquare representative
 	     	    nonSquareRep = A_(i,i);
                     break;
