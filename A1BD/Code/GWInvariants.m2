@@ -7,7 +7,7 @@
 
 getRank = method()
 getRank GrothendieckWittClass := ZZ => alpha -> (
-    numRows(getMatrix alpha)
+    numRows getMatrix alpha
     )
 
 getRank Matrix := ZZ => M -> (
@@ -21,17 +21,17 @@ getRank Matrix := ZZ => M -> (
 countPosDiagEntries = method()
 countPosDiagEntries Matrix := Matrix => A -> (
     -- Ensure matrix is symmetric
-    if not isSquareAndSymmetric(A) then error "Matrix is not symmetric";
+    if not isSquareAndSymmetric A then error "Matrix is not symmetric";
     -- Ensure base field is QQ or RR
     k := ring A;
     if not (instance(k,RealField) or k === QQ) then (
         error "Only implemented over QQ and RR";
         );
-    if not isDiagonal(A) then (
-        A = diagonalizeViaCongruence(A);
+    if not isDiagonal A then (
+        A = diagonalizeViaCongruence A;
         );
     posDiagEntries := 0;
-    for i from 0 to (numRows(A) - 1) do (
+    for i from 0 to numRows(A) - 1 do (
         if A_(i,i) > 0 then (
             posDiagEntries = posDiagEntries + 1;
             );
@@ -46,17 +46,17 @@ countPosDiagEntries Matrix := Matrix => A -> (
 countNegDiagEntries = method()
 countNegDiagEntries Matrix := Matrix => A -> (
     -- Ensure matrix is symmetric
-    if not isSquareAndSymmetric(A) then error "Matrix is not symmetric";
+    if not isSquareAndSymmetric A then error "Matrix is not symmetric";
     -- Ensure base field is QQ or RR
     k := ring A;
     if not (instance(k,RealField) or k === QQ) then (
         error "Only implemented over QQ and RR";
         );
-    if not isDiagonal(A) then (
+    if not isDiagonal A then (
         A = diagonalizeViaCongruence A;
         );
     negDiagEntries := 0;
-    for i from 0 to (numRows(A) - 1) do (
+    for i from 0 to numRows(A) - 1 do (
         if A_(i,i) < 0 then (
             negDiagEntries = negDiagEntries + 1;
             );
@@ -69,7 +69,7 @@ countNegDiagEntries Matrix := Matrix => A -> (
 -- Note: countPosDiagEntries is *not* included as a method in the A1BrowerDegrees package
 
 countPosDiagEntries GrothendieckWittClass := ZZ => beta -> (
-    countPosDiagEntries(getMatrix beta)
+    countPosDiagEntries getMatrix beta
     )
 
 -- Input: A Grothendieck-Witt class beta defined over QQ or RR
@@ -77,7 +77,7 @@ countPosDiagEntries GrothendieckWittClass := ZZ => beta -> (
 -- Note: countNegDiagEntries is *not* included as a method in the A1BrowerDegrees package
 
 countNegDiagEntries GrothendieckWittClass := ZZ => beta -> (
-    countNegDiagEntries(getMatrix beta)
+    countNegDiagEntries getMatrix beta
     )
 
 -- Input: A Grothendieck-Witt class beta defined over QQ or RR
@@ -101,7 +101,7 @@ getIntegralDiscriminant GrothendieckWittClass := ZZ => beta -> (
     if not kk === QQ then error "GrothendieckWittClass is not over QQ";
 
     -- Return a squarefree integral representative of the product of diagonal entries of a diagonal representative of the form 
-    getSquarefreePart product(getDiagonalEntries(beta))
+    getSquarefreePart product getDiagonalEntries beta
     )
 
 -- Input: A Grothendieck-Witt class defined over QQ
@@ -113,7 +113,7 @@ getRelevantPrimes GrothendieckWittClass := List => beta -> (
     if not kk === QQ then error "GrothendieckWittClass is not over QQ";
     
     -- Find the diagonal entries of a diagonal integral representative of the form
-    D := getDiagonalEntries( getDiagonalClass beta );
+    D := getDiagonalEntries getDiagonalClass beta;
     
     -- Make a list of all prime factors of diagonal entries
     L := {};
@@ -129,7 +129,7 @@ getRelevantPrimes GrothendieckWittClass := List => beta -> (
 
 getHasseWittInvariant = method()
 getHasseWittInvariant (List, ZZ) := ZZ => (L,p) -> (
-    if not isPrime(p) then error "second argument must be a prime number";
+    if not isPrime p then error "second argument must be a prime number";
 
     a := 1;
     len := #L;
@@ -149,7 +149,7 @@ getHasseWittInvariant (List, ZZ) := ZZ => (L,p) -> (
 
 getHasseWittInvariant(GrothendieckWittClass, ZZ) := ZZ => (beta,p) -> (
     kk := getBaseField beta;
-    if not (kk === QQ) then error "method is only implemented over the rationals";
-    getHasseWittInvariant(getDiagonalEntries(beta),p)
+    if not kk === QQ then error "method is only implemented over the rationals";
+    getHasseWittInvariant(getDiagonalEntries beta, p)
     )
 
