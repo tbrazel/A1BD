@@ -35,7 +35,7 @@ getHilbertSymbolReal (ZZ, ZZ) := ZZ => (a,b) -> (
 getHilbertSymbol = method()
 getHilbertSymbol (ZZ, ZZ, ZZ) := ZZ => (a, b, p) -> (
     if (a == 0 or b == 0) then error "first two arguments of getHilbertSymbol must be nonzero";
-    if not isPrime(p) then error "third argument of getHilbertSymbol must be prime";
+    if not isPrime p then error "third argument of getHilbertSymbol must be prime";
     
     alpha := getPadicValuation(a,p);
     beta := getPadicValuation(b,p);
