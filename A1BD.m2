@@ -34,9 +34,9 @@ newPackage(
 	},
     Headline=>"for working with A1-Brouwer degree computations",
     PackageImports=>{
-	"Parametrization",
-	"RealRoots",
-	"RationalPoints2"
+	--"Parametrization",
+	--"RealRoots",
+	--"RationalPoints2"
 	},
     PackageExports=>{},
     AuxiliaryFiles=>true,

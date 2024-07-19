@@ -44,8 +44,8 @@ reduceAnisotropicPartQQDimension3 GrothendieckWittClass := GrothendieckWittClass
 	);
     
     -- We are looking for an element which is equivalent to d-1 mod p for each p in L1 and equivalent to p mod p^2 for each p in L2
-    -- We use the chineseRemainder method from the "Parametrization" package to find such an element
-    alpha := chineseRemainder(S1 | S2, L1 | L2);
+    -- We use the solveCongruenceList method from the to find such an element
+    alpha := solveCongruenceList(S1 | S2, L1 | L2);
     a := getSquarefreePart alpha;
     makeDiagonalForm(QQ,a)
     )
