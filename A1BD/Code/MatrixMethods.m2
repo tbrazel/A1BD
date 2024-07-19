@@ -23,7 +23,7 @@ isSquareAndSymmetric Matrix := Boolean => M -> (
 
 isDegenerate = method()
 isDegenerate Matrix := Boolean => M -> (
-    if not isSquareAndSymmetric(M) then error "matrix is not symmetric";
+    if not isSquareAndSymmetric M then error "matrix is not symmetric";
     if numRows(M) == 0 then (
 	return false;
 	)
@@ -37,7 +37,7 @@ isDegenerate Matrix := Boolean => M -> (
 
 isNondegenerate = method()
 isNondegenerate Matrix := Boolean => M -> (
-    not isDegenerate(M)
+    not isDegenerate M
     )
  
 -- Input: A square matrix
@@ -46,12 +46,12 @@ isNondegenerate Matrix := Boolean => M -> (
 isDiagonal = method()
 isDiagonal Matrix := Boolean => M -> (
 
-    if not isSquare(M) then error "matrix is not a square";
+    if not isSquare M then error "matrix is not a square";
 
     n := numRows M;
     -- Check the matrix entries that aren't on the diagonal
-    for i from 0 to n-2 do (
-	for j from  i+1 to n-1 do (
+    for i from 0 to n - 2 do (
+	for j from  i + 1 to n - 1 do (
 	    -- If any off-diagonal entry is nonzero, then the matrix isn't diagonal
 	    if  M_(i,j) != 0 or M_(j,i) != 0 then return false;
             );
@@ -66,8 +66,8 @@ isDiagonal Matrix := Boolean => M -> (
 diagonalizeViaCongruence = method()
 diagonalizeViaCongruence Matrix := Matrix => AnonMut -> (
     k := ring AnonMut;
-    if not isField(k) then error "expected matrix entries from a field";
-    if not isSquareAndSymmetric(AnonMut) then error "matrix is not symmetric";
+    if not isField k then error "expected matrix entries from a field";
+    if not isSquareAndSymmetric AnonMut then error "matrix is not symmetric";
     
     -- If the matrix is already diagonal, then return it
     if isDiagonal AnonMut then return AnonMut;
@@ -99,8 +99,8 @@ diagonalizeViaCongruence Matrix := Matrix => AnonMut -> (
             );
         -- Now A_(col,col) != 0 unless there was a zero row/column; we use it to clear column "col" below this entry
         if A_(col,col) != 0 then (
-            for row from (col+1) to n - 1 do (
-                temp:=A_(row,col);
+            for row from col + 1 to n - 1 do (
+                temp := A_(row,col);
                 -- Row operation make A_(row,col) zero
                 rowAdd(A,row,-temp/A_(col,col),col);
 	        -- Column operation to keep reduced matrix congruent
@@ -120,14 +120,14 @@ diagonalizeAndSimplifyViaCongruence Matrix := Matrix => AnonMut -> (
     if not (instance(k,ComplexField) or instance(k,RealField) or k === QQ or (instance(k, GaloisField) and k.char != 2)) then (
         error "Base field not supported; only implemented over QQ, RR, CC, and finite fields of characteristic not 2";
         );
-    if not isSquareAndSymmetric(AnonMut) then error "matrix is not symmetric";
+    if not isSquareAndSymmetric AnonMut then error "matrix is not symmetric";
 
     A := mutableMatrix diagonalizeViaCongruence(AnonMut);
     n := numRows A;
 
     -- If the field is the complex numbers, replace each nonzero entry of the diagonalization by 1
     if instance(k,ComplexField) then (
-	for i from 0 to (n-1) do (
+	for i from 0 to n - 1 do (
 	    if A_(i,i) != 0 then (
 		A_(i,i) = 1;
 		);
@@ -136,7 +136,7 @@ diagonalizeAndSimplifyViaCongruence Matrix := Matrix => AnonMut -> (
     
     -- If the field is the real numbers, replace each positive entry of the diagonalization by 1 and each negative entry by -1
     else if instance(k,RealField) then (
-	for i from 0 to (n-1) do (
+	for i from 0 to n - 1 do (
 	    if A_(i,i) > 0 then (
 		A_(i,i) = 1;
 		);
@@ -148,7 +148,7 @@ diagonalizeAndSimplifyViaCongruence Matrix := Matrix => AnonMut -> (
 
     -- If the field is the rational numbers, replace each diagonal entry by its squarefree part
     else if k === QQ then (
-	for i from 0 to (n-1) do (
+	for i from 0 to n - 1 do (
             A_(i,i) = getSquarefreePart A_(i,i);
 	    );
 	)
@@ -159,7 +159,7 @@ diagonalizeAndSimplifyViaCongruence Matrix := Matrix => AnonMut -> (
         nonSquareRep := sub(-1,k);
         -- If -1 is a square, then find another nonsquare representative
         if isGFSquare sub(-1,k) then (
-	    for i from 0 to (n-1) do (
+	    for i from 0 to n - 1 do (
 	        if (A_(i,i) != 0 and (not isGFSquare(A_(i,i)))) then (
                     -- If there is a nonsquare on the diagonal, choose it as the nonsquare representative
 	     	    nonSquareRep = A_(i,i);
@@ -167,7 +167,7 @@ diagonalizeAndSimplifyViaCongruence Matrix := Matrix => AnonMut -> (
 		    );
                 );
 	    );
-	for i from 0 to (n-1) do (
+	for i from 0 to n - 1 do (
 	    if (A_(i,i) != 0 and isGFSquare(A_(i,i))) then (
 		A_(i,i) = 1;
 		);
@@ -186,8 +186,8 @@ getNondegeneratePartDiagonal = method()
 getNondegeneratePartDiagonal Matrix := Matrix => A -> (
     diagA := diagonalizeViaCongruence A;
     i := 0;
-    while (i < numRows(diagA)) do (
-        if (diagA_(i,i) == 0) then (
+    while i < numRows(diagA) do (
+        if diagA_(i,i) == 0 then (
             diagA = submatrix'(diagA,{i},{i});
             )
         else (
