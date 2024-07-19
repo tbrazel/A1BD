@@ -24,14 +24,14 @@ makeGWClass Matrix := GrothendieckWittClass => M -> (
 -- Output: A net for printing the underlying matrix
 
 net GrothendieckWittClass := Net => alpha -> (
-    net(getMatrix alpha)
+    net getMatrix alpha
     )
 
 -- Input: A GrothendieckWittClass
 -- Output: A string for printing the underlying matrix
 
 texMath GrothendieckWittClass := String => alpha -> (
-    texMath(getMatrix alpha)
+    texMath getMatrix alpha
     )
 
 -- Input: A matrix
@@ -40,13 +40,13 @@ texMath GrothendieckWittClass := String => alpha -> (
 isWellDefined Matrix := Boolean => M -> (
     
     -- Return false if the matrix isn't square and symmetric
-    if not isSquareAndSymmetric(M) then return false;
+    if not isSquareAndSymmetric M then return false;
 
     -- Return false if the matrix represents a degenerate form
     if isDegenerate M then return false;
 
     -- Return false if the matrix isn't defined over a field
-    if not isField(ring M) then return false;
+    if not isField ring M then return false;
     
     -- Returns false if the matrix is defined over a field of characteristic 2
     if char(ring M) == 2 then return false;
@@ -60,7 +60,7 @@ isWellDefined Matrix := Boolean => M -> (
 
 getBaseField = method()
 getBaseField GrothendieckWittClass := Ring => beta -> (
-    ring(getMatrix beta)
+    ring getMatrix beta
     )
 
 -- Input: A GrothendieckWittClass representing a symmetric bilinear form determined by a matrix M
