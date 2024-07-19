@@ -137,7 +137,7 @@ getHasseWittInvariant (List, ZZ) := ZZ => (L,p) -> (
     -- Replace every entry of L by its squarefree part so we can work with integers
     f := {};
     for x in L do (
-	f = append(f,getSquarefreePart(x));
+	f = append(f,getSquarefreePart x);
 	);
     for i from 0 to len - 2 do (
        	for j from i + 1 to len - 1 do (
