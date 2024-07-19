@@ -128,7 +128,7 @@ getRelevantPrimes GrothendieckWittClass := List => beta -> (
 -- Output: The Hasse-Witt invariant of the quadratic form or Grothendieck-Witt class over Q_p
 
 getHasseWittInvariant = method()
-getHasseWittInvariant (List, ZZ) := ZZ => (L,p) -> (
+getHasseWittInvariant (List, ZZ) := ZZ => (L, p) -> (
     if not isPrime p then error "second argument must be a prime number";
 
     a := 1;
