@@ -43,11 +43,11 @@ getHilbertSymbol (ZZ, ZZ, ZZ) := ZZ => (a, b, p) -> (
     v := sub(b/p^beta, ZZ);
     
     if (p % 4 == 1) then (
-	return (((getSquareSymbol(u,p))^beta) * ((getSquareSymbol(v,p))^alpha));
+	return ((getSquareSymbol(u,p))^beta) * ((getSquareSymbol(v,p))^alpha);
 	);
     
     if (p % 4 == 3) then (
-	return (((-1)^(alpha*beta))*((getSquareSymbol(u,p))^beta) * ((getSquareSymbol(v,p))^alpha));
+	return ((-1)^(alpha*beta))*((getSquareSymbol(u,p))^beta) * ((getSquareSymbol(v,p))^alpha);
 	);
     
     if p == 2 then (
