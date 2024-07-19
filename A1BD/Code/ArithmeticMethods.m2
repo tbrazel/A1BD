@@ -36,7 +36,7 @@ getPrimeFactors QQ := List => n -> (
 getPadicValuation = method()
 getPadicValuation (ZZ, ZZ) := ZZ => (n, p) -> (
     if n == 0 then error "Trying to find prime factorization of 0";
-    H := hashTable factor(abs(n));
+    H := hashTable factor abs(n);
     if H#?p then (
     	return(H#p);
 	)
