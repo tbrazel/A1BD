@@ -4,21 +4,19 @@ document{
     PARA {"A ", TT "GrothendieckWittClass" ," object is a type of ", TO2(HashTable, "HashTable"), " encoding the isomorphism class of a non-degenerate symmetric bilinear form ", TEX///$V \times V \to k$///, " over a field ", TEX///$k$///, "."},
     PARA{"Given any basis ", TEX///$e_1,\ldots,e_n$///, " for ", TEX///$V$///, " as a ", TEX///$k$///, "-vector space, we can encode the symmetric bilinear form ", TEX///$\beta$///, " by how it acts on basis elements. That is, we can produce a matrix ", TEX///$\left(\beta(e_i,e_j)\right)_{i,j}$///, ". This is called a ", EM "Gram matrix", " for the symmetric bilinear form. A change of basis will produce a congruent Gram matrix, thus a matrix represents a symmetric bilinear form uniquely up to matrix congruence."},
 	
-	
     PARA{"A GrothendieckWittClass object can be built from a symmetric ", TO2(matrix, "matrix"), " over a field using the ", TO2(makeGWClass,"makeGWClass"), " method."},
     EXAMPLE lines///
-    beta = makeGWClass(matrix(QQ,{{0,1},{1,0}}))
+    beta = makeGWClass matrix(QQ, {{0,1},{1,0}})
     class beta
     ///,
     PARA{"The underlying matrix representative of a form can be recovered via the ", TO2(getMatrix, "getMatrix"), " command or the ", TT "matrix", " command, and its underlying field can be recovered using ", TO2(getBaseField,"getBaseField"), "."},
     EXAMPLE lines///
-    getMatrix(beta)
-    beta.matrix
-    getBaseField(beta)
+    getMatrix beta
+    getBaseField beta
     ///,
     PARA{"For computational purposes, it is often desirable to diagonalize a Gram matrix. Any symmetric bilinear form admits a diagonal Gram matrix representative by ", EM "Sylvester's law of inertia", ", and this is implemented via the ", TO2(getDiagonalClass, "getDiagonalClass"), " method."},
     EXAMPLE lines///
-    getDiagonalClass(beta)
+    getDiagonalClass beta
     ///,
     PARA{"Once a form has been diagonalized, it is recorded in the cache for ", TT "GrothendieckWittClass", " and can therefore be quickly recovered."},
     EXAMPLE lines///
@@ -45,15 +43,14 @@ document{
 	{TO2(makeDiagonalForm,"makeDiagonalForm"),": creates a diagonal form over a field out of an element or list of field elements,"},
 	{TO2(makeHyperbolicForm,"makeHyperbolicForm"),": creates a hyperbolic form over a field,"},
 	{TO2(makePfisterForm,"makePfisterForm"),": creates a Pfister form over a field out of an element or list of field elements."},
-	
 	},
-    SeeAlso => {"makeGWClass","getDiagonalClass","getBaseField","getMatrix"},
+    SeeAlso => {"makeGWClass", "getDiagonalClass", "getBaseField", "getMatrix"},
     }
 
 document {
     Key => {makeGWClass, (makeGWClass, Matrix), (isWellDefined, Matrix)},
 	Headline => "the Grothendieck Witt class of a symmetric matrix",
-	Usage => "makeGWClass(M)",
+	Usage => "makeGWClass M",
 	Inputs => {
 	    Matrix => "M" => {"a symmetric matrix defined over an arbitrary field"}
 	    },
@@ -63,8 +60,8 @@ document {
 	PARA {"Given a symmetric matrix, ", TEX///$M$///, ", this command outputs an object of type ", TT "GrothendieckWittClass", ". ",
                 "This output has the representing matrix, ", TEX///$M$///, ", and the base field of the matrix stored in its CacheTable."},
 	EXAMPLE lines ///
-		 M := matrix(QQ,{{0,0,1},{0,1,0},{1,0,0}});
-		 beta = makeGWClass(M)
+		 M := matrix(QQ, {{0,0,1},{0,1,0},{1,0,0}});
+		 beta = makeGWClass M
 	 	 ///,
 	PARA{"The matrix representing a ", TT "GrothendieckWittClass", " element can be recovered using the ",  TO2(getMatrix, "getMatrix"), " command or the ", TT "matrix", " command:"},
 	EXAMPLE lines ///
@@ -82,7 +79,7 @@ document {
 document {
     Key => {getMatrix, (getMatrix, GrothendieckWittClass)},
 	Headline => "the underlying matrix of a Grothendieck-Witt class",
-	Usage => "getMatrix(beta)",
+	Usage => "getMatrix beta",
 	Inputs => {
 	    GrothendieckWittClass => "beta" => {"the isomorphism class of a symmetric bilinear form"}
 	    },
@@ -92,7 +89,7 @@ document {
 	PARA {"Given the isomorphism class of a symmetric bilinear form, ", TT "beta", 
                 ", this command outputs the underlying matrix of the form."},
 	EXAMPLE lines ///
-		 beta = makeGWClass(matrix(QQ,{{0,2},{2,0}}));
+		 beta = makeGWClass matrix(QQ,{{0,2},{2,0}});
 		 getMatrix beta
 	 	 ///,
     SeeAlso => {"GrothendieckWittClass"}
@@ -101,7 +98,7 @@ document {
 document {
     Key => {getBaseField, (getBaseField, GrothendieckWittClass)},
 	Headline => "the base field of a Grothendieck Witt class",
-	Usage => "getBaseField(beta)",
+	Usage => "getBaseField beta",
 	Inputs => {
 	    GrothendieckWittClass => "beta" => {"the isomorphism class of a symmetric bilinear form"}
 	    },
@@ -111,7 +108,7 @@ document {
 	PARA {"Given the isomorphism class of a symmetric bilinear form, ", TT "beta", 
                 ", this command outputs the base field of the form."},
 	EXAMPLE lines ///
-		 beta = makeGWClass(matrix(QQ,{{0,2},{2,0}}));
+		 beta = makeGWClass matrix(QQ,{{0,2},{2,0}});
 		 getBaseField beta
 	 	 ///,
     SeeAlso => {"GrothendieckWittClass"}
@@ -131,10 +128,10 @@ document {
 	    },
 	PARA {"This computes the direct sum of the Grothendieck-Witt classes ",TT "beta"," and ",TT "gamma","."},
 	EXAMPLE lines ///
-		 M = matrix(QQ,{{1,0},{0,1}});
-		 N = matrix(QQ, {{1, 2}, {2, 5}});
-		 beta = makeGWClass(M);
-		 gamma = makeGWClass(N);
+		 M = matrix(QQ, {{1,0},{0,1}});
+		 N = matrix(QQ, {{1,2},{2,5}});
+		 beta = makeGWClass M;
+		 gamma = makeGWClass N;
     	    	 addGW(beta, gamma)
 	 	 ///,
     SeeAlso => {"GrothendieckWittClass", "makeGWClass", "multiplyGW"}
@@ -153,10 +150,10 @@ document {
 	    },
 	PARA {"This computes the tensor product of the Grothendieck-Witt classes ",TT "beta"," and ",TT "gamma","."},
 	EXAMPLE lines ///
-    	    	 M = matrix(QQ,{{1,0},{0,1}});
-		 N = matrix(QQ, {{1, 2}, {2, 5}});
-		 beta = makeGWClass(M);
-		 gamma = makeGWClass(N);
+    	    	 M = matrix(QQ, {{1,0},{0,1}});
+		 N = matrix(QQ, {{1,2},{2,5}});
+		 beta = makeGWClass M;
+		 gamma = makeGWClass N;
     	    	 multiplyGW(beta, gamma)
 	 	 ///,
     SeeAlso => {"GrothendieckWittClass", "makeGWClass", "addGW"}
