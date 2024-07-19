@@ -13,17 +13,17 @@ getHilbertSymbolReal (QQ, QQ) := ZZ => (a, b) -> (
 	);
     )
 
-getHilbertSymbolReal (QQ, ZZ) := ZZ => (a,b) -> (
+getHilbertSymbolReal (QQ, ZZ) := ZZ => (a, b) -> (
     b1 := b/1;
     getHilbertSymbolReal(a, b1)
     )
 
-getHilbertSymbolReal (ZZ, QQ) := ZZ => (a,b) -> (
+getHilbertSymbolReal (ZZ, QQ) := ZZ => (a, b) -> (
     a1 := a/1;
     getHilbertSymbolReal(a1, b)
     )
 
-getHilbertSymbolReal (ZZ, ZZ) := ZZ => (a,b) -> (
+getHilbertSymbolReal (ZZ, ZZ) := ZZ => (a, b) -> (
     a1:= a/1;
     b1:= b/1;
     getHilbertSymbolReal(a1, b1)
