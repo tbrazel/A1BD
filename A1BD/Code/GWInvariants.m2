@@ -24,17 +24,12 @@ countPosDiagEntries Matrix := Matrix => A -> (
     if not isSquareAndSymmetric A then error "Matrix is not symmetric";
     -- Ensure base field is QQ or RR
     k := ring A;
-    if not (instance(k,RealField) or k === QQ) then (
+    if not (instance(k, RealField) or k === QQ) then
         error "Only implemented over QQ and RR";
-        );
-    if not isDiagonal A then (
-        A = diagonalizeViaCongruence A;
-        );
+    if not isDiagonal A then A = diagonalizeViaCongruence A;
     posDiagEntries := 0;
     for i from 0 to numRows(A) - 1 do (
-        if A_(i,i) > 0 then (
-            posDiagEntries = posDiagEntries + 1;
-            );
+        if A_(i,i) > 0 then posDiagEntries = posDiagEntries + 1;
         );
     posDiagEntries
     )
@@ -49,17 +44,12 @@ countNegDiagEntries Matrix := Matrix => A -> (
     if not isSquareAndSymmetric A then error "Matrix is not symmetric";
     -- Ensure base field is QQ or RR
     k := ring A;
-    if not (instance(k,RealField) or k === QQ) then (
+    if not (instance(k, RealField) or k === QQ) then
         error "Only implemented over QQ and RR";
-        );
-    if not isDiagonal A then (
-        A = diagonalizeViaCongruence A;
-        );
+    if not isDiagonal A then A = diagonalizeViaCongruence A;
     negDiagEntries := 0;
     for i from 0 to numRows(A) - 1 do (
-        if A_(i,i) < 0 then (
-            negDiagEntries = negDiagEntries + 1;
-            );
+        if A_(i,i) < 0 then negDiagEntries = negDiagEntries + 1;
         );
     negDiagEntries
     )
@@ -117,9 +107,7 @@ getRelevantPrimes GrothendieckWittClass := List => beta -> (
     
     -- Make a list of all prime factors of diagonal entries
     L := {};
-    for x in D do (
-	L = unique(L | getPrimeFactors(sub(x,ZZ)));
-	);
+    for x in D do L = unique(L | getPrimeFactors(sub(x, ZZ)));
     L
     )
 
@@ -136,20 +124,18 @@ getHasseWittInvariant (List, ZZ) := ZZ => (L, p) -> (
        
     -- Replace every entry of L by its squarefree part so we can work with integers
     f := {};
-    for x in L do (
-	f = append(f,getSquarefreePart x);
-	);
+    for x in L do f = append(f, getSquarefreePart x);
     for i from 0 to len - 2 do (
-       	for j from i + 1 to len - 1 do (
-	    a = a * getHilbertSymbol(f_i, f_j, p);
-	    );
+       	for j from i + 1 to len - 1 do
+	    a = a * getHilbertSymbol(f_i,f_j,p);
 	);
     a
     )
 
-getHasseWittInvariant(GrothendieckWittClass, ZZ) := ZZ => (beta,p) -> (
+getHasseWittInvariant(GrothendieckWittClass, ZZ) := ZZ => (beta, p) -> (
     kk := getBaseField beta;
-    if not kk === QQ then error "method is only implemented over the rationals";
+    if not kk === QQ then
+	error "method is only implemented over the rational numbers";
     getHasseWittInvariant(getDiagonalEntries beta, p)
     )
 

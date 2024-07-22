@@ -3,13 +3,13 @@ document{
     Headline => "determines whether a Grothendieck-Witt class is isotropic",
     Usage => "isIsotropic beta",
     Inputs => {
-	GrothendieckWittClass => "beta" => {"denoted by ", TEX///$\beta\in\text{GW}(k)$///, ", where ", TEX///$k$///, " is the rationals, reals, complex numbers, or a finite field."},
+	GrothendieckWittClass => "beta" => {"denoted by ", TEX///$\beta\in\text{GW}(k)$///, ", where ", TEX///$k$///, " is the rational numbers, the real numbers, the complex numbers, or a finite field of characteristic not 2."},
 	},
     Outputs => {
         Boolean => {"whether ", TEX///$\beta$///, " is isotropic"},
 	},
     PARA{"This is the negation of the boolean-valued ", TO2(isAnisotropic,"isAnisotropic"), ". See documentation there."},    
-    SeeAlso => {"isAnisotropic", "getHilbertSymbol", "getSignature"}
+    SeeAlso => {"isAnisotropic", "getWittIndex", "getAnisotropicDimension"}
 }
 
 
@@ -18,7 +18,7 @@ document{
     Headline => "determines whether a Grothendieck-Witt class is anisotropic",
     Usage => "isAnisotropic beta",
     Inputs => {
-	GrothendieckWittClass => "beta" => {"denoted by ", TEX///$\beta\in\text{GW}(k)$///, ", where ", TEX///$k$///, " is the rationals, reals, complex numbers, or a finite field"},
+	GrothendieckWittClass => "beta" => {"denoted by ", TEX///$\beta\in\text{GW}(k)$///, ", where ", TEX///$k$///, " is the rational numbers, the real numbers, the complex numbers, or a finite field of characteristic not 2"},
 	},
     Outputs => {
         Boolean => {"whether ", TEX///$\beta$///, " is anisotropic"},
@@ -52,5 +52,5 @@ document{
 	{"[S73] J.P. Serre, ", EM "A course in arithmetic,", " Springer-Verlag, 1973."},
 	{"[L05] T.Y. Lam, ", EM "Introduction to quadratic forms over fields,", " American Mathematical Society, 2005."},
     },
-    SeeAlso => {"isIsotropic"}   
+    SeeAlso => {"isIsotropic", "getAnisotropicDimension", "getAnisotropicPart", "getWittIndex"}   
 }

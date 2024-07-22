@@ -28,9 +28,8 @@ getDiagonalEntries GrothendieckWittClass := List => beta -> (
     n := numRows M;
     L := {};
     
-    for i from 0 to n - 1 do (
+    for i from 0 to n - 1 do
 	L = append(L, M_(i,i));
-	);
     L
     )
     

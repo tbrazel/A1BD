@@ -1,9 +1,10 @@
 document {
     Key => {getGlobalA1Degree, (getGlobalA1Degree, List)},
-    Headline => "computes a global A1-Brouwer degree of a list of n polynomials in n variables over a field k",
+    Headline => "computes the global A1-Brouwer degree of a list of n polynomials in n variables over a field k",
     Usage => "getGlobalA1Degree L",
     Inputs => {
-	List => "L" => {"of polynomials ", TEX///$f = (f_1, \ldots, f_n)$///, " in the polynomial ring ", TEX///$k[x_1,\ldots,x_n]$///, " over a field ", TEX///$k$///}
+	List => "L" => {"of polynomials ", TEX///$f = (f_1, \ldots, f_n)$///, " in the polynomial ring ", TEX///$k[x_1,\ldots,x_n]$///, " where ", TEX///$k$///, 
+" is", TEX///$\mathbb{Q}, \mathbb{R}, \mathbb{C}$///, " or a finite field of characteristic not 2. Over", TEX///$\mathbb{R}$///, " the user is prompted to instead do the computation over", TEX///$\mathbb{Q}$///, " and then base change to ", TEX///$\mathbb{R}$///, "."}
 	},
     Outputs => {
 	GrothendieckWittClass => {"the class ", TEX///$\text{deg}^{\mathbb{A}^1}(f)$///, " in the Grothendieck-Witt ring ", TEX///$\text{GW}(k)$///}
@@ -37,7 +38,7 @@ document {
     f = {x^3 - x^2 - y, y};
     point1 = ideal(x - 1, y);
     point2 = ideal(x, y);
-    getGlobalA1Degree(f)
+    getGlobalA1Degree f
     getLocalA1Degree(f, point1)
     getLocalA1Degree(f, point2)
     isIsomorphicForm(getGlobalA1Degree f, addGW(getLocalA1Degree(f, point1), getLocalA1Degree(f, point2)))
@@ -63,7 +64,8 @@ document {
     Headline => "computes a local A1-Brouwer degree of a list of n polynomials in n variables over a field k at a prime ideal in the zero locus",
     Usage => "locallA1Degree(L, p)",
     Inputs => {
-	List => "L" => {"of polynomials ", TEX///$f = (f_1, \ldots, f_n)$///, " in the polynomial ring ", TEX///$k[x_1,\ldots,x_n]$///, " over a field ", TEX///$k$///},
+	List => "L" => {"of polynomials ", TEX///$f = (f_1, \ldots, f_n)$///, " in the polynomial ring ", TEX///$k[x_1,\ldots,x_n]$///, " where ", TEX///$k$///, 
+" is", TEX///$\mathbb{Q}, \mathbb{R}, \mathbb{C}$///, " or a finite field of characteristic not 2. Over", TEX///$\mathbb{R}$///, " the user is prompted to instead do the computation over", TEX///$\mathbb{Q}$///, " and then base change to ", TEX///$\mathbb{R}$///, "."},
 	Ideal => "p" => {"a prime ideal ", TEX///$p \trianglelefteq k[x_1,\ldots,x_n]$///, " in the zero locus ", TEX///$V(f)$///},
 	},
     Outputs => {
@@ -75,16 +77,16 @@ document {
     EXAMPLE lines ///
     T1 = QQ[z_1..z_2];
     f1 = {(z_1 - 1)*z_1*z_2, (3/5)*z_1^2 - (17/3)*z_2^2};
-    f1GD = getGlobalA1Degree(f1);
+    f1GD = getGlobalA1Degree f1;
     q = ideal(z_1, z_2);
     r = ideal(z_1-1, z_2^2 - 9/85);
-    f1LDq = getLocalA1Degree(f1,q)
-    f1LDr = getLocalA1Degree(f1,r)
-    f1LDsum = addGW(f1LDq, f1LDr)
+    f1LDq = getLocalA1Degree(f1, q)
+    f1LDr = getLocalA1Degree(f1, r)
+    f1LDsum = addGW(f1LDq,f1LDr)
     ///,
     PARA{"The sum of the local A1-degrees is equal to the global A1-degree:"},
     EXAMPLE lines///
-    isIsomorphicForm(f1GD, f1LDsum)
+    isIsomorphicForm(f1GD,f1LDsum)
     ///,
     SeeAlso => {"getGlobalA1Degree", "getSumDecomposition", "getSumDecompositionString"}
     }

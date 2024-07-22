@@ -28,7 +28,7 @@ document{
     Outputs => {
         ZZ => {"the rank of the anisotropic part of ", TEX///$\beta$///},
 	},
-    PARA{"By the Witt decomposition, any form decomposes uniquely as ", TEX///$\beta \cong n \mathbb{H} \oplus \beta_a$///," where the form ", TEX///$\beta_a$///," is anisotropic. The rank of ", TEX///$\beta_a$///, " is called the ", EM "anisotropic dimension", " of ", TEX///$\beta$///, "."},
+    PARA{"By the Witt Decomposition Theorem, any non-degenerate form decomposes uniquely as ", TEX///$\beta \cong n \mathbb{H} \oplus \beta_a$///," where the form ", TEX///$\beta_a$///," is anisotropic. The rank of ", TEX///$\beta_a$///, " is called the ", EM "anisotropic dimension", " of ", TEX///$\beta$///, "."},
     PARA{"The anisotropic dimension of a form defined over the rational numbers is the maximum of the ", TO2(getAnisotropicDimensionQQp,"anistropic dimension at each of the completions"), " of ", TEX///$\mathbb{Q}$///, "."},
     SeeAlso => {"getWittIndex", "getAnisotropicDimensionQQp", "getAnisotropicPart"}   
 }
@@ -44,7 +44,7 @@ document{
     Outputs => {
         ZZ => {"the rank of the totally isotropic part of ", TEX///$\beta$///},
 	},
-    PARA{"By the Witt decomposition, any form decomposes uniquely as ", TEX///$\beta \cong n \mathbb{H} \oplus \beta_a$///," where the form ", TEX///$\beta_a$///," is anisotropic. The integer ", TEX///$n$///, " is called the ", EM "Witt index", " of ", TEX///$\beta$///, ". See for instance [L05, I.4.3]."},
+    PARA{"By the Witt Decomposition Theorem, any non-degenerate form decomposes uniquely as ", TEX///$\beta \cong n \mathbb{H} \oplus \beta_a$///," where the form ", TEX///$\beta_a$///," is anisotropic. The integer ", TEX///$n$///, " is called the ", EM "Witt index", " of ", TEX///$\beta$///, ". See for instance [L05, I.4.3]."},
     
         PARA{EM "Citations:"},
     UL{

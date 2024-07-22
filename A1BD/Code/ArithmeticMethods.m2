@@ -8,7 +8,7 @@
 getSquarefreePart = method()
 getSquarefreePart ZZ := ZZ => n -> (
     if n == 0 then return 0;
-    tableOfPrimeFactors := hashTable factor abs(n);
+    tableOfPrimeFactors := hashTable factor abs n;
     return sub(n/abs(n),ZZ)*product(apply(keys(tableOfPrimeFactors),p -> p^(tableOfPrimeFactors#p%2)));
     )
 
@@ -21,13 +21,12 @@ getSquarefreePart QQ := ZZ => n -> (
 
 getPrimeFactors = method()
 getPrimeFactors ZZ := List => n -> (
-    if abs(n) == 1 then return {};
     sort keys hashTable(factor abs n)
     )
 
 getPrimeFactors QQ := List => n -> (
-    if not liftable(n,ZZ) then error "tried to take prime factors of a rational";
-    getPrimeFactors sub(n,ZZ)  
+    if not liftable(n, ZZ) then error "gatPrimeFactors expected an integer";
+    getPrimeFactors sub(n, ZZ)  
     )
 
 -- Input: An integer or rational number and a prime number p
@@ -36,17 +35,12 @@ getPrimeFactors QQ := List => n -> (
 getPadicValuation = method()
 getPadicValuation (ZZ, ZZ) := ZZ => (n, p) -> (
     if n == 0 then error "Trying to find prime factorization of 0";
-    H := hashTable factor abs(n);
-    if H#?p then (
-    	return(H#p);
-	)
-    else (
-	return 0;
-	);
+    H := hashTable factor abs n;
+    if H#?p then return H#p else return 0;
     )
 
 getPadicValuation (QQ, ZZ) := ZZ => (q, p) -> (
-    getPadicValuation(numerator(q),p) - getPadicValuation(denominator(q),p)
+    getPadicValuation(numerator q, p) - getPadicValuation(denominator q, p)
     )
 
 -- Input: An element of a finite field
@@ -54,7 +48,8 @@ getPadicValuation (QQ, ZZ) := ZZ => (q, p) -> (
 
 isGFSquare = method()
 isGFSquare RingElement := Boolean => a -> (
-    if not instance(ring a,GaloisField) then error "isGFSquare only works for Galois fields";
+    if not instance(ring a, GaloisField) then 
+        error "isGFSquare only works for Galois fields";
     q := (ring a).order;
     -- Detects if a is a square in F_q
     a^((q-1)//2) == 1 
@@ -65,19 +60,14 @@ isGFSquare RingElement := Boolean => a -> (
 -- Note: The terminology "Square Symbol" comes from John Voight's Quaternion Algebra book
 
 getSquareSymbol = method()
-getSquareSymbol (ZZ, ZZ) := ZZ => (a, p) -> (
+getSquareSymbol (ZZ,ZZ) := ZZ => (a,p) -> (
     R := GF(p);
     e1 := getPadicValuation(a,p);
     if even e1 then (
     	a1 := sub(a/(p^e1), ZZ);
 	a2 := sub(a1, R);
-	if isGFSquare a2 then (
-	    return 1;
-	    ) 
-	else (
-	    return -1;
-	    );
-	);
+	if isGFSquare a2 then return 1 else return -1;
+        );
     return 0;
     )
 
@@ -89,7 +79,7 @@ getSquareSymbol (ZZ, ZZ) := ZZ => (a, p) -> (
 -- Output: Boolean that gives whether a and b differ by a square in Q_p
 
 isEqualUpToPadicSquare = method()
-isEqualUpToPadicSquare (ZZ, ZZ, ZZ) := Boolean => (a, b, p) -> (
+isEqualUpToPadicSquare (ZZ,ZZ,ZZ) := Boolean => (a,b,p) -> (
     
 -- One has to separately handle the cases when p is odd and when p = 2
 
@@ -98,7 +88,7 @@ isEqualUpToPadicSquare (ZZ, ZZ, ZZ) := Boolean => (a, b, p) -> (
         -- differ by a square in GF(p)
         a1 := getSquarefreePart a;
         b1 := getSquarefreePart b;
-        if (getPadicValuation(a1, p) != getPadicValuation(b1, p)) then (
+        if (getPadicValuation(a1,p) != getPadicValuation(b1,p)) then (
             return false;
             )
         else (
@@ -112,7 +102,7 @@ isEqualUpToPadicSquare (ZZ, ZZ, ZZ) := Boolean => (a, b, p) -> (
         -- that the units agree mod 8.
         a1 = getSquarefreePart a;
         b1 = getSquarefreePart b;
-        if getPadicValuation(a1, p) != getPadicValuation(b1, p) then (
+        if getPadicValuation(a1,p) != getPadicValuation(b1,p) then (
 	    return false;
             )
         else (
@@ -129,7 +119,7 @@ isEqualUpToPadicSquare (ZZ, ZZ, ZZ) := Boolean => (a, b, p) -> (
 -- Output: Boolean that gives whether a is a square in QQ_p
 
 isPadicSquare = method()
-isPadicSquare (ZZ, ZZ) := Boolean => (a, p) -> (
+isPadicSquare (ZZ,ZZ) := Boolean => (a,p) -> (
     isEqualUpToPadicSquare(a,1,p)
     )
 
@@ -152,8 +142,8 @@ getLocalAlgebraBasis (List, Ideal) := List => (L, p) -> (
     
     -- Check whether or not the ideal is zero-dimensional
     if dim I > 0 then error "morphism does not have isolated zeroes";
-    if not isSubset(I,p) then error "prime is not a zero of function";
-    J := I:saturate(I,p);
+    if not isSubset(I, p) then error "prime is not a zero of function";
+    J := I:saturate(I, p);
     A := R/J;
     B := basis A;
     flatten entries B
@@ -167,9 +157,7 @@ getGlobalAlgebraRank List := ZZ => Endo -> (
     
     -- Get the underlying field    
     kk := coefficientRing ring(Endo#0);    
-    if not isField kk then (
-    	kk = toField kk;
-    	);
+    if not isField kk then kk = toField kk;
     
     -- Let S = k[x_1,...,x_n] be the ambient polynomial ring
     S := ring(Endo#0);
@@ -186,9 +174,9 @@ getGlobalAlgebraRank List := ZZ => Endo -> (
 -- This is adapted from the igcdx method from the Parametrization package
 
 computeExtendedEuclidean = method()
-computeExtendedEuclidean(ZZ, ZZ) := (a, b) -> (
+computeExtendedEuclidean(ZZ,ZZ) := (a,b) -> (
     if a % b == 0 then (
-        return {0, 1};
+        return {0,1};
         )
     else (
         L := computeExtendedEuclidean(b, a % b);
@@ -196,14 +184,14 @@ computeExtendedEuclidean(ZZ, ZZ) := (a, b) -> (
         );
     )
 
--- Input: A set of four integers a, b, p, q
+-- Input: A set of four integers a,b,p,q
 -- Output: An integer solution x to the congruences x = a (mod p) and x = b (mod q)
 -- This is adapted from the chineseRemainder0 method from the Parametrization package
 
 solveCongruencePair = method()
-solveCongruencePair(ZZ, ZZ, ZZ, ZZ) := (a, b, n, m) -> (
+solveCongruencePair(ZZ,ZZ,ZZ,ZZ) := (a,b,n,m) -> (
     k := a - b;
-    L := computeExtendedEuclidean(n, m);
+    L := computeExtendedEuclidean(n,m);
     u := L#0;
     v := L#1;
     a - k*u*n % n*m
@@ -212,7 +200,7 @@ solveCongruencePair(ZZ, ZZ, ZZ, ZZ) := (a, b, n, m) -> (
 -- This is adapted from the chineseRemainder method from the Parametrization package
 
 solveCongruenceList = method()
-solveCongruenceList(List, List) := (L1, L2) -> (
+solveCongruenceList(List,List) := (L1,L2) -> (
     q := 1;
     a := L1#0;
     n := L2#0;

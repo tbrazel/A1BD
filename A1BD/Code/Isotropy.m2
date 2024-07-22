@@ -5,9 +5,8 @@ isAnisotropic = method()
 isAnisotropic Matrix := Boolean => A -> (
     k := ring A;
     -- Ensure base field is supported
-    if not (instance(k,ComplexField) or instance(k,RealField) or k === QQ or (instance(k, GaloisField) and k.char != 2)) then (
+    if not (instance(k, ComplexField) or instance(k, RealField) or k === QQ or (instance(k, GaloisField) and k.char != 2)) then
         error "Base field not supported; only implemented over QQ, RR, CC, and finite fields of characteristic not 2";
-        );
     numRows(A) == getAnisotropicDimension(A)
     )
 

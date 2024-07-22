@@ -28,7 +28,7 @@ isHyperbolicQQp (GrothendieckWittClass, ZZ) := Boolean => (beta, p) -> (
     -- so by e.g. Lam V.3.25 it suffices to check whether their Hasse-Witt invariants agree
     m := sub(rankBeta/2,ZZ);
     HasseWittHyperbolicForm := (getHilbertSymbol(-1,-1,p))^(m*(m - 1)/2);
-    HasseWittBeta := getHasseWittInvariant(beta,p);
+    HasseWittBeta := getHasseWittInvariant(beta, p);
     HasseWittHyperbolicForm == HasseWittBeta
     )
 
@@ -48,19 +48,17 @@ getAnisotropicDimensionQQp (GrothendieckWittClass, ZZ) := ZZ => (beta, p) -> (
     
     if even rankBeta then (
 	-- If the form is hyperbolic it has no anisotropic part
-	if isHyperbolicQQp(beta,p) then return 0;
+	if isHyperbolicQQp(beta, p) then return 0;
        	
 	-- Note Koprowski and Czogala use a signed version of the discriminant
 	d := (-1)^(rankBeta*(rankBeta-1)/2) * getIntegralDiscriminant(beta);
-	if isPadicSquare(d,p) then return 4;
-	return 2;
+	if isPadicSquare(d,p) then return 4 else return 2;
 	);
     
     if odd rankBeta then (
 	c := (-1)^(rankBeta*(rankBeta+1)/2) * getIntegralDiscriminant(beta);
 	gamma := addGW(beta, makeDiagonalForm(QQ,(c)));
-	if isHyperbolicQQp(gamma,p) then return 1;
-	return 3;
+	if isHyperbolicQQp(gamma, p) then return 1 else return 3;
 	);
     )
 
@@ -78,15 +76,14 @@ getAnisotropicDimensionQQ GrothendieckWittClass := ZZ => beta -> (
     ListOfLocalAnistropicDimensions := {};
     
     -- The anisotropic dimension at RR is the absolute value of the getSignature of the form
-    ListOfLocalAnistropicDimensions = append(ListOfLocalAnistropicDimensions, abs(getSignature(beta)));
+    ListOfLocalAnistropicDimensions = append(ListOfLocalAnistropicDimensions, abs(getSignature beta));
     
     -- We always have to add the anisotropic dimension at the prime 2
-    ListOfLocalAnistropicDimensions = append(ListOfLocalAnistropicDimensions, getAnisotropicDimensionQQp(beta,2));
+    ListOfLocalAnistropicDimensions = append(ListOfLocalAnistropicDimensions, getAnisotropicDimensionQQp(beta, 2));
        
     -- For the remaining local fields, we can just look at relevant primes
-    for p in getRelevantPrimes(beta) do (
-	ListOfLocalAnistropicDimensions = append(ListOfLocalAnistropicDimensions, getAnisotropicDimensionQQp(beta,p))
-	);
+    for p in getRelevantPrimes(beta) do
+	ListOfLocalAnistropicDimensions = append(ListOfLocalAnistropicDimensions, getAnisotropicDimensionQQp(beta, p));
     max ListOfLocalAnistropicDimensions
     )
 
@@ -97,23 +94,22 @@ getAnisotropicDimension = method()
 getAnisotropicDimension Matrix := ZZ => A -> (
     k := ring A;
     -- Ensure base field is supported
-    if not (instance(k,ComplexField) or instance(k,RealField) or k === QQ or (instance(k, GaloisField) and k.char != 2)) then (
+    if not (instance(k, ComplexField) or instance(k, RealField) or k === QQ or (instance(k, GaloisField) and k.char != 2)) then
         error "Base field not supported; only implemented over QQ, RR, CC, and finite fields of characteristic not 2";
-        );
     -- Ensure matrix is symmetric
     if not isSquareAndSymmetric A then error "Matrix is not symmetric";
     -- Over CC, the anisotropic dimension is 0 or 1 depending on the parity of the rank
-    if instance(k,ComplexField) then (
+    if instance(k, ComplexField) then (
         return rank(A)%2;
         )
     -- Over RR, the anisotropic dimension is the absolute value of the getSignature
-    else if instance(k,RealField) then (
+    else if instance(k, RealField) then (
         diagonalA := diagonalizeViaCongruence A;
         return abs(countPosDiagEntries(diagonalA) - countNegDiagEntries(diagonalA));
         )
     -- Over QQ, call getAnisotropicDimensionQQ
     else if k === QQ then (
-        return getAnisotropicDimensionQQ makeGWClass(getNondegeneratePartDiagonal(A));
+        return getAnisotropicDimensionQQ makeGWClass(getNondegeneratePartDiagonal A);
         )
     -- Over a finite field, if the number of nonzero diagonal entries is odd, then the anisotropic dimension is 1
     -- if the number of nonzero diagonal entries is even, then the anisotropic dimension is either 0 or 2
@@ -123,12 +119,11 @@ getAnisotropicDimension Matrix := ZZ => A -> (
         if (rank(diagA)%2 == 1) then (
             return 1;
             )
-        else if isGFSquare(det getNondegeneratePartDiagonal diagA) == isGFSquare(sub((-1)^(rank(diagA)/2),k)) then (
+        else if isGFSquare(det getNondegeneratePartDiagonal diagA) == isGFSquare(sub((-1)^(rank(diagA)/2), k)) then (
             return 0;
             )
-        else (
+        else
             return 2;
-            );
         );
     )
 

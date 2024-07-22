@@ -1,8 +1,8 @@
 document{
-    Key => {GrothendieckWittClass, (net, GrothendieckWittClass),(texMath, GrothendieckWittClass)},
+    Key => {GrothendieckWittClass, (net, GrothendieckWittClass), (texMath, GrothendieckWittClass)},
     Headline => "a new type, intended to capture the isomorphism class of an element of the Grothendieck-Witt ring of a base field",
     PARA {"A ", TT "GrothendieckWittClass" ," object is a type of ", TO2(HashTable, "HashTable"), " encoding the isomorphism class of a non-degenerate symmetric bilinear form ", TEX///$V \times V \to k$///, " over a field ", TEX///$k$///, "."},
-    PARA{"Given any basis ", TEX///$e_1,\ldots,e_n$///, " for ", TEX///$V$///, " as a ", TEX///$k$///, "-vector space, we can encode the symmetric bilinear form ", TEX///$\beta$///, " by how it acts on basis elements. That is, we can produce a matrix ", TEX///$\left(\beta(e_i,e_j)\right)_{i,j}$///, ". This is called a ", EM "Gram matrix", " for the symmetric bilinear form. A change of basis will produce a congruent Gram matrix, thus a matrix represents a symmetric bilinear form uniquely up to matrix congruence."},
+    PARA{"Given any basis ", TEX///$e_1,\ldots,e_n$///, " for ", TEX///$V$///, " as a ", TEX///$k$///, "-vector space, we can encode the symmetric bilinear form ", TEX///$\beta$///, " by how it acts on basis elements. That is, we can produce a matrix ", TEX///$\left(\beta(e_i,e_j)\right)_{i,j}$///, ". This is called a ", EM "Gram matrix", " for the symmetric bilinear form. A change of basis produces a congruent Gram matrix, so thus a matrix represents a symmetric bilinear form uniquely up to matrix congruence."},
 	
     PARA{"A GrothendieckWittClass object can be built from a symmetric ", TO2(matrix, "matrix"), " over a field using the ", TO2(makeGWClass,"makeGWClass"), " method."},
     EXAMPLE lines///
@@ -14,7 +14,7 @@ document{
     getMatrix beta
     getBaseField beta
     ///,
-    PARA{"For computational purposes, it is often desirable to diagonalize a Gram matrix. Any symmetric bilinear form admits a diagonal Gram matrix representative by ", EM "Sylvester's law of inertia", ", and this is implemented via the ", TO2(getDiagonalClass, "getDiagonalClass"), " method."},
+    PARA{"For computational purposes, it is often desirable to diagonalize a Gram matrix. Any symmetric bilinear form admits a diagonal Gram matrix representative, and this is implemented via the ", TO2(getDiagonalClass, "getDiagonalClass"), " method."},
     EXAMPLE lines///
     getDiagonalClass beta
     ///,
@@ -22,21 +22,21 @@ document{
     EXAMPLE lines///
     beta.cache.getDiagonalClass
     ///,
-    PARA{"We additionally have the following methods which can be applied to Grothendieck Witt classes:"},
+    PARA{"We additionally have the following methods which can be applied to Grothendieck-Witt classes:"},
     UL{
 	{TO2(getRank,"getRank"),": returns the rank of a form,"},
-	{TO2(getSignature,"getSignature"),": returns the signature of a form,"},
-	{TO2(getIntegralDiscriminant,"getIntegralDiscriminant"),": returns an integral representative for the signature of a form over the rationals,"},
-	{TO2(getHasseWittInvariant,"getHasseWittInvariant"),": returns the Hasse-Witt invariant for a form over the rationals at a particular prime,"},
+	{TO2(getSignature,"getSignature"),": returns the signature of a form over the real numbers or rational numbers,"},
+	{TO2(getIntegralDiscriminant,"getIntegralDiscriminant"),": returns an integral representative for the discriminant of a form over the rational numbers,"},
+	{TO2(getHasseWittInvariant,"getHasseWittInvariant"),": returns the Hasse-Witt invariant for a form over the rational numbers at a particular prime,"},
 	{TO2(getAnisotropicDimension,"getAnisotropicDimension"),": returns the anisotropic dimension of a form,"},
 	{TO2(getAnisotropicPart,"getAnisotropicPart"),": returns the anisotropic part of a form,"},
 	{TO2(getSumDecomposition,"getSumDecomposition"),": returns a simplified diagonal representative of a form,"},
 	{TO2(getSumDecompositionString,"getSumDecompositionString"),": returns a string to quickly read a form,"},
 	},
-    PARA{"and Boolean methods for Grothendieck--Witt classes:"},
+    PARA{"and Boolean methods for Grothendieck-Witt classes:"},
     UL{
-	{TO2(isIsotropic,"isIsotropic"),": returns true if the form is isotropic,"},
-	{TO2(isAnisotropic,"isAnisotropic"),": returns true if the form is anisotropic."},
+	{TO2(isIsotropic,"isIsotropic"),": returns whether the form is isotropic,"},
+	{TO2(isAnisotropic,"isAnisotropic"),": returns whether the form is anisotropic."},
 	},
     PARA{"Forms can be created via the following methods:"},
     UL{
@@ -44,18 +44,18 @@ document{
 	{TO2(makeHyperbolicForm,"makeHyperbolicForm"),": creates a hyperbolic form over a field,"},
 	{TO2(makePfisterForm,"makePfisterForm"),": creates a Pfister form over a field out of an element or list of field elements."},
 	},
-    SeeAlso => {"makeGWClass", "getDiagonalClass", "getBaseField", "getMatrix"},
+    SeeAlso => {"makeGWClass", "getBaseField", "getMatrix", "getDiagonalClass"},
     }
 
 document {
     Key => {makeGWClass, (makeGWClass, Matrix), (isWellDefined, Matrix)},
-	Headline => "the Grothendieck Witt class of a symmetric matrix",
+	Headline => "the Grothendieck-Witt class of a symmetric matrix",
 	Usage => "makeGWClass M",
 	Inputs => {
-	    Matrix => "M" => {"a symmetric matrix defined over an arbitrary field"}
+	    Matrix => "M" => {"a non-singular symmetric matrix defined over an arbitrary field of characteristic not 2"}
 	    },
 	Outputs => {
-	    GrothendieckWittClass => { "the isomorphism class of a symmetric bilinear form represented by ", TEX/// $M$///}
+	    GrothendieckWittClass => { "the isomorphism class of the non-degenerate symmetric bilinear form represented by ", TEX/// $M$///}
 	    },
 	PARA {"Given a symmetric matrix, ", TEX///$M$///, ", this command outputs an object of type ", TT "GrothendieckWittClass", ". ",
                 "This output has the representing matrix, ", TEX///$M$///, ", and the base field of the matrix stored in its CacheTable."},
@@ -63,17 +63,8 @@ document {
 		 M := matrix(QQ, {{0,0,1},{0,1,0},{1,0,0}});
 		 beta = makeGWClass M
 	 	 ///,
-	PARA{"The matrix representing a ", TT "GrothendieckWittClass", " element can be recovered using the ",  TO2(getMatrix, "getMatrix"), " command or the ", TT "matrix", " command:"},
-	EXAMPLE lines ///
-	    	getMatrix beta
-		beta.matrix
-		///,
-        PARA{"The base field which the form ", TEX///$\beta$///, " is implicitly defined over can be recovered with the ", TO2(getBaseField,"getBaseField"), " method."},
-	EXAMPLE lines ///
-	    	getBaseField beta
-		///,
 		
-	SeeAlso => {"getBaseField","GrothendieckWittClass"}
+	SeeAlso => {"GrothendieckWittClass", "getMatrix", "getBaseField"}
         }
 
 document {
@@ -81,34 +72,32 @@ document {
 	Headline => "the underlying matrix of a Grothendieck-Witt class",
 	Usage => "getMatrix beta",
 	Inputs => {
-	    GrothendieckWittClass => "beta" => {"the isomorphism class of a symmetric bilinear form"}
+	    GrothendieckWittClass => "beta" => {"the isomorphism class of a non-degenerate symmetric bilinear form over a field of characteristic not 2"}
 	    },
 	Outputs => {
-	    Ring => { "the underlying matrix of the Grothendieck-Witt class ", TT "beta" }
+	    Ring => {"the underlying matrix of the Grothendieck-Witt class ", TT "beta"}
 	    },
-	PARA {"Given the isomorphism class of a symmetric bilinear form, ", TT "beta", 
-                ", this command outputs the underlying matrix of the form."},
+	PARA {"Given the isomorphism class of a symmetric bilinear form, ", TT "beta", ", this command outputs the underlying matrix of the form."},
 	EXAMPLE lines ///
-		 beta = makeGWClass matrix(QQ,{{0,2},{2,0}});
+		 beta = makeGWClass matrix(QQ, {{0,2},{2,0}});
 		 getMatrix beta
 	 	 ///,
-    SeeAlso => {"GrothendieckWittClass"}
+    SeeAlso => {"GrothendieckWittClass", "makeGWClass"}
         }
 
 document {
     Key => {getBaseField, (getBaseField, GrothendieckWittClass)},
-	Headline => "the base field of a Grothendieck Witt class",
+	Headline => "the base field of a Grothendieck-Witt class",
 	Usage => "getBaseField beta",
 	Inputs => {
-	    GrothendieckWittClass => "beta" => {"the isomorphism class of a symmetric bilinear form"}
+	    GrothendieckWittClass => "beta" => {"the isomorphism class of a non-degenerate symmetric bilinear form over a field of characteristic not 2"}
 	    },
 	Outputs => {
-	    Ring => { "the base field of the Grothendieck-Witt class ", TT "beta" }
+	    Ring => {"the base field of the Grothendieck-Witt class ", TT "beta"}
 	    },
-	PARA {"Given the isomorphism class of a symmetric bilinear form, ", TT "beta", 
-                ", this command outputs the base field of the form."},
+	PARA {"Given the isomorphism class of a symmetric bilinear form, ", TT "beta", ", this command outputs the base field of the form."},
 	EXAMPLE lines ///
-		 beta = makeGWClass matrix(QQ,{{0,2},{2,0}});
+		 beta = makeGWClass matrix(QQ, {{0,2},{2,0}});
 		 getBaseField beta
 	 	 ///,
     SeeAlso => {"GrothendieckWittClass"}

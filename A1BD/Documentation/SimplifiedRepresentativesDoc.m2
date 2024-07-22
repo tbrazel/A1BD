@@ -3,12 +3,12 @@ document {
 	Headline => "produces a diagonalized form for any Grothendieck-Witt class, with simplified terms on the diagonal",
 	Usage => "getDiagonalClass beta",
 	Inputs => {
-	    GrothendieckWittClass => "beta" => {"over a field ", TEX///$k$///,", where ", TEX///$k$///, " is the complex numbers, the real numbers, the rational numbers, or a finite field of characteristic not 2"}
+	    GrothendieckWittClass => "beta" => {"over the complex numbers, the real numbers, the rational numbers, or a finite field of characteristic not 2"}
 	    },
 	Outputs => {
 	    GrothendieckWittClass => {"a form isomorphic to ", TEX///$\beta$///, " with a diagonal Gram matrix"}
 	    },
-	PARA {"Given a symmetric bilinear form, this method calls the ", TO2(diagonalizeViaCongruence,"diagonalizeViaCongruence"), " command in order to produce a diagonal symmetric bilinear form isomorphic to ", TEX///$\beta$///, ", with reduced square classes appearing as the diagonal entries."},
+	PARA {"Given a symmetric bilinear form, this method uses the ", TO2(diagonalizeViaCongruence,"diagonalizeViaCongruence"), " command in order to produce a diagonal symmetric bilinear form isomorphic to ", TEX///$\beta$///, ", with reduced square classes appearing as the diagonal entries."},
 	EXAMPLE lines ///
 	M = matrix(QQ, {{9,1,7,4},{1,10,3,2},{7,3,6,7},{4,2,7,5}});
 	beta = makeGWClass M;
@@ -27,7 +27,7 @@ document {
 	Headline => "extracts a list of diagonal entries for a GrothendieckWittClass",
 	Usage => "getDiagonalEntries beta",
 	Inputs => {
-	    GrothendieckWittClass => "beta" => {"over a field ", TEX///$k$///,", where ", TEX///$k$///, " is the complex numbers, the real numbers, the rational numbers, or a finite field of characteristic not 2"}
+	    GrothendieckWittClass => "beta" => {"over a field of characteristic not 2"}
 	    },
 	Outputs => {
 	    List => "L" => {" of elements ", TEX///$a_i\in k$///,", where ", TEX///$i = 1,\dots,n $///,", such that ", TEX///$\beta \cong \langle a_1,\ldots,a_n\rangle$///}
