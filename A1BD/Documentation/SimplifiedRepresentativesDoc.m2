@@ -3,7 +3,7 @@ document {
 	Headline => "produces a diagonalized form for any Grothendieck-Witt class, with simplified terms on the diagonal",
 	Usage => "getDiagonalClass beta",
 	Inputs => {
-	    GrothendieckWittClass => "beta" => {"over the complex numbers, the real numbers, the rational numbers, or a finite field of characteristic not 2"}
+	    GrothendieckWittClass => "beta" => {"over ", TEX///$\mathbb{Q}$///,", ",TEX///$ \mathbb{R}$///,", ",TEX///$\mathbb{C}$///, ", or a finite field of characteristic not 2"}
 	    },
 	Outputs => {
 	    GrothendieckWittClass => {"a form isomorphic to ", TEX///$\beta$///, " with a diagonal Gram matrix"}

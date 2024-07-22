@@ -3,8 +3,8 @@ document{
     Headline => "determines whether two Grothendieck-Witt classes over CC, RR, QQ, or a finite field of characteristic not 2 are isomorphic.",
     Usage => "isIsomorphicForm(alpha, beta)",
     Inputs => {
-	GrothendieckWittClass => "alpha" => {"denoted by ", TEX///$\alpha$///, " over", TEX///$\mathbb{C}, \mathbb{R}, \mathbb{Q}$///, ", or a finite field of characteristic not 2"},
-	GrothendieckWittClass => "beta" => {"denoted by ", TEX///$\beta$///, " over", TEX///$\mathbb{C}, \mathbb{R}, \mathbb{Q}$///, ", or a finite field of characteristic not 2"},
+	GrothendieckWittClass => "alpha" => {"denoted by ", TEX///$\alpha$///, " over ", TEX///$\mathbb{Q}$///,", ",TEX///$ \mathbb{R}$///,", ",TEX///$\mathbb{C}$///, ", or a finite field of characteristic not 2"},
+	GrothendieckWittClass => "beta" => {"denoted by ", TEX///$\beta$///, " over ", TEX///$\mathbb{Q}$///,", ",TEX///$ \mathbb{R}$///,", ",TEX///$\mathbb{C}$///, ", or a finite field of characteristic not 2"},
 	},
     Outputs => {
 	Boolean => {"whether the two Grothendieck-Witt classes are equal as elements of the Grothendieck-Witt ring"},

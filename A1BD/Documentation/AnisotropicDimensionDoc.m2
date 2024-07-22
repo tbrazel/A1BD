@@ -23,7 +23,7 @@ document{
     Headline => "returns the anisotropic dimension of a symmetric bilinear form",
     Usage => "getAnisotropicDimension beta",
     Inputs => {
-	GrothendieckWittClass => "beta" => {"over a field ", TEX///$k$///, " where ", TEX///$k$///, " is the complex numbers, the real numbers, the rational numbers, or a finite field of characteristic not 2"},
+	GrothendieckWittClass => "beta" => {"over a field ", TEX///$k$///, " where ", TEX///$k$///, " is ", TEX///$\mathbb{Q}$///,", ",TEX///$ \mathbb{R}$///,", ",TEX///$\mathbb{C}$///, ", or a finite field of characteristic not 2"},
 	},
     Outputs => {
         ZZ => {"the rank of the anisotropic part of ", TEX///$\beta$///},
@@ -39,7 +39,7 @@ document{
     Headline => "returns the Witt index of a symmetric bilinear form",
     Usage => "getWittIndex beta",
     Inputs => {
-	GrothendieckWittClass => "beta" => {"denoted by ", TEX///$\beta\in\text{GW}(k)$///, " where ", TEX///$k$///, " is ",TEX///$\mathbb{Q},$///," ",TEX///$ \mathbb{R},$///," ",TEX///$\mathbb{C}$///, " or a finite field of characteristic not 2"},
+	GrothendieckWittClass => "beta" => {"denoted by ", TEX///$\beta\in\text{GW}(k)$///, " where ", TEX///$k$///, " is ", TEX///$\mathbb{Q}$///,", ",TEX///$ \mathbb{R}$///,", ",TEX///$\mathbb{C}$///, ", or a finite field of characteristic not 2"},
 	},
     Outputs => {
         ZZ => {"the rank of the totally isotropic part of ", TEX///$\beta$///},

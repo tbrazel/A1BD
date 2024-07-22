@@ -4,7 +4,7 @@ document {
     Usage => "getGlobalA1Degree L",
     Inputs => {
 	List => "L" => {"of polynomials ", TEX///$f = (f_1, \ldots, f_n)$///, " in the polynomial ring ", TEX///$k[x_1,\ldots,x_n]$///, " where ", TEX///$k$///,
-	    " is ", TEX///$\mathbb{Q},$///," ",TEX///$\mathbb{R},$///," ",TEX///$\mathbb{C}$///, " or a finite field of characteristic not 2. Over ", 
+	    " is ", TEX///$\mathbb{Q}$///,", ",TEX///$\mathbb{C}$///, ", or a finite field of characteristic not 2. Over ", 
 	    TEX///$\mathbb{R},$///," the user is prompted to instead do the computation over ", TEX///$\mathbb{Q}$///, " and then base change to ", TEX///$\mathbb{R}$///, "."}
 	},
     Outputs => {
@@ -66,7 +66,7 @@ document {
     Usage => "locallA1Degree(L, p)",
     Inputs => {
 	List => "L" => {"of polynomials ", TEX///$f = (f_1, \ldots, f_n)$///, " in the polynomial ring ", TEX///$k[x_1,\ldots,x_n]$///, " where ", 
-	    TEX///$k$///, " is ", TEX///$\mathbb{Q},$///," ",TEX///$\mathbb{R},$///," ",TEX///$\mathbb{C}$///, " or a finite field of characteristic not 2. Over ", 
+	    TEX///$k$///, " is ", TEX///$\mathbb{Q}$///,", ",TEX///$\mathbb{C}$///, ", or a finite field of characteristic not 2. Over ", 
 TEX///$\mathbb{R},$///, " the user is prompted to instead do the computation over ", TEX///$\mathbb{Q}$///, " and then base change to ", TEX///$\mathbb{R}$///, "."},
 	Ideal => "p" => {"a prime ideal ", TEX///$p \subset k[x_1,\ldots,x_n]$///, " corresponding to a point in the zero locus ", TEX///$V(f)$///},
 	},

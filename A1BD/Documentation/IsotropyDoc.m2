@@ -3,7 +3,7 @@ document{
     Headline => "determines whether a Grothendieck-Witt class is isotropic",
     Usage => "isIsotropic beta",
     Inputs => {
-	GrothendieckWittClass => "beta" => {"denoted by ", TEX///$\beta\in\text{GW}(k)$///, ", where ", TEX///$k$///, " is the rational numbers, the real numbers, the complex numbers, or a finite field of characteristic not 2."},
+	GrothendieckWittClass => "beta" => {"denoted by ", TEX///$\beta\in\text{GW}(k)$///, ", where ", TEX///$k$///, " is ", TEX///$\mathbb{Q}$///,", ",TEX///$ \mathbb{R}$///,", ",TEX///$\mathbb{C}$///, ", or a finite field of characteristic not 2"},
 	},
     Outputs => {
         Boolean => {"whether ", TEX///$\beta$///, " is isotropic"},
@@ -18,7 +18,7 @@ document{
     Headline => "determines whether a Grothendieck-Witt class is anisotropic",
     Usage => "isAnisotropic beta",
     Inputs => {
-	GrothendieckWittClass => "beta" => {"denoted by ", TEX///$\beta\in\text{GW}(k)$///, ", where ", TEX///$k$///, " is the rational numbers, the real numbers, the complex numbers, or a finite field of characteristic not 2"},
+	GrothendieckWittClass => "beta" => {"denoted by ", TEX///$\beta\in\text{GW}(k)$///, ", where ", TEX///$k$///, " is ", TEX///$\mathbb{Q}$///,", ",TEX///$ \mathbb{R}$///,", ",TEX///$\mathbb{C}$///, ", or a finite field of characteristic not 2"},
 	},
     Outputs => {
         Boolean => {"whether ", TEX///$\beta$///, " is anisotropic"},
