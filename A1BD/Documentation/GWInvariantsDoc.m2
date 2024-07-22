@@ -97,7 +97,7 @@ document {
                  getRank beta
 		 ///,                
         EXAMPLE lines ///
-                 M=matrix(QQ, {{1,4,7},{4,3,-1},{7,-1,5}})
+                 M = matrix(QQ, {{1,4,7},{4,3,-1},{7,-1,5}})
                  getRank M
                  ///,
     SeeAlso => {"isIsomorphicForm", "getSignature"}
