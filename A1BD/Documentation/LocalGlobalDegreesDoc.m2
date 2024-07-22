@@ -3,8 +3,9 @@ document {
     Headline => "computes the global A1-Brouwer degree of a list of n polynomials in n variables over a field k",
     Usage => "getGlobalA1Degree L",
     Inputs => {
-	List => "L" => {"of polynomials ", TEX///$f = (f_1, \ldots, f_n)$///, " in the polynomial ring ", TEX///$k[x_1,\ldots,x_n]$///, " where ", TEX///$k$///, 
-" is", TEX///$\mathbb{Q}, \mathbb{R}, \mathbb{C}$///, " or a finite field of characteristic not 2. Over", TEX///$\mathbb{R}$///, " the user is prompted to instead do the computation over", TEX///$\mathbb{Q}$///, " and then base change to ", TEX///$\mathbb{R}$///, "."}
+	List => "L" => {"of polynomials ", TEX///$f = (f_1, \ldots, f_n)$///, " in the polynomial ring ", TEX///$k[x_1,\ldots,x_n]$///, " where ", TEX///$k$///,
+	    " is ", TEX///$\mathbb{Q},$///," ",TEX///$\mathbb{R},$///," ",TEX///$\mathbb{C}$///, " or a finite field of characteristic not 2. Over ", 
+	    TEX///$\mathbb{R},$///," the user is prompted to instead do the computation over ", TEX///$\mathbb{Q}$///, " and then base change to ", TEX///$\mathbb{R}$///, "."}
 	},
     Outputs => {
 	GrothendieckWittClass => {"the class ", TEX///$\text{deg}^{\mathbb{A}^1}(f)$///, " in the Grothendieck-Witt ring ", TEX///$\text{GW}(k)$///}
@@ -64,9 +65,10 @@ document {
     Headline => "computes a local A1-Brouwer degree of a list of n polynomials in n variables over a field k at a prime ideal in the zero locus",
     Usage => "locallA1Degree(L, p)",
     Inputs => {
-	List => "L" => {"of polynomials ", TEX///$f = (f_1, \ldots, f_n)$///, " in the polynomial ring ", TEX///$k[x_1,\ldots,x_n]$///, " where ", TEX///$k$///, 
-" is", TEX///$\mathbb{Q}, \mathbb{R}, \mathbb{C}$///, " or a finite field of characteristic not 2. Over", TEX///$\mathbb{R}$///, " the user is prompted to instead do the computation over", TEX///$\mathbb{Q}$///, " and then base change to ", TEX///$\mathbb{R}$///, "."},
-	Ideal => "p" => {"a prime ideal ", TEX///$p \trianglelefteq k[x_1,\ldots,x_n]$///, " in the zero locus ", TEX///$V(f)$///},
+	List => "L" => {"of polynomials ", TEX///$f = (f_1, \ldots, f_n)$///, " in the polynomial ring ", TEX///$k[x_1,\ldots,x_n]$///, " where ", 
+	    TEX///$k$///, " is ", TEX///$\mathbb{Q},$///," ",TEX///$\mathbb{R},$///," ",TEX///$\mathbb{C}$///, " or a finite field of characteristic not 2. Over ", 
+TEX///$\mathbb{R},$///, " the user is prompted to instead do the computation over ", TEX///$\mathbb{Q}$///, " and then base change to ", TEX///$\mathbb{R}$///, "."},
+	Ideal => "p" => {"a prime ideal ", TEX///$p \subset k[x_1,\ldots,x_n]$///, " corresponding to a point in the zero locus ", TEX///$V(f)$///},
 	},
     Outputs => {
 	GrothendieckWittClass => {"the class ", TEX///$\text{deg}_p^{\mathbb{A}^1}(f)$///, " in the Grothendieck-Witt ring ", TEX///$\text{GW}(k)$///}

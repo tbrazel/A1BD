@@ -11,7 +11,7 @@ document {
 	Outputs => { 
 	    GrothendieckWittClass => {"the diagonal form ", TEX///$\langle a_1,\ldots,a_n\rangle \in \text{GW}(k)$///},
 	    },
-	PARA {"Given a sequence of elements ", TEX///$a_1,\ldots,a_n \in k$///, " we can form the diagonal form ", TEX///$\langle a_1,\ldots,a_n\rangle$///, " defined to be the block sum of each of the rank one forms ", TEX///$\langle a_i \rangle \colon k \times k \to k$///, " ", TEX///$(x,y) \mapsto a_i xy$///, "."},
+	PARA {"Given a sequence of elements ", TEX///$a_1,\ldots,a_n \in k$///, " we can form the diagonal form ", TEX///$\langle a_1,\ldots,a_n\rangle$///, " defined to be the block sum of each of the rank one forms ", TEX///$\langle a_i \rangle \colon k \times k \to k,$///, " ", TEX///$(x,y) \mapsto a_i xy$///, "."},
 	EXAMPLE lines ///
     	    	 makeDiagonalForm(QQ, (3,5,7))
 	 	 ///,

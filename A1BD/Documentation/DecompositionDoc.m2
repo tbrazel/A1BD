@@ -3,12 +3,14 @@ document {
     Headline => "produces a simplified diagonal representative of a Grothendieck-Witt class",
     Usage => "getSumDecomposition beta",
     Inputs => {
-        GrothendieckWittClass => "beta" => {"a symmetric bilinear form defined over ", TEX///$\mathbb{Q}, \mathbb{R}, \mathbb{C}$///, " or a finite field of characteristic not 2"},
+        GrothendieckWittClass => "beta" => {"a symmetric bilinear form defined over ", TEX///$\mathbb{Q},$///," ",TEX///$ \mathbb{R},$///," ",TEX///$\mathbb{C}$///, " or a finite field of characteristic not 2"},
     },
     Outputs => { 
 	GrothendieckWittClass => {"a diagonal representative of the Grothendieck Witt class of the input form"},
 	},
-    PARA {"Given a symmetric bilinear form ", TT"beta", " over ", TEX///$\mathbb{Q}, \mathbb{R}, \mathbb{C}$///, " or a finite field of characteristic not 2, we decompose it as a sum of some number of hyperbolic and rank one forms."},
+    PARA {"Given a symmetric bilinear form ", TT"beta", " over ", 
+        TEX///$\mathbb{Q},$///," ",TEX///$ \mathbb{R},$///," ",
+	TEX///$\mathbb{C}$///, " or a finite field of characteristic not 2, we decompose it as a sum of some number of hyperbolic and rank one forms."},
     EXAMPLE lines ///
     M = matrix(RR, {{2.091,2.728,6.747},{2.728,7.329,6.257},{6.747,6.257,0.294}});
     beta = makeGWClass M;
@@ -33,7 +35,7 @@ document {
     Headline => "produces a simplified diagonal representative of a Grothendieck-Witt class",
     Usage => "getSumDecompositionString beta",
     Inputs => {
-        GrothendieckWittClass => "beta" => {"a symmetric bilinear form defined over ", TEX///$\mathbb{Q}, \mathbb{R}, \mathbb{C}$///, " or a finite field of characteristic not 2"},
+        GrothendieckWittClass => "beta" => {"a symmetric bilinear form defined over ", TEX///$\mathbb{Q,}$///," ",TEX///$ \mathbb{R},$///," ",TEX///$\mathbb{C},$///, " or a finite field of characteristic not 2"},
     },
     Outputs => { 
 	String => {"the decomposition as a sum of hyperbolic and rank one forms"},
