@@ -10,12 +10,22 @@ document{
     Outputs => {
 	ZZ => {"the ", EM "Hilbert symbol ", TEX///$(a,b)_p$///},
 	},
-    PARA{"The ", EM "Hasse-Witt invariant", " of a diagonal form ", TEX///$\langle a_1,\ldots,a_n\rangle$///, " over a field ", TEX///$k$///, " is defined to be the product ", TEX///$\prod_{i<j}  \phi(a_i,a_j)$///, " where ", TEX///$\phi \colon k \times k \to \left\{\pm 1\right\}$///, " is any ", EM "symbol", " (see e.g. [MH73, III.5.4] for a definition). It is a classical result of Hilbert that over a local field of characteristic not equal to two, there is a unique symbol, ", TEX///$(-,-)_p$///,  " called the ", EM "Hilbert symbol", " ([S73, Chapter III]) computed as follows:"},
-    PARA{TEX///$(a,b)_p = \begin{cases} 1 & z^2 = ax^2 + by^2 \text{ has a nonzero solution in } K^3 \\ -1 & \text{otherwise.} \end{cases}$///},
-    PARA{"Consider the following example, where we observe that ", TEX///$z^2 = 2x^2 + y^2$///," does admit nonzero solutions mod 7, in particular ", TEX///$(x,y,z) = (1,0,3)$///, ":"},
+    PARA{"The ", EM "Hasse-Witt invariant", " of a diagonal form ", TEX///$\langle a_1,\ldots,a_n\rangle$///, " over a field ", TEX///$k$///, " is defined to be the product ", 
+	TEX///$\prod_{i<j}  \left( a_i,a_j \right)_p)$///, " where ",
+    -- " where ", TEX///$\phi \colon k \times k \to \left\{\pm 1\right\}$///, " is any ", EM "symbol", " (see e.g. [MH73, III.5.4] for a definition). It is a classical result of Hilbert that over a local field of characteristic not equal to two, there is a unique symbol, ", 
+	TEX///$(-,-)_p$///,  " is the ", EM "Hilbert symbol", " ([S73, Chapter III]) computed as follows:"},
+    PARA{TEX///$(a,b)_p = \begin{cases} 1 & \text{if }z^2 = ax^2 + by^2 \text{ has a nonzero solution in } K^3 \\ -1 & \text{otherwise.} \end{cases}$///},
+    PARA{"Consider the following example, where we observe that ", TEX///$z^2 = 2x^2 + y^2$///," does admit nonzero solutions mod 7, in particular ", TEX///$(x,y,z) = (1,0,3),$///, 
+	" and then by Hensel's lemma, has a solution over ",TEX///$\mathbb{Q}_7$///, "."},
     EXAMPLE lines///
     getHilbertSymbol(2,1,7)
     ///,
+    PARA{"In contrast, since ", TEX///$z^2 = 7x^2 + 3y^2$///, 
+	" does not have a  nonzero solution mod 7, the Hilbert symbol will be ",
+	TEX///$-1.$///},
+    EXAMPLE lines///                                                                         
+    getHilbertSymbol(7,3,7)                                                               
+    ///,                  
     PARA{"Computing Hasse-Witt invariants is a key step in classifying symmetric bilinear forms over the rational numbers, and in particular certifying their ", TO2(isIsotropic, "(an)isotropy"), "."},
     PARA{EM "Citations:"},
     UL{

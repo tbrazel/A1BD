@@ -48,7 +48,7 @@ document{
     Outputs => {
         ZZ => {"the Hasse-Witt invariant of ", TEX///$\beta$///," at the prime ",TEX///$p$///},
 	},
-    PARA{"The ", EM "Hasse-Witt invariant", " of a diagonal form ", TEX///$\langle a_1,\ldots,a_n\rangle$///, " over a field ", TEX///$K$///, " is defined to be the product ", TEX///$\prod_{i<j} \left((a_i,a_j)_p \right)$///, " where ", TEX///$(-,-)_p$///, " is the ", TO2(getHilbertSymbol,"Hilbert symbol"), "."},
+    PARA{"The ", EM "Hasse-Witt invariant", " of a diagonal form ", TEX///$\langle a_1,\ldots,a_n\rangle$///, " over a field ", TEX///$K$///, " is defined to be the product ", TEX///$\prod_{i<j} \left(a_i,a_j\right)_p $///, " where ", TEX///$(-,-)_p$///, " is the ", TO2(getHilbertSymbol,"Hilbert symbol"), "."},
     PARA{"The Hasse-Witt invariant of a form will be equal to 1 for almost all primes. In particular, after diagonalizing a form ", TEX///$\beta \cong \left\langle a_1,\ldots,a_n\right\rangle$///, " the Hasse-Witt invariant at a prime ", TEX///$p$///, " will be 1 automatically if ", TEX///$p\nmid a_i$///, " for all ", TEX///$i$///, ". Thus we only have to compute the Hasse-Witt invariant at ", TO2(getRelevantPrimes, "primes dividing diagonal entries"),  "."},
     EXAMPLE lines ///
     beta = makeGWClass matrix(QQ, {{1,4,7},{4,3,-1},{7,-1,5}});

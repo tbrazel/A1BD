@@ -69,7 +69,7 @@ document {
     Outputs => { 
 	GrothendieckWittClass => {"the anisotropic part of ", TEX///$\beta$///},
     },
-    PARA{"By the Witt Decomposition Theorem, any non-degenerate form decomposes uniquely as ", TEX///$\beta \cong n \mathbb{H} \oplus \beta_a$///," where the form ", TEX///$\beta_a$///," is anisotropic. We compute the anisotropic part", TEX///$\beta_a$///," inductively by reference to its ", TO2(getAnisotropicDimension,"anisotropic dimension"), ". Over the complex numbers and real numbers this is straightforward, and over finite fields it is a fairly routine computation. Over the rational numbers some more sophisticated algorithms are needed from the literature. For this we implement algorithms developed for number fields by Koprowski and Rothkegel [KR23]."},
+    PARA{"By the Witt Decomposition Theorem, any non-degenerate form decomposes uniquely as ", TEX///$\beta \cong n \mathbb{H} \oplus \beta_a$///," where the form ", TEX///$\beta_a$///," is anisotropic. We compute the anisotropic part ", TEX///$\beta_a$///," inductively by reference to its ", TO2(getAnisotropicDimension,"anisotropic dimension"), ". Over the complex numbers and real numbers this is straightforward, and over finite fields it is a fairly routine computation. Over the rational numbers some more sophisticated algorithms are needed from the literature. For this we implement algorithms developed for number fields by Koprowski and Rothkegel [KR23]."},
     EXAMPLE lines ///
     alpha = makeDiagonalForm(QQ, (3,-3,2,5,1,-9));
     getAnisotropicPart alpha
