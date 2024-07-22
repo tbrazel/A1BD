@@ -215,7 +215,7 @@ getAnisotropicPart Matrix := Matrix => A -> (
             return -id_(RR^(negEntries - posEntries));
             )
         else
-            return diagonalMatrix(RR, ());
+            return diagonalMatrix(RR, {});
         )
     -- Over QQ, call getAnisotropicPartQQ
     else if k === QQ then (
@@ -229,7 +229,7 @@ getAnisotropicPart Matrix := Matrix => A -> (
             return matrix(k, {{sub((-1)^((rank(diagA)-1)/2), k)*det(getNondegeneratePartDiagonal diagA)}});
             )
         else if getAnisotropicDimension(A) == 0 then (
-            return diagonalMatrix(k, ());
+            return diagonalMatrix(k, {});
             )
         else
             return matrix(k, {{1,0},{0, sub((-1)^((rank(diagA)-2)/2), k)*det(getNondegeneratePartDiagonal diagA)}});
@@ -252,7 +252,7 @@ getSumDecompositionVerbose GrothendieckWittClass := (GrothendieckWittClass, Stri
     kk := getBaseField beta;
 
     if getRank(beta) == 0 then
-	return (makeGWClass(diagonalMatrix(kk,())), "empty form");
+	return (makeGWClass(diagonalMatrix(kk, {})), "empty form");
     
     outputString := "";
     

@@ -57,7 +57,7 @@ getAnisotropicDimensionQQp (GrothendieckWittClass, ZZ) := ZZ => (beta, p) -> (
     
     if odd rankBeta then (
 	c := (-1)^(rankBeta*(rankBeta+1)/2) * getIntegralDiscriminant(beta);
-	gamma := addGW(beta, makeDiagonalForm(QQ,(c)));
+	gamma := addGW(beta, makeDiagonalForm(QQ, (c)));
 	if isHyperbolicQQp(gamma, p) then return 1 else return 3;
 	);
     )
