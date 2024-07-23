@@ -25,12 +25,12 @@ newPackage (
         {Name => "Joel Louwsma",
 	 Email => "jlouwsma@niagara.edu",
 	 HomePage => "https://www.joellouwsma.com/"},
-        {Name => "Andrew Tawfeek",
-	 Email => "atawfeek@uw.edu",
-	 HomePage => "https://www.atawfeek.com/"},
         {Name => "Wern Juin Gabriel Ong",
 	 Email => "gong@bowdoin.edu",
-	 HomePage => "https://wgabrielong.github.io/"}
+	 HomePage => "https://wgabrielong.github.io/"},
+        {Name => "Andrew Tawfeek",
+	 Email => "atawfeek@uw.edu",
+	 HomePage => "https://www.atawfeek.com/"}
 	},
     Headline => "for working with A1-Brouwer degree computations",
     PackageImports => {},
