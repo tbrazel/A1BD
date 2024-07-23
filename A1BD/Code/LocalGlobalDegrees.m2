@@ -18,9 +18,9 @@ getGlobalA1Degree List := GrothendieckWittClass => Endo -> (
     -- Let S = kk[x_1..x_n] be the ambient polynomial ring
     S := ring(Endo#0);
     
-    -- Check whether the morphism has isolated zeroes
+    -- Check whether the morphism has isolated zeros
     if dim ideal(Endo) > 0  then
-	error "morphism does not have isolated zeroes";
+	error "morphism does not have isolated zeros";
     
     -- Check whether the number of variables matches the number of polynomials
     if #(gens S) != n then
@@ -150,9 +150,9 @@ getLocalA1Degree (List, Ideal) := GrothendieckWittClass => (Endo,p) -> (
     -- Get the dimension of the local algebra Q_p(f)
     localFormRank := numColumns basis(S/J);
     
-    -- Check whether the morphism has isolated zeroes
+    -- Check whether the morphism has isolated zeros
     if dim ideal(Endo) > 0 then
-	error "morphism does not have isolated zeroes";
+	error "morphism does not have isolated zeros";
     
     -- Check whether the number of variables matches the number of polynomials
     if #(gens S) != n then

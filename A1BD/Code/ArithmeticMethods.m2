@@ -141,7 +141,7 @@ getLocalAlgebraBasis (List, Ideal) := List => (L, p) -> (
     I := ideal L;
     
     -- Check whether the ideal I is zero-dimensional
-    if dim I > 0 then error "morphism does not have isolated zeroes";
+    if dim I > 0 then error "morphism does not have isolated zeros";
     if not isSubset(I, p) then error "prime is not a zero of function";
     J := I:saturate(I, p);
     A := R/J;
