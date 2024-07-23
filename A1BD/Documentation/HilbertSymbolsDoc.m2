@@ -26,6 +26,13 @@ document{
     EXAMPLE lines///                                                                         
     getHilbertSymbol(7,3,7)                                                               
     ///,                  
+    PARA{"Over ",TEX///$\mathbb{Q}_2$///, " the equation ", TEX///$z^2 = 2x^2 + 2y^2$///,
+	" has a non-trivial solution, whereas the equation ", TEX///$z^2=2x^2+3y^2$///, 
+	" does not. Hence, their Hilbert symbols are 1 and -1, respectively."},
+    EXAMPLE lines///                                                                         
+    getHilbertSymbol(2,2,2)
+    getHilbertSymbol(2,3,2)                                                               
+    ///,                  
     PARA{"Computing Hasse-Witt invariants is a key step in classifying symmetric bilinear forms over the rational numbers, and in particular certifying their ", TO2(isIsotropic, "(an)isotropy"), "."},
     PARA{EM "Citations:"},
     UL{
