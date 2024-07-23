@@ -48,7 +48,7 @@ document{
     }
 
 document {
-    Key => {makeGWClass, (makeGWClass, Matrix), (isWellDefined, Matrix)},
+    Key => {makeGWClass, (makeGWClass, Matrix), (isWellDefinedGW, Matrix)},
 	Headline => "the Grothendieck-Witt class of a symmetric matrix",
 	Usage => "makeGWClass M",
 	Inputs => {
@@ -58,7 +58,7 @@ document {
 	    GrothendieckWittClass => {"the isomorphism class of the non-degenerate symmetric bilinear form represented by ", TEX/// $M$///}
 	    },
 	PARA {"Given a symmetric matrix, ", TEX///$M$///, ", this command outputs an object of type ", TT "GrothendieckWittClass", ". ",
-                "This output has the representing matrix, ", TEX///$M$///, ", and the base field of the matrix stored in its CacheTable."},
+                "This output has the representing matrix, ", TEX///$M$///, ", and the base field of the matrix stored in its ",TO2(CacheTable,"CacheTable.")},
 	EXAMPLE lines ///
 		 M := matrix(QQ, {{0,0,1},{0,1,0},{1,0,0}});
 		 beta = makeGWClass M
@@ -135,9 +135,9 @@ document {
 	    GrothendieckWittClass => "gamma" => {"the isomorphism class of a non-degenerate symmetric bilinear form represented by a matrix ", TT "N"},
 	    }, 
 	Outputs => { 
-	    GrothendieckWittClass => {"the isomorphism class of the tensor product of the bilinear forms represented by the matrices ", TT "M", " and ", TT "N"},
+	    GrothendieckWittClass => {"the isomorphism class of the tensor product ",TEX///$M\otimes N$///," of the bilinear forms represented by the matrices ", TT "M", " and ", TT "N"},
 	    },
-	PARA {"This computes the tensor product of the Grothendieck-Witt classes ",TT "beta"," and ",TT "gamma","."},
+	PARA {"This computes the tensor product ",TEX///$\beta\otimes\gamma$///," of the Grothendieck-Witt classes ",TT "beta"," and ",TT "gamma","."},
 	EXAMPLE lines ///
     	    	 M = matrix(QQ, {{1,0},{0,1}});
 		 N = matrix(QQ, {{1,2},{2,5}});

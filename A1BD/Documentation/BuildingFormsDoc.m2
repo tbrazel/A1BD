@@ -59,7 +59,7 @@ document {
 	    ZZ => "n" => {"an even number, giving an optional rank ", TEX///$n$///, " for a totally hyperbolic form"},
 	    }, 
 	Outputs => { 
-	    GrothendieckWittClass => {"the hyperbolic form ", TEX///$\mathbb{H} = \langle 1, -1\rangle \in \text{GW}(k)$///, " or the totally hyperbolic form ", TEX///$\frac{n}{2}\mathbb{H}$///, " if an optional rank is specified"},
+	    GrothendieckWittClass => {"the hyperbolic form ", TEX///$\mathbb{H} = \langle 1, -1\rangle \in \text{GW}(k)$///, " or the totally hyperbolic form ", TEX///$\left(\displaystyle\frac{n}{2}\right)\mathbb{H}$///, " if an optional rank ",TEX///$n$///," is specified"},
 	    },
 	PARA {"By default outputs the rank two hyperbolic form over the input field ", TEX///$k$///, "."},
 	EXAMPLE lines ///

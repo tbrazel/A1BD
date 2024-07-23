@@ -69,7 +69,7 @@ document{
         List => {"a finite list of primes ", TEX///$(p_1,\ldots,p_r)$///, " containing all primes ",
 	    TEX///$p$///, " where the ",TO2(getHasseWittInvariant,"Hasse-Witt invariant "), TEX///$\phi_p(\beta)$///," is nontrivial"},
 	},
-    PARA{"It is a classical result that the ", TO2(getHasseWittInvariant,"Hasse-Witt invariants"), " of a quadratic form are equal to 1 for all but finitely many primes (see e.g. [S73, IV Section 3.3]. As the Hasse-Witt invariants are computed as a product of ", TO2(getHilbertSymbol,"Hilbert symbols") , " of the pairwise entries appearing on a diagonalization of the symbol, it suffices to consider primes dividing diagonal entries."},
+    PARA{"It is a classical result that the ", TO2(getHasseWittInvariant,"Hasse-Witt invariants"), " of a quadratic form are equal to 1 for all but finitely many primes (see e.g. [S73, IV Section 3.3]). As the Hasse-Witt invariants are computed as a product of ", TO2(getHilbertSymbol,"Hilbert symbols") , " of the pairwise entries appearing on a diagonalization of the symbol, it suffices to consider primes dividing diagonal entries."},
    EXAMPLE lines ///
    beta = makeDiagonalForm(QQ, (6,7,22));
    getRelevantPrimes beta
