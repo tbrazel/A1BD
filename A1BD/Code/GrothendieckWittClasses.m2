@@ -1,3 +1,26 @@
+-- Input: A matrix
+-- Output: Boolean that gives whether the matrix defines a nondegenerate symmetric bilinear form over a field of characteristic not 2
+
+isWellDefinedGW = method()
+isWellDefinedGW Matrix := Boolean => M -> (
+    
+    -- Return false if the matrix isn't square and symmetric
+    if not isSquareAndSymmetric M then return false;
+
+    -- Return false if the matrix represents a degenerate form
+    if isDegenerate M then return false;
+
+    -- Return false if the matrix isn't defined over a field
+    if not isField ring M then return false;
+    
+    -- Returns false if the matrix is defined over a field of characteristic 2
+    if char(ring M) == 2 then return false;
+
+    -- Otherwise, return true
+    true
+    )
+
+
 -- We define GrothendieckWittClass to be a new type, meant to represent the isomorphism class 
 -- of a nondegenerate symmetric bilinear form over a field of characteristic not 2
 
@@ -9,7 +32,7 @@ GrothendieckWittClass.synonym = "Grothendieck-Witt Class"
 
 makeGWClass = method()
 makeGWClass Matrix := GrothendieckWittClass => M -> (
-   if isWellDefined M then (
+   if isWellDefinedGW M then (
         new GrothendieckWittClass from {
             symbol matrix => M,
             symbol cache => new CacheTable
@@ -32,27 +55,6 @@ net GrothendieckWittClass := Net => alpha -> (
 
 texMath GrothendieckWittClass := String => alpha -> (
     texMath getMatrix alpha
-    )
-
--- Input: A matrix
--- Output: Boolean that gives whether the matrix defines a nondegenerate symmetric bilinear form over a field of characteristic not 2
-
-isWellDefined Matrix := Boolean => M -> (
-    
-    -- Return false if the matrix isn't square and symmetric
-    if not isSquareAndSymmetric M then return false;
-
-    -- Return false if the matrix represents a degenerate form
-    if isDegenerate M then return false;
-
-    -- Return false if the matrix isn't defined over a field
-    if not isField ring M then return false;
-    
-    -- Returns false if the matrix is defined over a field of characteristic 2
-    if char(ring M) == 2 then return false;
-
-    -- Otherwise, return true
-    true
     )
 
 -- Input: A Grothendieck-Witt class beta, the isomorphism class of a symmetric bilinear form
