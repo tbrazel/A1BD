@@ -7,7 +7,7 @@ reduceAnisotropicPartQQDimension4 GrothendieckWittClass := GrothendieckWittClass
     if getAnisotropicDimensionQQ(beta) < 4 then
 	error "anisotropic dimension of form is not >= 4";
     
-    -- If the getSignature is non-negative then return < 1 >
+    -- If the signature is non-negative then return < 1 >
     if getSignature(beta) >= 0 then return makeDiagonalForm(QQ, 1);
     
     -- Otherwise return < -1 >
@@ -41,8 +41,8 @@ reduceAnisotropicPartQQDimension3 GrothendieckWittClass := GrothendieckWittClass
 	    );
 	);
     
-    -- We are looking for an element which is equivalent to d-1 mod p for each p in L1 and equivalent to p mod p^2 for each p in L2
-    -- We use the solveCongruenceList method from the to find such an element
+    -- We are looking for an element which is equivalent to (d - 1) mod p for each p in L1 and equivalent to p mod p^2 for each p in L2
+    -- We use the solveCongruenceList method to find such an element
     alpha := solveCongruenceList(S1 | S2, L1 | L2);
     a := getSquarefreePart alpha;
     makeDiagonalForm(QQ, a)
@@ -59,11 +59,10 @@ getAnisotropicPartQQDimension2 GrothendieckWittClass := GrothendieckWittClass =>
 
     n := getRank beta;
 
-    -- Shortcut: if the form has anisotropic dimension 2 and the form is dimension 2, return the form itself
+    -- Shortcut: if the form has anisotropic dimension 2 and the form is rank 2, return the form itself
     if n == 2 then return beta; 
     
-    -- Step 1: We want the Witt index to be 0 mod 4 in their terminology --- note they define the Witt index to be
-    -- the integer w so that q = wH + q_a.
+    -- Step 1: We want the Witt index to be 0 mod 4 
     w := getWittIndex beta;
     q := beta;
     if (w % 4) != 0 then (
@@ -72,14 +71,14 @@ getAnisotropicPartQQDimension2 GrothendieckWittClass := GrothendieckWittClass =>
 	n = n + 2*(4-w);
 	);
 
-    -- Step 2: Compute discriminant (note they use a signed version of the discriminant in their algorithm)
+    -- Step 2: Compute discriminant (note that Koprowski/Rothkegel use a signed version of the discriminant in their algorithm)
     d := ((-1)^(n*(n-1)/2))*getIntegralDiscriminant(q);
     
-    -- Step 3: Take relevant primes plus dyadic ones
+    -- Step 3: Take relevant primes plus 2
     S := getRelevantPrimes beta;
     if not member(2, S) then S = append(S, 2);
     
-    -- Start the loop at p=2
+    -- Start the loop at p = 2
     p := 2;
     solnFound := false;
     
@@ -112,7 +111,7 @@ getAnisotropicPartQQDimension2 GrothendieckWittClass := GrothendieckWittClass =>
 	    );
 	B = matrix B;
     	
-	-- Step 5d: Append a zero column on the front if the discriminant is negative
+	-- Step 5d: Append a zero column on the left if the discriminant is negative
     	if (d < 0) then (
 	    A := mutableMatrix(QQ, 1,m);
 	    for i from 0 to m - 1 do (
@@ -125,7 +124,7 @@ getAnisotropicPartQQDimension2 GrothendieckWittClass := GrothendieckWittClass =>
 	    B = matrix(A) || B;
 	    );
 
-	-- Step 5f: Try to solve sytem of equations over F_2
+	-- Step 5f: Try to solve sytem of equations over GF(2)
         kk := GF(2);
     	W = matrix(kk, entries W);
     	B = matrix(kk, entries B);
@@ -147,7 +146,7 @@ getAnisotropicPartQQDimension2 GrothendieckWittClass := GrothendieckWittClass =>
     makeDiagonalForm(QQ, (alpha, -getSquarefreePart(alpha*d)))
     )
 
--- Input: A Grothendieck-Witt class representing a quadratic form over QQ
+-- Input: A Grothendieck-Witt class representing a symmetric bilinear form over QQ
 -- Output: The Grothendieck-Witt class representing the anisotropic part of this form
 
 getAnisotropicPartQQ = method()
@@ -158,7 +157,7 @@ getAnisotropicPartQQ GrothendieckWittClass := GrothendieckWittClass => beta -> (
     -- If the form is anisotropic 
     if getAnisotropicDimension(beta) == n then return beta;
     
-    -- Initialize an empty quadratic form
+    -- Initialize an empty symmetric bilinear form
     outputForm := makeDiagonalForm(QQ, ());    
     alpha := 1;
 
@@ -183,7 +182,7 @@ getAnisotropicPartQQ GrothendieckWittClass := GrothendieckWittClass => beta -> (
     outputForm
     )
 
--- Input: A symmetric matrix representing a quadratic form or a GrothendieckWittClass; over QQ, RR, CC, or a finite field of characteristic not 2
+-- Input: A symmetric matrix representing a symmetric bilinear form or a GrothendieckWittClass; over QQ, RR, CC, or a finite field of characteristic not 2
 -- Output: A symmetric matrix or GrothendieckWittClass that is the anisotropic part of the input
 
 getAnisotropicPart = method()
@@ -226,13 +225,13 @@ getAnisotropicPart Matrix := Matrix => A -> (
     else if (instance(k, GaloisField) and k.char != 2) then (
         diagA := diagonalizeViaCongruence(A);
         if getAnisotropicDimension(A) == 1 then (
-            return matrix(k, {{sub((-1)^((rank(diagA)-1)/2), k)*det(getNondegeneratePartDiagonal diagA)}});
+            return matrix(k, {{sub((-1)^((getRank(diagA)-1)/2), k)*det(getNondegeneratePartDiagonal diagA)}});
             )
         else if getAnisotropicDimension(A) == 0 then (
             return diagonalMatrix(k, {});
             )
         else
-            return matrix(k, {{1,0},{0, sub((-1)^((rank(diagA)-2)/2), k)*det(getNondegeneratePartDiagonal diagA)}});
+            return matrix(k, {{1,0},{0, sub((-1)^((getRank(diagA)-2)/2), k)*det(getNondegeneratePartDiagonal diagA)}});
         );
     )
 
@@ -284,7 +283,7 @@ getSumDecomposition GrothendieckWittClass := GrothendieckWittClass => beta -> (
     )
 
 -- Input: A Grothendieck-Witt class beta over over QQ, RR, CC, or a finite field of characteristic not 2
--- Output: The decomposition as a sum of hyperbolic and rank one forms
+-- Output: The decomposition of beta as a sum of hyperbolic and rank one forms
 
 getSumDecompositionString = method()
 getSumDecompositionString GrothendieckWittClass := String => beta -> (

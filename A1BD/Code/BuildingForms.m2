@@ -27,7 +27,7 @@ makeDiagonalForm (Ring, Sequence) := GrothendieckWittClass => (kk, L) -> (
     
     for i from 0 to n - 1 do A_(i,i) = sub(L_i, kk);
     
-    -- A is mutable so we take matrix(A) and form a Grothendieck-Witt class
+    -- A is mutable so we take matrix A and form a Grothendieck-Witt class
     makeGWClass matrix A
     )
 
@@ -52,7 +52,7 @@ makeDiagonalForm (InexactFieldFamily, Sequence) := GrothendieckWittClass => (kk,
     
     for i from 0 to n - 1 do A_(i,i) = sub(L_i, kk);
     
-    -- A is mutable so we take matrix(A) and form a Grothendieck-Witt class
+    -- A is mutable so we take matrix A and form a Grothendieck-Witt class
     makeGWClass matrix A
     )
 

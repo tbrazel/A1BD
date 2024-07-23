@@ -2,8 +2,8 @@
 -- Arithmetic operations
 ------------------------
 
--- Input: An integer or rational number
--- Output: The smallest magnitude integer in the same integer square class as the input
+-- Input: An integer or rational number n
+-- Output: The smallest magnitude integer in the same integer square class as n
 
 getSquarefreePart = method()
 getSquarefreePart ZZ := ZZ => n -> (
@@ -29,8 +29,8 @@ getPrimeFactors QQ := List => n -> (
     getPrimeFactors sub(n, ZZ)  
     )
 
--- Input: An integer or rational number and a prime number p
--- Output: The p-adic valuation of the integer or rational number
+-- Input: An integer or rational number n and a prime number p
+-- Output: The p-adic valuation of n
 
 getPadicValuation = method()
 getPadicValuation (ZZ, ZZ) := ZZ => (n, p) -> (
@@ -55,7 +55,7 @@ isGFSquare RingElement := Boolean => a -> (
     a^((q-1)//2) == 1 
     )
 
--- Input: An integer a and a prime p
+-- Input: An integer a and a prime number p
 -- Output: 1 if a is a unit square, -1 if a = p^(even power) x (non-square unit), 0 otherwise
 -- Note: The terminology "Square Symbol" comes from John Voight's Quaternion Algebra book
 
@@ -76,7 +76,7 @@ getSquareSymbol (ZZ,ZZ) := ZZ => (a,p) -> (
 ------------------------------
 
 -- Input: Two integers a and b, and a prime number p
--- Output: Boolean that gives whether a and b differ by a square in Q_p
+-- Output: Boolean that gives whether a and b differ by a square in QQ_p
 
 isEqualUpToPadicSquare = method()
 isEqualUpToPadicSquare (ZZ,ZZ,ZZ) := Boolean => (a,b,p) -> (
@@ -84,7 +84,7 @@ isEqualUpToPadicSquare (ZZ,ZZ,ZZ) := Boolean => (a,b,p) -> (
 -- One has to separately handle the cases when p is odd and when p = 2
 
     if odd p then (
-        -- p is odd and we need to check that the powers of p have the same parity, and the units
+        -- if p is odd, we need to check that the p-adic valuations of a and b have the same parity and the units
         -- differ by a square in GF(p)
         a1 := getSquarefreePart a;
         b1 := getSquarefreePart b;
@@ -92,13 +92,13 @@ isEqualUpToPadicSquare (ZZ,ZZ,ZZ) := Boolean => (a,b,p) -> (
             return false;
             )
         else (
-    	    -- c1 will be an integer prime to p
+    	    -- c1 will be an integer coprime to p
 	    c1 := getSquarefreePart(a1*b1);
 	    return isGFSquare sub(c1, GF(p)); 
 	    );
         )
     else (
-        -- Case when p=2. Here we have to check that the powers of p have the same parity, and 
+        -- Case when p = 2. Here we have to check that the p-adic valuations of a and b have the same parity and 
         -- that the units agree mod 8.
         a1 = getSquarefreePart a;
         b1 = getSquarefreePart b;
@@ -106,10 +106,10 @@ isEqualUpToPadicSquare (ZZ,ZZ,ZZ) := Boolean => (a,b,p) -> (
 	    return false;
             )
         else (
-    	    -- c1 will be an integer prime to p
+    	    -- c1 will be an integer coprime to p
 	    c1 = getSquarefreePart(a1*b1);
 	    c1 = c1 % 8;
-	    -- If c1 = 1, then the two odd units are congruent mod 8, and are squares in Q_2
+	    -- If c1 = 1, then the two odd units are congruent mod 8 and are squares in QQ_2
 	    return c1 == 1; 
 	    );
         );
@@ -127,7 +127,7 @@ isPadicSquare (ZZ,ZZ) := Boolean => (a,p) -> (
 -- Commutative algebra methods
 ------------------------------
 
--- Input: A list L of functions f1,...,fn over the same ring R and p is a prime ideal of an isolated zero
+-- Input: A list L of functions f1,...,fn over the same ring R and p a prime ideal of an isolated zero
 -- Output: A list of basis elements of the local k-algebra Q_p(f) = R[x]_p/(f)
 
 getLocalAlgebraBasis = method()
@@ -140,7 +140,7 @@ getLocalAlgebraBasis (List, Ideal) := List => (L, p) -> (
     R := ring L#0;
     I := ideal L;
     
-    -- Check whether or not the ideal is zero-dimensional
+    -- Check whether the ideal I is zero-dimensional
     if dim I > 0 then error "morphism does not have isolated zeroes";
     if not isSubset(I, p) then error "prime is not a zero of function";
     J := I:saturate(I, p);
@@ -149,8 +149,8 @@ getLocalAlgebraBasis (List, Ideal) := List => (L, p) -> (
     flatten entries B
     )
 
--- Input: A zero-dimensional ideal (f_1,...,f_n) < k[x_1,...,x_n].
--- Output: The rank of the global algebra as a k-vector space.
+-- Input: A zero-dimensional ideal (f_1,...,f_n) < k[x_1,...,x_n]
+-- Output: The rank of the global algebra as a k-vector space
 
 getGlobalAlgebraRank = method()
 getGlobalAlgebraRank List := ZZ => Endo -> (
@@ -159,18 +159,18 @@ getGlobalAlgebraRank List := ZZ => Endo -> (
     kk := coefficientRing ring(Endo#0);    
     if not isField kk then kk = toField kk;
     
-    -- Let S = k[x_1,...,x_n] be the ambient polynomial ring
+    -- Let S = kk[x_1,...,x_n] be the ambient polynomial ring
     S := ring(Endo#0);
     
-    -- First check if the morphism does not have isolated zeroes
+    -- First check verify that the morphism has isolated zeroes
     if dim ideal(Endo) > 0  then error "ideal is not zero-dimensional";
     
     -- Get the rank of S/ideal(Endo) as a kk-vector space
     numColumns basis(S/ideal(Endo))
     )
 
--- Input: A pair of integers a,b
--- Output: x,y such that a*x + b*y = gcd(a,b)
+-- Input: A pair of integers a and b
+-- Output: A pair of integers x and y such that a*x + b*y = gcd(a,b)
 -- This is adapted from the igcdx method from the Parametrization package
 
 computeExtendedEuclidean = method()
@@ -184,7 +184,7 @@ computeExtendedEuclidean(ZZ,ZZ) := (a,b) -> (
         );
     )
 
--- Input: A set of four integers a,b,p,q
+-- Input: A list of four integers a,b,p,q
 -- Output: An integer solution x to the congruences x = a (mod p) and x = b (mod q)
 -- This is adapted from the chineseRemainder0 method from the Parametrization package
 

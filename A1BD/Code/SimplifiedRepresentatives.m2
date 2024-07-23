@@ -8,12 +8,12 @@
 getDiagonalClass = method()
 getDiagonalClass GrothendieckWittClass := GrothendieckWittClass => beta -> (
 
-    -- Check if the getDiagonalClass has already been computed; if so, recall it from the cache
+    -- Check if the diagonal class has already been computed; if so, recall it from the cache
     if beta.cache.?getDiagonalClass then return beta.cache.getDiagonalClass;
 
     getDiagonalClassOfBetaMatrix := diagonalizeAndSimplifyViaCongruence getMatrix beta;
 
-    -- The diagonal form gets cached in the GWClass type
+    -- The computed diagonal class gets stored in the cache
     beta.cache.getDiagonalClass = makeGWClass getDiagonalClassOfBetaMatrix;
     makeGWClass getDiagonalClassOfBetaMatrix
     )

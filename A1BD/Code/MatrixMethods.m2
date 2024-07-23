@@ -64,7 +64,7 @@ isDiagonal Matrix := Boolean => M -> (
 diagonalizeViaCongruence = method()
 diagonalizeViaCongruence Matrix := Matrix => AnonMut -> (
     k := ring AnonMut;
-    if not isField k then error "expected matrix entries from a field";
+    if not isField k then error "expected matrix over a field";
     if not isSquareAndSymmetric AnonMut then
 	error "matrix is not symmetric";
     
@@ -110,7 +110,7 @@ diagonalizeViaCongruence Matrix := Matrix => AnonMut -> (
     matrix A 
     )
 
--- Input: A symmetric matrix 
+-- Input: A symmetric matrix over QQ, RR, CC, and finite fields of characteristic not 2
 -- Output: A diagonal matrix congruent to the original matrix, with squarefree entries on the diagonal
 
 diagonalizeAndSimplifyViaCongruence = method()

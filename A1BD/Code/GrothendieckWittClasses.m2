@@ -20,7 +20,6 @@ isWellDefinedGW Matrix := Boolean => M -> (
     true
     )
 
-
 -- We define GrothendieckWittClass to be a new type, meant to represent the isomorphism class 
 -- of a nondegenerate symmetric bilinear form over a field of characteristic not 2
 
@@ -58,7 +57,7 @@ texMath GrothendieckWittClass := String => alpha -> (
     )
 
 -- Input: A Grothendieck-Witt class beta, the isomorphism class of a symmetric bilinear form
--- Output: The base ring of beta
+-- Output: The base field of beta
 
 getBaseField = method()
 getBaseField GrothendieckWittClass := Ring => beta -> (
@@ -73,7 +72,7 @@ getMatrix GrothendieckWittClass := Matrix => alpha -> (
     alpha.matrix
     )
 
--- Input: Two Grothendieck-Witt classes beta and gamma
+-- Input: Two Grothendieck-Witt classes beta and gamma over the same field
 -- Output: The direct sum of beta and gamma
 
 addGW = method()
@@ -95,7 +94,7 @@ addGW (GrothendieckWittClass,GrothendieckWittClass) := GrothendieckWittClass => 
     makeGWClass(getMatrix beta ++ getMatrix gamma)
     )
 
--- Input: Two Grothendieck-Witt classes beta and gamma
+-- Input: Two Grothendieck-Witt classes beta and gamma over the same field
 -- Output: The tensor product of beta and gamma
 
 multiplyGW = method()

@@ -3,7 +3,7 @@
 -- See Serre, III Theorem 1
 
 getHilbertSymbolReal = method()
-getHilbertSymbolReal (QQ,QQ) := ZZ => (a,b) -> (
+getHilbertSymbolReal (QQ, QQ) := ZZ => (a, b) -> (
     if (a == 0 or b == 0) then
 	error "the arguments of getHilbertSymbolReal must be nonzero";
     if (a < 0 and b < 0) then (
@@ -15,12 +15,12 @@ getHilbertSymbolReal (QQ,QQ) := ZZ => (a,b) -> (
 
 getHilbertSymbolReal (QQ, ZZ) := ZZ => (a, b) -> (
     b1 := b/1;
-    getHilbertSymbolReal(a, b1)
+    getHilbertSymbolReal(a,b1)
     )
 
 getHilbertSymbolReal (ZZ, QQ) := ZZ => (a, b) -> (
     a1 := a/1;
-    getHilbertSymbolReal(a1, b)
+    getHilbertSymbolReal(a1,b)
     )
 
 getHilbertSymbolReal (ZZ, ZZ) := ZZ => (a, b) -> (
@@ -29,7 +29,7 @@ getHilbertSymbolReal (ZZ, ZZ) := ZZ => (a, b) -> (
     getHilbertSymbolReal(a1,b1)
     )
 
--- Input: A pair of rational numbers a and b and a prime number p. The integers a and b are considered as elements of Q_p
+-- Input: A pair of rational numbers a and b and a prime number p. The integers a and b are considered as elements of QQ_p
 -- Output: The Hilbert symbol (a,b)_p following Serre, III Theorem 1
 
 getHilbertSymbol = method()
@@ -62,7 +62,7 @@ getHilbertSymbol (ZZ, ZZ, ZZ) := ZZ => (a, b, p) -> (
 	);
     )
 
-getHilbertSymbol (QQ,QQ, ZZ) := ZZ => (a,b, p) -> (
+getHilbertSymbol (QQ, QQ, ZZ) := ZZ => (a, b, p) -> (
  
 -- If a and b are rational numbers with denominators, one can multiply by the square of their denominators to 
 -- get integers a' and b' and then evaluate getHilbertSymbol (a',b',p)

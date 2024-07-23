@@ -1,5 +1,5 @@
--- Input: Two Grothendieck-Witt classes or symmetric matrices representing quadratic forms over QQ
--- Output: Boolean that gives whether the Grothendieck-Witt classes/quadratic forms are isomorphic
+-- Input: A pair of Grothendieck-Witt classes or a pair of matrices representing symmetric bilinear forms over QQ
+-- Output: Boolean that gives whether the Grothendieck-Witt classes/symmetric bilinear forms are isomorphic
 
 isIsomorphicFormQQ = method()
 isIsomorphicFormQQ (GrothendieckWittClass,GrothendieckWittClass) := Boolean => (alpha,beta) -> (
@@ -11,7 +11,7 @@ isIsomorphicFormQQ (GrothendieckWittClass,GrothendieckWittClass) := Boolean => (
     -- If the ranks differ, then the forms are not isomorphic
     if getRank(alpha) != getRank(beta) then return false;
     
-    -- If the getSignatures (Hasse-Witt invariants at RR) differ, then the forms are not isomorphic
+    -- If the signatures (Hasse-Witt invariants at RR) differ, then the forms are not isomorphic
     if getSignature(alpha) != getSignature(beta) then return false;
     
     -- If the discriminants differ, then the forms are not isomorphic
@@ -25,7 +25,8 @@ isIsomorphicFormQQ (GrothendieckWittClass,GrothendieckWittClass) := Boolean => (
 	if (getHasseWittInvariant(alpha, p) != getHasseWittInvariant(beta, p)) then
 	    return false;
 	);
-    -- If we get here, then all Hasse-Witt invariants agree and the forms are isomorphic
+    -- If we get here, then the rank, signature, discriminant, and all Hasse-Witt invariants agree,
+    -- so thus the forms are isomorphic
     true
     )
 
@@ -34,7 +35,7 @@ isIsomorphicFormQQ (Matrix,Matrix) := Boolean => (M,N) -> (
     )
 
 -- Input: Two matrices representing symmetric bilinear forms over CC, RR, QQ, or a finite field of characteristic not 2
--- Output: Boolean that gives whether the bilinear forms are isometric
+-- Output: Boolean that gives whether the bilinear forms are isomorphic
 
 isIsomorphicForm = method()
 isIsomorphicForm (Matrix,Matrix) := Boolean => (A,B) -> (
@@ -56,16 +57,16 @@ isIsomorphicForm (Matrix,Matrix) := Boolean => (A,B) -> (
     -- Complex numbers
     -----------------------------------
     
-    -- Over CC, forms over spaces of the same dimension are equivalent if and only if they have the same rank
+    -- Over CC, forms over spaces of the same dimension are isomorphic if and only if they have the same rank
     if (instance(k1, ComplexField) and instance(k2, ComplexField)) then (
-        return (numRows(A) == numRows(B) and rank(A) == rank(B));
+        return (numRows(A) == numRows(B) and getRank(A) == getRank(B));
         )
     
     -----------------------------------
     -- Real numbers
     -----------------------------------
     
-    -- Over RR, diagonal forms of the same dimension are equivalent if and only if they have the same number of positive and negative entries
+    -- Over RR, diagonal forms of the same dimension are isomorphic if and only if they have the same number of positive and negative entries
     else if (instance(k1, RealField) and instance(k2, RealField)) then (
         diagA := diagonalizeViaCongruence A;
         diagB := diagonalizeViaCongruence B;
@@ -76,7 +77,7 @@ isIsomorphicForm (Matrix,Matrix) := Boolean => (A,B) -> (
     -- Rational numbers
     -----------------------------------
     
-    -- Over QQ, if spaces have same dimension, then call isIsomorphicFormQQ on their nondegenerate parts
+    -- Over QQ, if the spaces have same dimension, then call isIsomorphicFormQQ on the nondegenerate parts of the forms
     else if (k1 === QQ and k2 === QQ) then (
         return (numRows(A) == numRows(B) and isIsomorphicFormQQ(getNondegeneratePartDiagonal A, getNondegeneratePartDiagonal B));
         )
@@ -87,9 +88,9 @@ isIsomorphicForm (Matrix,Matrix) := Boolean => (A,B) -> (
     
     -- Over a finite field, diagonal forms over spaces of the same dimension are equivalent if and only if they have the same number of nonzero entries and the product of these nonzero entries is in the same square class
     else if (instance(k1, GaloisField) and instance(k2, GaloisField) and k1.char !=2 and k2.char != 2 and k1.order == k2.order) then (
-        return (numRows(A) == numRows(B) and rank(A) == rank(B) and isGFSquare(det(getNondegeneratePartDiagonal A)) == isGFSquare(sub(det(getNondegeneratePartDiagonal B), k1)));
+        return (numRows(A) == numRows(B) and getRank(A) == getRank(B) and isGFSquare(det(getNondegeneratePartDiagonal A)) == isGFSquare(sub(det(getNondegeneratePartDiagonal B), k1)));
         )
-    -- If we get here, the base fields are not the same
+    -- If we get here, then the base fields are not the same
     else
 	error "Base fields are not the same";
     )

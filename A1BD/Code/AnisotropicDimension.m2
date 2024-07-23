@@ -2,8 +2,8 @@
 -- Anisotropic dimension
 ---------------------------------------
 
--- Input: A Grothendieck-Witt class beta over QQ and a prime number
--- Output: Boolean that indicates whether beta is hyperbolic over the p-adic rationals Q_p
+-- Input: A Grothendieck-Witt class beta over QQ and a prime number p
+-- Output: Boolean that indicates whether beta is totally hyperbolic over the p-adic rationals QQ_p
 -- Notes: Koprowski/Czogala Algorithm 6
 
 isHyperbolicQQp = method()
@@ -21,10 +21,10 @@ isHyperbolicQQp (GrothendieckWittClass, ZZ) := Boolean => (beta, p) -> (
     -- Note that Koprowski and Czogala are using a different, signed, version of the discriminant
     d := (-1)^(rankBeta*(rankBeta-1)/2) * getIntegralDiscriminant(beta);
     
-    -- If this discriminant is not a square in Q_p then return false
+    -- If this discriminant is not a square in QQ_p then return false
     if not isPadicSquare(d,p) then return false;
     
-    -- At this stage, the rank and discriminant of our beta agrees with that of a hyperbolic form,
+    -- At this stage, the rank and discriminant of our beta agrees with that of a totally hyperbolic form,
     -- so by e.g. Lam V.3.25 it suffices to check whether their Hasse-Witt invariants agree
     m := sub(rankBeta/2,ZZ);
     HasseWittHyperbolicForm := (getHilbertSymbol(-1,-1,p))^(m*(m - 1)/2);
@@ -32,9 +32,9 @@ isHyperbolicQQp (GrothendieckWittClass, ZZ) := Boolean => (beta, p) -> (
     HasseWittHyperbolicForm == HasseWittBeta
     )
 
--- Input: A Grothendieck-Witt class beta over QQ and a prime number
--- Output: An integer, the rank of the anisotropic part of beta over the p-adic rationals Q_p
--- Note that as all quadratic forms over Q_p of dimension >= 5 are isotropic, 
+-- Input: A Grothendieck-Witt class beta over QQ and a prime number p
+-- Output: An integer, the rank of the anisotropic part of beta over the p-adic rationals QQ_p
+-- Note that as all symmetric bilinear forms over QQ_p of dimension >= 5 are isotropic, 
 -- this method will always output 0, 1, 2, 3, or 4.
 -- This is an implementation of Koprowski/Czogala Algorithm 8
 
@@ -50,7 +50,7 @@ getAnisotropicDimensionQQp (GrothendieckWittClass, ZZ) := ZZ => (beta, p) -> (
 	-- If the form is hyperbolic it has no anisotropic part
 	if isHyperbolicQQp(beta, p) then return 0;
        	
-	-- Note Koprowski and Czogala use a signed version of the discriminant
+	-- Note Koprowski and Czogala use a different, signed, version of the discriminant
 	d := (-1)^(rankBeta*(rankBeta-1)/2) * getIntegralDiscriminant(beta);
 	if isPadicSquare(d,p) then return 4 else return 2;
 	);
@@ -72,13 +72,13 @@ getAnisotropicDimensionQQ GrothendieckWittClass := ZZ => beta -> (
     
     if not kk === QQ then error "GrothendieckWittClass is not over QQ";
     
-    -- The anisotropic dimension of a form over Q is the maximum of its anisotropic dimensions at any of its completions or over Q_2
+    -- The anisotropic dimension of a form over QQ is the maximum of its anisotropic dimensions at any of its completions or over QQ_2
     ListOfLocalAnistropicDimensions := {};
     
-    -- The anisotropic dimension at RR is the absolute value of the getSignature of the form
+    -- The anisotropic dimension at RR is the absolute value of the signature of the form
     ListOfLocalAnistropicDimensions = append(ListOfLocalAnistropicDimensions, abs(getSignature beta));
     
-    -- We always have to add the anisotropic dimension at the prime 2
+    -- We always have to include the anisotropic dimension at the prime 2
     ListOfLocalAnistropicDimensions = append(ListOfLocalAnistropicDimensions, getAnisotropicDimensionQQp(beta, 2));
        
     -- For the remaining local fields, we can just look at relevant primes
@@ -87,8 +87,8 @@ getAnisotropicDimensionQQ GrothendieckWittClass := ZZ => beta -> (
     max ListOfLocalAnistropicDimensions
     )
 
--- Input: A symmetric matrix representing a quadratic form or a GrothendieckWittClass over QQ, RR, CC, or a finite field of characteristic not 2
--- Output: An integer, the rank of the anisotropic part of the quadratic form or GrothendieckWittClass
+-- Input: A symmetric matrix representing a symmetric bilinear form or a GrothendieckWittClass over QQ, RR, CC, or a finite field of characteristic not 2
+-- Output: An integer, the rank of the anisotropic part of the symmetric bilinear form or GrothendieckWittClass
 
 getAnisotropicDimension = method()
 getAnisotropicDimension Matrix := ZZ => A -> (
@@ -100,9 +100,9 @@ getAnisotropicDimension Matrix := ZZ => A -> (
     if not isSquareAndSymmetric A then error "Matrix is not symmetric";
     -- Over CC, the anisotropic dimension is 0 or 1 depending on the parity of the rank
     if instance(k, ComplexField) then (
-        return rank(A)%2;
+        return getRank(A)%2;
         )
-    -- Over RR, the anisotropic dimension is the absolute value of the getSignature
+    -- Over RR, the anisotropic dimension is the absolute value of the signature
     else if instance(k, RealField) then (
         diagonalA := diagonalizeViaCongruence A;
         return abs(countPosDiagEntries(diagonalA) - countNegDiagEntries(diagonalA));
@@ -112,14 +112,14 @@ getAnisotropicDimension Matrix := ZZ => A -> (
         return getAnisotropicDimensionQQ makeGWClass(getNondegeneratePartDiagonal A);
         )
     -- Over a finite field, if the number of nonzero diagonal entries is odd, then the anisotropic dimension is 1
-    -- if the number of nonzero diagonal entries is even, then the anisotropic dimension is either 0 or 2
+    -- if the number of nonzero diagonal entries is even, then the anisotropic dimension is either 0 or 2,
     -- depending on whether the nondegenerate part of the form is totally hyperbolic
     else if (instance(k, GaloisField) and k.char != 2) then (
         diagA := diagonalizeViaCongruence A;
-        if (rank(diagA)%2 == 1) then (
+        if (getRank(diagA)%2 == 1) then (
             return 1;
             )
-        else if isGFSquare(det getNondegeneratePartDiagonal diagA) == isGFSquare(sub((-1)^(rank(diagA)/2), k)) then (
+        else if isGFSquare(det getNondegeneratePartDiagonal diagA) == isGFSquare(sub((-1)^(getRank(diagA)/2), k)) then (
             return 0;
             )
         else

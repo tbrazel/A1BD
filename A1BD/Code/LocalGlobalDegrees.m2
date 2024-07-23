@@ -32,7 +32,7 @@ getGlobalA1Degree List := GrothendieckWittClass => Endo -> (
     	return makeGWClass id_(CC^rankAlgebra);
         );
     
-    -- If the field is RR, ask the user to run the computation over QQ instead and then base chnage to RR
+    -- If the field is RR, ask the user to run the computation over QQ instead and then base change to RR
     if instance(kk, RealField) then error "getGlobalA1Degree method does not work over the reals. Instead, define the polynomials over QQ to output a GrothendieckWittClass. Then extract the matrix, base change it to RR, and run getSumDecomposition().";    
     
     -- Create internal rings/matrices
@@ -49,15 +49,15 @@ getGlobalA1Degree List := GrothendieckWittClass => Endo -> (
     for i from 0 to n - 1 do (
 	for j from 0 to n - 1 do (
 	    -- Iterate through the entries of the matrix D and populate it as follows
-            -- Create the list {Y_1,...,Y_(j-1), X_j,...,X_n}. Note Macaulay2 is 0-indexed hence the difference in notation. 
+            -- Create the list {Y_1,...,Y_(j-1), X_j,...,X_n}. Note that Macaulay2 is 0-indexed hence the difference in notation. 
 	    targetList1 := apply(toList(Y_1..Y_j | X_(j+1)..X_n), i->i_R);
-            -- Create the list {Y_1,...,Y_j, X_(j+1),...,X_n}. Note Macaulay2 is 0-indexed hence the difference in notation. 
+            -- Create the list {Y_1,...,Y_j, X_(j+1),...,X_n}. Note that Macaulay2 is 0-indexed hence the difference in notation. 
 	    targetList2 := apply(toList (Y_1..Y_(j+1) | X_(j+2)..X_n), i->i_R); 
             -- Suppose our endomorphisms are given in the variables x_1,...,x_n
             -- Map f_i(x_1,...,x_n) to f_i(Y_1,...,Y_(j-1), X_j,...,X_n) resp.
             -- Take the difference f_i(Y_1,...,Y_(j-1), X_j,...,X_n) - f_i(Y_1,...,Y_j, X_(j+1),...,X_n)
             numeratorD := (map(R, S, targetList1)) (Endo_i) - (map(R, S, targetList2)) (Endo_i); 
-            -- Divide this by X_j - Y_j. Note Macaulay2 is 0-indexed hence the difference in notation. 
+            -- Divide this by X_j - Y_j. Note that Macaulay2 is 0-indexed hence the difference in notation. 
 	    D_(i,j) = numeratorD / ((X_(j+1))_R - (Y_(j+1))_R); 
 	    ); 
         );
@@ -70,13 +70,13 @@ getGlobalA1Degree List := GrothendieckWittClass => Endo -> (
     if liftable(det D, R) then bezDetR = lift(det D, R);
     
     -- In some computations, applying lift(-,R) doesn't work, so we instead lift the numerator and
-    -- then divide by a lift of the denominator (which will be a scalar) to the coefficient ring k
+    -- then divide by a lift of the denominator (which will be a scalar) to the coefficient ring kk
     if not liftable(det D, R) then (
 	bezDet = lift(numerator det D, R) / lift(denominator det D, coefficientRing R);
     	bezDetR = lift(bezDet, R);
 	);
 
-    -- Define formal variables X_i, Y_i that replace x_i
+    -- Define formal variables X_i and Y_i that replace x_i
     RX := kk[X_1..X_n]; 
     RY := kk[Y_1..Y_n];
 
@@ -97,7 +97,7 @@ getGlobalA1Degree List := GrothendieckWittClass => Endo -> (
     promotedEndo := sub(id1, R) + sub(id2, R); 
 
     -- Here we're using that (R/I) \otimes_R (R/J) = R/(I+J) in order to express Q(f) \otimes Q(f),
-    -- where X's are the variables in first term, Y's are variables in second part
+    -- where X's are the variables in first part and Y's are variables in second part
     Rquot := R/promotedEndo; 
 
     -- Move the standard bases to the quotient ring
@@ -113,8 +113,8 @@ getGlobalA1Degree List := GrothendieckWittClass => Endo -> (
     -- m is the dimension of the basis for the algebra
     m := numColumns sBXProm;
 
-    -- Create the Bezoutian matrix B for the quadratic form by reading off the coefficients. 
-    -- B is an (m x m) matrix. The coefficient B_(i,j) is the coefficient of the (ith basis vector x jth basis vector) in tensor product.
+    -- Create the Bezoutian matrix B for the symmetric bilinear form by reading off the coefficients. 
+    -- B is an (m x m) matrix. The coefficient B_(i,j) is the coefficient of the (ith basis vector x jth basis vector) in the tensor product.
     -- phi0 maps the coefficient to kk
     B := mutableMatrix id_(kk^m);
     for i from 0 to m - 1 do (
@@ -162,7 +162,7 @@ getLocalA1Degree (List, Ideal) := GrothendieckWittClass => (Endo,p) -> (
     if instance(kk, ComplexField) then
     	return makeGWClass id_(CC^localFormRank);
 
-    -- If the field is RR, ask the user to run the computation over QQ instead and then base chnage to RR
+    -- If the field is RR, ask the user to run the computation over QQ instead and then base change to RR
     if instance(kk, RealField) then
         error "getLocalA1Degree method does not work over the reals. Instead, define the polynomials over QQ to output a GrothendieckWittClass. Then extract the matrix, base change it to RR, and run getSumDecomposition().";
     
@@ -180,15 +180,15 @@ getLocalA1Degree (List, Ideal) := GrothendieckWittClass => (Endo,p) -> (
     for i from 0 to n - 1 do (
 	for j from 0 to n - 1 do (
 	    -- Iterate through the entries of the matrix D and populate it as follows
-            -- Create the list {Y_1,...,Y_(j-1), X_j,...,X_n}. Note Macaulay2 is 0-indexed hence the difference in notation. 
+            -- Create the list {Y_1,...,Y_(j-1), X_j,...,X_n}. Note that Macaulay2 is 0-indexed hence the difference in notation. 
 	    targetList1 := apply(toList (Y_1..Y_j | X_(j+1)..X_n), i -> i_R);
-            -- Create the list {Y_1,...,Y_j, X_(j+1), ..., X_n}. Note Macaulay2 is 0-indexed hence the difference in notation. 
+            -- Create the list {Y_1,...,Y_j, X_(j+1), ..., X_n}. Note that Macaulay2 is 0-indexed hence the difference in notation. 
 	    targetList2 := apply(toList (Y_1..Y_(j+1) | X_(j+2)..X_n), i -> i_R); 
             -- Suppose our endomorphisms are given in the variables x_1,...,x_n
             -- Map f_i(x_1,...,x_n) to f_i(Y_1,...,Y_(j-1), X_j,...,X_n) resp.
             -- Take the difference f_i(Y_1,...,Y_(j-1), X_j,...,X_n) - f_i(Y_1,...,Y_j, X_(j+1),...,X_n)
             numeratorD := (map(R, S, targetList1)) (Endo_i) - (map(R, S, targetList2)) (Endo_i); 
-            -- Divide this by X_j - Y_j. Note Macaulay2 is 0-indexed hence the difference in notation. 
+            -- Divide this by X_j - Y_j. Note that Macaulay2 is 0-indexed hence the difference in notation. 
 	    D_(i,j)= numeratorD / ((X_(j+1))_R - (Y_(j+1))_R); 
 	    ); 
         );
@@ -201,7 +201,7 @@ getLocalA1Degree (List, Ideal) := GrothendieckWittClass => (Endo,p) -> (
     if liftable(det D, R) then bezDetR = lift(det D, R);
 
     -- In some computations, applying lift(-,R) doesn't work, so we instead lift the numerator and
-    -- then divide by a lift of the denominator (which will be a scalar) to the coefficient ring k
+    -- then divide by a lift of the denominator (which will be a scalar) to the coefficient ring kk
     if not liftable(det D, R) then (
 	bezDet = lift(numerator det D, R) / lift(denominator det D, coefficientRing R);
     	bezDetR = lift(bezDet, R);
@@ -229,7 +229,7 @@ getLocalA1Degree (List, Ideal) := GrothendieckWittClass => (Endo,p) -> (
     localIdeal := sub(mapxtoX J, R) + sub(mapxtoY J, R);
 
     -- Here we're using that (R/I) \otimes_R (R/J) = R/(I+J) in order to express Q(f) \otimes Q(f),
-    -- where X's are the variables in first term, Y's are variables in second part
+    -- where X's are the variables in first part and Y's are variables in second part
     Rquot := R/localIdeal;
 
     -- Move the standard bases to the quotient ring
@@ -245,8 +245,8 @@ getLocalA1Degree (List, Ideal) := GrothendieckWittClass => (Endo,p) -> (
     -- m is the dimension of the basis for the local ring
     m := #sBXProm;
 
-    -- Create the Bezoutian matrix B for the quadratic form by reading off the local coefficients. 
-    -- B is an (m x m) matrix. The coefficient B_(i,j) is the coefficient of the (ith basis vector x jth basis vector) in tensor product.
+    -- Create the Bezoutian matrix B for the symmetric bilinear form by reading off the local coefficients. 
+    -- B is an (m x m) matrix. The coefficient B_(i,j) is the coefficient of the (ith basis vector x jth basis vector) in the tensor product.
     -- phi0 maps the coefficient to kk    
     B:= mutableMatrix id_(kk^m);
     for i from 0 to m - 1 do (
