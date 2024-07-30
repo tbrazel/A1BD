@@ -32,11 +32,7 @@ newPackage (
 	 Email => "atawfeek@uw.edu",
 	 HomePage => "https://www.atawfeek.com/"}
 	},
-    Headline => "for working with A1-Brouwer degree computations",
-    PackageImports => {},
-    PackageExports => {},
-    AuxiliaryFiles => true,
-    DebuggingMode => true
+    Headline => "for working with A1-Brouwer degree computations"
     )
 
 export{
